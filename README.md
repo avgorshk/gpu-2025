@@ -465,6 +465,8 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 ## 4_naive_gemm_cuda (4096 elements)
 |Group|Name|Result|Rank|
 |-----|----|------|----|
+|**FAST**|**FAST**|**0.0776**|**-**|
+|**REF**|**REF**|**0.5798**|**-**|
 
 ## 5_block_gemm_omp (1024 elements)
 |Group|Name|Result|Rank|
