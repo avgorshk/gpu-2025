@@ -8,4 +8,6 @@
 
 std::vector<float> GeluOMP(const std::vector<float>& input);
 
+std::vector<float> GeluOMPapprox(const std::vector<float> &input);
+
 #endif  // __GELU_OMP_H
