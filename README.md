@@ -71,7 +71,7 @@ int main() {
 - RAM: 16 GB
 - GPU: NVIDIA RTX 4060 (8 GB)
 - OS:  Ubuntu 22.04.3 LTS
-- Host Compiler: GCC 11.4.0
+- Host Compiler: GCC 11.4.0 (C++17)
 - CUDA: 12.9
 
 # Tasks
