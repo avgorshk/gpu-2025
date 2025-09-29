@@ -1,4 +1,4 @@
-﻿#include "kudryashova_gelu_omp.h"
+﻿#include "gelu_omp.h"
 #include <cmath>
 #include <omp.h>
 
