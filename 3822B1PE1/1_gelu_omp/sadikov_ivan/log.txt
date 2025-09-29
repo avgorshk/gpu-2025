@@ -1,0 +1,4 @@
+In file included from /home/crazyproger/sandbox/gpu-2025/3822B1PE1/1_gelu_omp/sadikov_ivan/gelu_omp.cpp:1:
+/home/crazyproger/sandbox/gpu-2025/3822B1PE1/1_gelu_omp/sadikov_ivan/gelu_omp.h:10:48: error: ‘std::numbers’ has not been declared
+   10 |         const float sqrt = std::sqrt((2 / std::numbers::pi));
+      |                                                ^~~~~~~
