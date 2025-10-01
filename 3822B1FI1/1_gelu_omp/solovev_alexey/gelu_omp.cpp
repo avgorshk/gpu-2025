@@ -1,4 +1,4 @@
-#include "solovev.hpp"
+#include "gelu_omp.h"
 #include <cmath>
 #include <omp.h>
 
