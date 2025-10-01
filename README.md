@@ -468,13 +468,13 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 ## 3_naive_gemm_omp (1024 elements)
 |Group|Name|Result|Rank|
 |-----|----|------|----|
+|3822B1PE1|korablev_vladlen|0.0260|4|
 |**FAST**|**FAST**|**0.0261**|**-**|
 |3822B1PE1|moiseev_artem|0.0261|3|
 |3822B1PE3|sotskov_andrey|0.0940|1|
 |3822B1PE1|sadikov_ivan|0.1249|1|
 |**REF**|**REF**|**0.7773**|**-**|
 |3822B1PE1|shvedova_vitalina|0.7832|2|
-|3822B1PE1|korablev_vladlen|BUILD FAILED|-|
 
 ## 4_naive_gemm_cuda (4096 elements)
 |Group|Name|Result|Rank|
@@ -531,10 +531,10 @@ Passed: 0
 ## 3822B1PE1
 |Group|Name|Passed|Score|
 |-----|----|------|-----|
-|3822B1PE1|korablev_vladlen|2/9|16|
-|3822B1PE1|moiseev_artem|2/9|14|
-|3822B1PE1|sadikov_ivan|1/9|7|
-|3822B1PE1|shvedova_vitalina|2/9|11|
+|3822B1PE1|korablev_vladlen|3/9|21|
+|3822B1PE1|moiseev_artem|2/9|13|
+|3822B1PE1|sadikov_ivan|1/9|6|
+|3822B1PE1|shvedova_vitalina|2/9|10|
 
 Passed: 0
 
