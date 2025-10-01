@@ -469,8 +469,8 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |Group|Name|Result|Rank|
 |-----|----|------|----|
 |3822B1PE1|korablev_vladlen|0.0260|4|
-|**FAST**|**FAST**|**0.0261**|**-**|
 |3822B1PE1|moiseev_artem|0.0261|3|
+|**FAST**|**FAST**|**0.0261**|**-**|
 |3822B1PE3|sotskov_andrey|0.0940|1|
 |3822B1PE1|sadikov_ivan|0.1249|1|
 |**REF**|**REF**|**0.7773**|**-**|
@@ -524,17 +524,17 @@ Passed: 0
 ## 3822B1FI3
 |Group|Name|Passed|Score|
 |-----|----|------|-----|
-|3822B1FI3|kudryashova_irina|1/9|2|
+|3822B1FI3|kudryashova_irina|1/9|64|
 
 Passed: 0
 
 ## 3822B1PE1
 |Group|Name|Passed|Score|
 |-----|----|------|-----|
-|3822B1PE1|korablev_vladlen|3/9|21|
-|3822B1PE1|moiseev_artem|2/9|13|
-|3822B1PE1|sadikov_ivan|1/9|6|
-|3822B1PE1|shvedova_vitalina|2/9|10|
+|3822B1PE1|korablev_vladlen|3/9|189|
+|3822B1PE1|moiseev_artem|2/9|125|
+|3822B1PE1|sadikov_ivan|1/9|62|
+|3822B1PE1|shvedova_vitalina|2/9|122|
 
 Passed: 0
 
@@ -542,8 +542,11 @@ Passed: 0
 |Group|Name|Passed|Score|
 |-----|----|------|-----|
 |3822B1PE3|oturin_alexander|0/9|0|
-|3822B1PE3|sotskov_andrey|2/9|8|
+|3822B1PE3|sotskov_andrey|2/9|128|
 
 Passed: 0
 
 **Total Passed: 0**
+
+---
+*Maximum Score: 576 (64 per task)*
