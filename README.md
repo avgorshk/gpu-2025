@@ -463,6 +463,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |-----|----|------|----|
 |**FAST**|**FAST**|**0.1205**|**-**|
 |**REF**|**REF**|**0.2209**|**-**|
+|3822B1FI3|kudryashova_irina|0.2274|1|
 |3822B1PE1|moiseev_artem|0.2298|1|
 
 ## 3_naive_gemm_omp (1024 elements)
@@ -525,7 +526,7 @@ Passed: 0
 ## 3822B1FI3
 |Group|Name|Passed|Score|
 |-----|----|------|-----|
-|3822B1FI3|kudryashova_irina|2/9|128|
+|3822B1FI3|kudryashova_irina|3/9|192|
 
 Passed: 0
 
