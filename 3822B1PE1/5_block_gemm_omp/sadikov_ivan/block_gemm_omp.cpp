@@ -8,11 +8,11 @@ void matrixMultiplication(const std::vector<float>& a,
 						  std::vector<float>& result,
 					      int iIndex,
 						  int jIndex,
-					      int step)
+						  int blockSize,
+						  int size)
 {
-	const int iBarier{ iIndex + step };
-	const int jBarier{ jIndex + step };
-	const int size{ step * step };
+	const int iBarier = std::min(iIndex + blockSize, size);
+	const int jBarier = std::min(jIndex + blockSize, size);
 
 	for (int i = iIndex; i < iBarier; ++i)
 	{
@@ -32,16 +32,16 @@ void matrixMultiplication(const std::vector<float>& a,
 
 std::vector<float> BlockGemmOMP(const std::vector<float>& a, const std::vector<float>& b, int n)
 {
-	int step = sqrt(n);
+	int blockSize = std::sqrt(n);
 	std::vector<float> result(n * n);
 #pragma omp parallel
 	{
 #pragma omp for
-		for (int i = 0; i < n; i += step)
+		for (int i = 0; i < n; i += blockSize)
 		{
-			for (int j = 0; j < n; j += step)
+			for (int j = 0; j < n; j += blockSize)
 			{
-				matrixMultiplication(a, b, result, i, j, step);
+				matrixMultiplication(a, b, result, i, j, blockSize, n);
 			}
 		}
 	}

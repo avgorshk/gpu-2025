@@ -8,7 +8,8 @@ void matrixMultiplication(const std::vector<float>& a,
 						  std::vector<float>& result,
 						  int iIndex,
 						  int jIndex,
-						  int step);
+						  int blockSize,
+					      int size);
 
 std::vector<float> BlockGemmOMP(const std::vector<float>& a,
                                 const std::vector<float>& b,
