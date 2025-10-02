@@ -1,5 +1,6 @@
 #include "block_gemm_omp.h"
 
+#include <cmath>
 #include <omp.h>
 
 void matrixMultiplication(const std::vector<float>& a,
