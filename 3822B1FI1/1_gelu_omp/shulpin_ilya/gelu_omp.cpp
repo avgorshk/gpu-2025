@@ -6,12 +6,6 @@
   #define RESTRICT __restrict__
 #endif
 
-#if defined(_MSC_VER)
-  #define RESTRICT __restrict
-#else
-  #define RESTRICT __restrict__
-#endif
-
 static inline float gelu_scalar_exp(float x) {
     constexpr float c = 0.044715f;
     constexpr float sqrt_2_over_pi = 0.7978845608028654f;
