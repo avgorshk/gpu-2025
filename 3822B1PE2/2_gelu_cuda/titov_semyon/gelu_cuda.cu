@@ -3,39 +3,42 @@
 #include <cmath>
 #include <vector>
 
-__global__ void GeluKernelFast(const float* input, float* output, int n) {
-    const float a = 1.702f;
+__global__ void GeluKernel(const float* input, float* output, int n) {
+    const float sqrt_2_over_pi = 0.7978845608028654f;
+    const float coef = 0.044715f;
+
     int idx = blockIdx.x * blockDim.x + threadIdx.x;
     if (idx < n) {
         float x = input[idx];
-        output[idx] = x * (0.5f + 0.5f * tanhf(x * a * 0.5f));
+        float x_cubed = x * x * x;
+        float inner = sqrt_2_over_pi * (x + coef * x_cubed);
+        output[idx] = 0.5f * x * (1.0f + tanhf(inner));
     }
 }
 
 std::vector<float> GeluCUDA(const std::vector<float>& input) {
     int n = input.size();
     std::vector<float> output(n);
-    
-    float *d_input, *d_output;
+
+    if (n == 0) return output;
+
+    float* d_input, * d_output;
+
     cudaMalloc(&d_input, n * sizeof(float));
     cudaMalloc(&d_output, n * sizeof(float));
-    
-    cudaStream_t stream;
-    cudaStreamCreate(&stream);
-    
-    cudaMemcpyAsync(d_input, input.data(), n * sizeof(float), cudaMemcpyHostToDevice, stream);
-    
+
+    cudaMemcpy(d_input, input.data(), n * sizeof(float), cudaMemcpyHostToDevice);
+
     int blockSize = 256;
     int numBlocks = (n + blockSize - 1) / blockSize;
-    
-    GeluKernelFast<<<numBlocks, blockSize, 0, stream>>>(d_input, d_output, n);
-    cudaMemcpyAsync(output.data(), d_output, n * sizeof(float), cudaMemcpyDeviceToHost, stream);
-    
-    cudaStreamSynchronize(stream);
-    cudaStreamDestroy(stream);
-    
+    GeluKernel << <numBlocks, blockSize >> > (d_input, d_output, n);
+
+    cudaDeviceSynchronize();
+
+    cudaMemcpy(output.data(), d_output, n * sizeof(float), cudaMemcpyDeviceToHost);
+
     cudaFree(d_input);
     cudaFree(d_output);
-    
+
     return output;
 }
