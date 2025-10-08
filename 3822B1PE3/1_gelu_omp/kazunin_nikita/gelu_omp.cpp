@@ -1,6 +1,7 @@
 #include "gelu_omp.h"
 #include <cmath>
 #include <omp.h>
+#include <cstddef> 
 
 std::vector<float> GeluOMP(const std::vector<float>& input) {
     const size_t n = input.size();
