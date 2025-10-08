@@ -506,6 +506,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |Group|Name|Result|Rank|
 |-----|----|------|----|
 |**FAST**|**FAST**|**0.0776**|**-**|
+|3822B1PE3|sotskov_andrey|0.1604|1|
 |3822B1PE1|moiseev_artem|0.2539|2|
 |3822B1FI1|solovev_alexey|0.2613|1|
 |3822B1PE1|korablev_vladlen|0.2780|3|
@@ -596,7 +597,7 @@ Passed: 0
 |3822B1PE3|kazunin_nikita|0/9|0|
 |3822B1PE3|oturin_alexander|3/9|190|
 |3822B1PE3|sarafanov_maxim|1/9|60|
-|3822B1PE3|sotskov_andrey|3/9|190|
+|3822B1PE3|sotskov_andrey|4/9|254|
 
 Passed: 0
 
