@@ -4,8 +4,8 @@
 #include <omp.h>
 
 static inline float tanh_exp(float t) {
-    float e2 = std::expf(-2.0f * t);         
-    return (1.0f - e2) / (1.0f + e2);         
+    float e2 = std::exp(-2.0f * t);
+    return (1.0f - e2) / (1.0f + e2);
 }
 
 std::vector<float> GeluOMP(const std::vector<float>& input) {
@@ -13,8 +13,8 @@ std::vector<float> GeluOMP(const std::vector<float>& input) {
     std::vector<float> out(n);
     if (n == 0) return out;
 
-    constexpr float kInvSqrtPi2 = 0.7978845608028654f; 
-    constexpr float kCubicCoeff = 0.044715f;          
+    constexpr float kInvSqrtPi2 = 0.7978845608028654f;
+    constexpr float kCubicCoeff = 0.044715f;
 
     const float* __restrict src = input.data();
     float* __restrict dst = out.data();
