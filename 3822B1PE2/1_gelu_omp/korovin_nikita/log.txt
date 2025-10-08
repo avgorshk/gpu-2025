@@ -1,5 +1,0 @@
-/home/crazyproger/sandbox/gpu-2025/3822B1PE2/1_gelu_omp/korovin_nikita/gelu_omp.cpp: In function ‘float tanh_exp(float)’:
-/home/crazyproger/sandbox/gpu-2025/3822B1PE2/1_gelu_omp/korovin_nikita/gelu_omp.cpp:7:21: error: ‘expf’ is not a member of ‘std’; did you mean ‘exp2f’?
-    7 |     float e2 = std::expf(-2.0f * t);
-      |                     ^~~~
-      |                     exp2f

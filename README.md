@@ -453,6 +453,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1FI3|kholin_kirill|0.2718|2|
 |3822B1FI3|kudryashova_irina|0.2810|1|
 |3822B1PE3|sotskov_andrey|0.2822|1|
+|3822B1PE2|korovin_nikita|0.2914|2|
 |**REF**|**REF**|**0.4736**|**-**|
 |3822B1PE2|titov_semyon|0.6721|1|
 |3822B1PE1|moiseev_artem|0.6731|3|
@@ -463,7 +464,6 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE1|shvedova_vitalina|0.6866|2|
 |3822B1PE3|sarafanov_maxim|0.7546|3|
 |3822B1PE3|kazunin_nikita|BUILD FAILED|-|
-|3822B1PE2|korovin_nikita|BUILD FAILED|-|
 |3822B1PE2|ermolaev_vladislav|TEST FAILED|-|
 |3822B1PE1|sadikov_ivan|BUILD FAILED|-|
 
@@ -564,8 +564,8 @@ Passed: 0
 |Group|Name|Passed|Score|
 |-----|----|------|-----|
 |3822B1PE2|ermolaev_vladislav|1/9|64|
-|3822B1PE2|korovin_nikita|0/9|0|
-|3822B1PE2|titov_semyon|1/9|64|
+|3822B1PE2|korovin_nikita|1/9|63|
+|3822B1PE2|titov_semyon|1/9|63|
 
 Passed: 0
 
