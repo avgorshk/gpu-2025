@@ -1,4 +1,5 @@
-In file included from /home/crazyproger/sandbox/gpu-2025/3822B1PE1/1_gelu_omp/sadikov_ivan/gelu_omp.cpp:1:
-/home/crazyproger/sandbox/gpu-2025/3822B1PE1/1_gelu_omp/sadikov_ivan/gelu_omp.h:10:48: error: ‘std::numbers’ has not been declared
-   10 |         const float sqrt = std::sqrt((2 / std::numbers::pi));
-      |                                                ^~~~~~~
+/usr/bin/ld: /tmp/ccEAN0e2.o: in function `main':
+main.cpp:(.text.startup+0x8a): undefined reference to `GeluOMP(std::vector<float, std::allocator<float> > const&)'
+/usr/bin/ld: main.cpp:(.text.startup+0x20c): undefined reference to `GeluOMP(std::vector<float, std::allocator<float> > const&)'
+/usr/bin/ld: main.cpp:(.text.startup+0x33a): undefined reference to `GeluOMP(std::vector<float, std::allocator<float> > const&)'
+collect2: error: ld returned 1 exit status

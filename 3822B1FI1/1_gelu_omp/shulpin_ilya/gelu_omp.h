@@ -2,9 +2,9 @@
 #define __GELU_OMP_H
 
 #include <cmath>
-#include <vector>
 #include <omp.h>
+#include <vector>
 
 std::vector<float> GeluOMP(const std::vector<float>& input);
 
-#endif  // __GELU_OMP_H
+#endif // __GELU_OMP_H
