@@ -28,8 +28,8 @@ std::vector<float> GemmCUBLAS(const std::vector<float>& a,
     const float beta = 0.0f;
 
     cublasSgemm(handle,
-        CUBLAS_OP_T,
-        CUBLAS_OP_T,
+        CUBLAS_OP_N,
+        CUBLAS_OP_N,
         n, n, n,
         &alpha,
         d_b, n,
