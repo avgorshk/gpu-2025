@@ -1,5 +1,0 @@
-/home/crazyproger/sandbox/gpu-2025/3822B1PE3/2_gelu_cuda/kazunin_nikita/gelu_cuda.cu(43): error: identifier "\u0447" is undefined
-      cudaDeviceSynchronize();\U00000447
-                              ^
-
-1 error detected in the compilation of "/home/crazyproger/sandbox/gpu-2025/3822B1PE3/2_gelu_cuda/kazunin_nikita/gelu_cuda.cu".

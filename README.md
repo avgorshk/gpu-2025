@@ -477,6 +477,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE4|shuravina_oksana|0.1840|1|
 |3822B1FI1|solovev_alexey|0.2105|1|
 |3822B1PE2|ermolaev_vladislav|0.2200|1|
+|3822B1PE3|kazunin_nikita|0.2204|3|
 |**REF**|**REF**|**0.2209**|**-**|
 |3822B1PE2|titov_semyon|0.2237|2|
 |3822B1PE3|oturin_alexander|0.2239|2|
@@ -488,7 +489,6 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE1|moiseev_artem|0.2298|1|
 |3822B1FI3|kirill_kholin|0.2325|2|
 |3822B1PE1|morozov_egor|0.2372|4|
-|3822B1PE3|kazunin_nikita|BUILD FAILED|-|
 |3822B1PE1|shvedova_vitalina|TOO SLOW|-|
 |3822B1PE1|sadikov_ivan|TEST FAILED|-|
 
@@ -591,6 +591,7 @@ Passed: 0
 |3822B1PE1|korablev_vladlen|5/9|306|
 |3822B1PE1|moiseev_artem|7/9|434|
 |3822B1PE1|morozov_egor|3/9|171|
+|3822B1PE1|odintsov_misha|0/9|0|
 |3822B1PE1|rams_sergei|6/9|367|
 |3822B1PE1|sadikov_ivan|3/9|175|
 |3822B1PE1|shvedova_vitalina|3/9|175|
@@ -609,10 +610,10 @@ Passed: 0
 ## 3822B1PE3
 |Group|Name|Passed|Score|
 |-----|----|------|-----|
-|3822B1PE3|kazunin_nikita|1/9|59|
-|3822B1PE3|oturin_alexander|4/9|253|
+|3822B1PE3|kazunin_nikita|2/9|121|
+|3822B1PE3|oturin_alexander|4/9|252|
 |3822B1PE3|sarafanov_maxim|1/9|59|
-|3822B1PE3|sotskov_andrey|4/9|253|
+|3822B1PE3|sotskov_andrey|4/9|252|
 
 Passed: 0
 
