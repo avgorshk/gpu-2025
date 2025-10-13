@@ -1,47 +1,53 @@
 #include "gelu_cuda.h"
-#include <cuda.h>
+#include <cuda_runtime.h>
 #include <cmath>
-#include <iostream>
+#include <vector>
+#include <stdexcept>
 
-__global__ void gelu_kernel(const float* __restrict__ in, float* __restrict__ out, int n) {
-    int idx = blockIdx.x * blockDim.x + threadIdx.x;
-    if (idx >= n) return;
-    float x = in[idx];
-    const float kAlpha = 0.7978845608f;
+__device__ __forceinline__ float gelu_single(float x) {
+    const float alpha = sqrtf(2.0f / 3.14159265f);
+    const float c = 0.044715f;
     float x3 = x * x * x;
-    float inner = kAlpha * (x + 0.044715f * x3);
-    float exp_term = __expf(-2.0f * inner);
-    float tanh_val = (1.0f - exp_term) / (1.0f + exp_term);
-    out[idx] = 0.5f * x * (1.0f + tanh_val);
+    float t = alpha * (x + c * x3);
+    float tanh_t = tanhf(t);
+    return 0.5f * x * (1.0f + tanh_t);
+}
+
+__global__ void gelu_kernel(const float* __restrict__ in,
+                            float* __restrict__ out,
+                            int n) {
+    int idx = blockIdx.x * blockDim.x + threadIdx.x;
+    if (idx < n) {
+        out[idx] = gelu_single(in[idx]);
+    }
 }
 
 std::vector<float> GeluCUDA(const std::vector<float>& input) {
-    if (input.empty()) return {};
-    const int n = static_cast<int>(input.size());
-    std::vector<float> output(n);
-    float *d_in = nullptr, *d_out = nullptr;
-    cudaMalloc((void**)&d_in, n * sizeof(float));
-    cudaMalloc((void**)&d_out, n * sizeof(float));
-    
-    float* h_in_pinned = nullptr;
-    float* h_out_pinned = nullptr;
-    cudaMallocHost((void**)&h_in_pinned, n * sizeof(float));
-    cudaMallocHost((void**)&h_out_pinned, n * sizeof(float));
-    memcpy(h_in_pinned, input.data(), n * sizeof(float));
-    cudaMemcpyAsync(d_in, h_in_pinned, n * sizeof(float), cudaMemcpyHostToDevice);
+    int n = static_cast<int>(input.size());
+    if (n == 0) return {};
 
-    const int blockSize = 256;
-    const int gridSize = (n + blockSize - 1) / blockSize;
+    size_t bytes = n * sizeof(float);
+    float *d_in = nullptr, *d_out = nullptr;
+
+    if (cudaMalloc(&d_in, bytes) != cudaSuccess ||
+        cudaMalloc(&d_out, bytes) != cudaSuccess) {
+        throw std::runtime_error("CUDA malloc failed");
+    }
+
+    cudaMemcpy(d_in, input.data(), bytes, cudaMemcpyHostToDevice);
+
+    int blockSize = 256;
+    int gridSize = (n + blockSize - 1) / blockSize;
+
     gelu_kernel<<<gridSize, blockSize>>>(d_in, d_out, n);
 
-    cudaMemcpyAsync(h_out_pinned, d_out, n * sizeof(float), cudaMemcpyDeviceToHost);
     cudaDeviceSynchronize();
-    memcpy(output.data(), h_out_pinned, n * sizeof(float));
 
-    cudaFreeHost(h_in_pinned);
-    cudaFreeHost(h_out_pinned);
+    std::vector<float> output(n);
+    cudaMemcpy(output.data(), d_out, bytes, cudaMemcpyDeviceToHost);
+
     cudaFree(d_in);
     cudaFree(d_out);
-    
+
     return output;
 }
