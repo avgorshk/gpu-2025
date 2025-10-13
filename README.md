@@ -516,13 +516,13 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |-----|----|------|----|
 |**FAST**|**FAST**|**0.0776**|**-**|
 |3822B1PE3|sotskov_andrey|0.1604|1|
+|3822B1PE1|shvedova_vitalina|0.1729|4|
 |3822B1PE1|moiseev_artem|0.2539|2|
 |3822B1FI1|solovev_alexey|0.2613|1|
 |3822B1PE1|korablev_vladlen|0.2780|3|
 |3822B1PE1|rams_sergei|0.3064|1|
 |**REF**|**REF**|**0.5798**|**-**|
 |3822B1PE2|titov_semyon|0.6015|1|
-|3822B1PE1|shvedova_vitalina|TOO SLOW|-|
 
 ## 5_block_gemm_omp (1024 elements)
 |Group|Name|Result|Rank|
@@ -588,13 +588,13 @@ Passed: 0
 ## 3822B1PE1
 |Group|Name|Passed|Score|
 |-----|----|------|-----|
-|3822B1PE1|korablev_vladlen|5/9|305|
-|3822B1PE1|moiseev_artem|7/9|433|
+|3822B1PE1|korablev_vladlen|5/9|304|
+|3822B1PE1|moiseev_artem|7/9|432|
 |3822B1PE1|morozov_egor|3/9|170|
 |3822B1PE1|odintsov_misha|0/9|0|
-|3822B1PE1|rams_sergei|6/9|366|
+|3822B1PE1|rams_sergei|6/9|365|
 |3822B1PE1|sadikov_ivan|3/9|175|
-|3822B1PE1|shvedova_vitalina|4/9|235|
+|3822B1PE1|shvedova_vitalina|5/9|296|
 
 Passed: 0
 
