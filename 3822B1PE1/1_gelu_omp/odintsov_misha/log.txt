@@ -1,5 +1,6 @@
 In file included from /usr/include/c++/11/cmath:45,
                  from /home/crazyproger/sandbox/gpu-2025/3822B1PE1/1_gelu_omp/odintsov_misha/gelu_omp.cpp:2:
-/home/crazyproger/sandbox/gpu-2025/3822B1PE1/1_gelu_omp/odintsov_misha/gelu_omp.cpp:6:17: error: expected unqualified-id before numeric constant
-    6 | constexpr float M_PI = 3.14159265358979323846f;
+/home/crazyproger/sandbox/gpu-2025/3822B1PE1/1_gelu_omp/odintsov_misha/gelu_omp.cpp: In function ‘std::vector<float> GeluOMP(const std::vector<float>&)’:
+/home/crazyproger/sandbox/gpu-2025/3822B1PE1/1_gelu_omp/odintsov_misha/gelu_omp.cpp:9:17: error: expected unqualified-id before numeric constant
+    9 |     const float M_PI = 3.14159265358979323846f;
       |                 ^~~~
