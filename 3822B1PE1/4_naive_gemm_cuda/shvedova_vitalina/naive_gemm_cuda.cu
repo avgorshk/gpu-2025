@@ -1,45 +1,70 @@
 #include "naive_gemm_cuda.h"
-#include <cuda.h>
+#include <cuda_runtime.h>
+#include <stdexcept>
+#include <vector>
+#include <iostream>
 
-__global__ void naive_gemm_kernel(const float* __restrict__ A,
-                                  const float* __restrict__ B,
-                                  float* __restrict__ C,
+__global__ void gemm_naive_kernel(const float* a,
+                                  const float* b,
+                                  float* c,
                                   int n) {
     int row = blockIdx.y * blockDim.y + threadIdx.y;
     int col = blockIdx.x * blockDim.x + threadIdx.x;
-    if (row >= n || col >= n) return;
 
-    float sum = 0.0f;
-#pragma unroll 4
-    for (int k = 0; k < n; ++k)
-        sum += A[row * n + k] * B[k * n + col];
-    C[row * n + col] = sum;
+    if (row < n && col < n) {
+        float sum = 0.0f;
+        for (int k = 0; k < n; ++k) {
+            sum += a[row * n + k] * b[k * n + col];
+        }
+        c[row * n + col] = sum;
+    }
 }
 
 std::vector<float> NaiveGemmCUDA(const std::vector<float>& a,
                                  const std::vector<float>& b,
                                  int n) {
-    if (a.empty() || b.empty()) return {};
+    if (a.size() != static_cast<size_t>(n * n) ||
+        b.size() != static_cast<size_t>(n * n)) {
+        throw std::invalid_argument("Matrix sizes do not match n*n");
+    }
+
+    size_t bytes = n * n * sizeof(float);
+    float *d_a = nullptr, *d_b = nullptr, *d_c = nullptr;
+
+    if (cudaMalloc(&d_a, bytes) != cudaSuccess ||
+        cudaMalloc(&d_b, bytes) != cudaSuccess ||
+        cudaMalloc(&d_c, bytes) != cudaSuccess) {
+        throw std::runtime_error("CUDA malloc failed");
+    }
+
+    if (cudaMemcpy(d_a, a.data(), bytes, cudaMemcpyHostToDevice) != cudaSuccess ||
+        cudaMemcpy(d_b, b.data(), bytes, cudaMemcpyHostToDevice) != cudaSuccess) {
+        cudaFree(d_a); cudaFree(d_b); cudaFree(d_c);
+        throw std::runtime_error("CUDA memcpy (H2D) failed");
+    }
+
+    dim3 blockSize(16, 16);
+    dim3 gridSize((n + blockSize.x - 1) / blockSize.x,
+                  (n + blockSize.y - 1) / blockSize.y);
+
+    gemm_naive_kernel<<<gridSize, blockSize>>>(d_a, d_b, d_c, n);
+
+    if (cudaGetLastError() != cudaSuccess ||
+        cudaDeviceSynchronize() != cudaSuccess) {
+        cudaFree(d_a); cudaFree(d_b); cudaFree(d_c);
+        throw std::runtime_error("CUDA kernel execution failed");
+    }
+
     std::vector<float> c(n * n);
+    if (cudaMemcpy(c.data(), d_c, bytes, cudaMemcpyDeviceToHost) != cudaSuccess) {
+        cudaFree(d_a); cudaFree(d_b); cudaFree(d_c);
+        throw std::runtime_error("CUDA memcpy (D2H) failed");
+    }
 
-    float *A, *B, *C;
-    cudaMallocManaged(&A, n * n * sizeof(float));
-    cudaMallocManaged(&B, n * n * sizeof(float));
-    cudaMallocManaged(&C, n * n * sizeof(float));
+    cudaFree(d_a);
+    cudaFree(d_b);
+    cudaFree(d_c);
 
-    memcpy(A, a.data(), n * n * sizeof(float));
-    memcpy(B, b.data(), n * n * sizeof(float));
-
-    dim3 block(32, 32);
-    dim3 grid((n + block.x - 1) / block.x, (n + block.y - 1) / block.y);
-
-    naive_gemm_kernel<<<grid, block>>>(A, B, C, n);
-    cudaDeviceSynchronize();
-
-    memcpy(c.data(), C, n * n * sizeof(float));
-
-    cudaFree(A);
-    cudaFree(B);
-    cudaFree(C);
     return c;
 }
+
