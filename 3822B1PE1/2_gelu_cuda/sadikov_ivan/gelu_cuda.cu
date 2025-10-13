@@ -9,8 +9,8 @@ __global__ void Calculate(const float* inputData, float* result, int size)
 
     if (index < size)
     {
-        result[index] = 0.5f * inputData[index] * (1.0f  + 
-            tanhf(0.7978f * (inputData[index] + 0.044715f * inputData[index] * inputData[index] * inputData[index])));
+      const float x = inputData[index];
+      result[index] = 0.5f * x * (1.0f  + tanhf(0.7978f * (x + 0.044715f * x * x * x)));
     }
 }
 
@@ -32,8 +32,8 @@ std::vector<float> GeluCUDA(const std::vector<float>& input)
 
     Calculate<<<blocksCount, threadsCount>>>(inputData, resultFromCUDA, static_cast<int>(input.size()));
 
-    cudaMemcpy(resultFromCUDA, result.data(), size, cudaMemcpyDeviceToHost);
-    
+    cudaMemcpy(result.data(), resultFromCUDA, size, cudaMemcpyDeviceToHost);
+        
     cudaFree(inputData);
     cudaFree(resultFromCUDA);
     
