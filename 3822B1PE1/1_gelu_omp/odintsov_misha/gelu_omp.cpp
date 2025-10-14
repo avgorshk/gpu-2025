@@ -15,7 +15,7 @@ std::vector<float> GeluOMP(const std::vector<float>& input) {
         float x = input[i];
         tmp[i] = 0.5f * x * (1.0f + tanh(
             sq *
-            (x + 0.044715f * pow(x, 3))
+            (x + 0.044715f * x*x*x)
         ));
     }
     return tmp;
