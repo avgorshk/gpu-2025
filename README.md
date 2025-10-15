@@ -521,6 +521,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |-----|----|------|----|
 |**FAST**|**FAST**|**0.0776**|**-**|
 |3822B1PE3|sotskov_andrey|0.1604|1|
+|3822B1PE4|podovinnikov_artyom|0.1717|1|
 |3822B1PE1|shvedova_vitalina|0.1729|4|
 |3822B1FI3|kirill_kholin|0.1816|1|
 |3822B1PE2|ermolaev_vladislav|0.1841|2|
@@ -530,7 +531,6 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE1|rams_sergei|0.3064|1|
 |**REF**|**REF**|**0.5798**|**-**|
 |3822B1PE2|titov_semyon|0.6015|1|
-|3822B1PE4|podovinnikov_artyom|TOO SLOW|-|
 
 ## 5_block_gemm_omp (1024 elements)
 |Group|Name|Result|Rank|
@@ -631,7 +631,7 @@ Passed: 0
 |Group|Name|Passed|Score|
 |-----|----|------|-----|
 |3822B1PE4|kolokolova_darya|2/9|123|
-|3822B1PE4|podovinnikov_artyom|3/9|187|
+|3822B1PE4|podovinnikov_artyom|4/9|251|
 |3822B1PE4|shuravina_oksana|3/9|188|
 
 Passed: 0
