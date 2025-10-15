@@ -481,6 +481,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE2|ermolaev_vladislav|0.2200|1|
 |3822B1PE3|kazunin_nikita|0.2204|3|
 |**REF**|**REF**|**0.2209**|**-**|
+|3822B1PE4|podovinnikov_artyom|0.2227|3|
 |3822B1PE2|titov_semyon|0.2237|2|
 |3822B1PE3|oturin_alexander|0.2239|2|
 |3822B1PE1|rams_sergei|0.2259|3|
@@ -507,6 +508,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE1|sadikov_ivan|0.1249|1|
 |3822B1PE1|morozov_egor|0.1872|6|
 |3822B1FI3|kudryashova_irina|0.6950|1|
+|3822B1PE4|podovinnikov_artyom|0.7137|1|
 |3822B1PE2|ermolaev_vladislav|0.7310|2|
 |3822B1FI1|solovev_alexey|0.7486|1|
 |**REF**|**REF**|**0.7773**|**-**|
@@ -527,6 +529,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE1|rams_sergei|0.3064|1|
 |**REF**|**REF**|**0.5798**|**-**|
 |3822B1PE2|titov_semyon|0.6015|1|
+|3822B1PE4|podovinnikov_artyom|TOO SLOW|-|
 
 ## 5_block_gemm_omp (1024 elements)
 |Group|Name|Result|Rank|
@@ -626,8 +629,8 @@ Passed: 0
 ## 3822B1PE4
 |Group|Name|Passed|Score|
 |-----|----|------|-----|
-|3822B1PE4|kolokolova_darya|2/9|124|
-|3822B1PE4|podovinnikov_artyom|1/9|62|
+|3822B1PE4|kolokolova_darya|2/9|123|
+|3822B1PE4|podovinnikov_artyom|3/9|187|
 |3822B1PE4|shuravina_oksana|2/9|126|
 
 Passed: 0
