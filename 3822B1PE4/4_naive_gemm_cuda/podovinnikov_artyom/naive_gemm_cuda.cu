@@ -56,4 +56,4 @@ std::vector<float> NaiveGemmCUDA(const std::vector<float>& a,
   cudaFree(d_C);
 
   return c;
-}
+} //
