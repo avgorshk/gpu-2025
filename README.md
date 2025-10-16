@@ -547,6 +547,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE1|moiseev_artem|0.1767|2|
 |3822B1PE1|shvedova_vitalina|0.1814|4|
 |3822B1PE1|korablev_vladlen|0.1959|1|
+|3822B1PE4|podovinnikov_artyom|0.2540|1|
 |3822B1FI1|solovev_alexey|0.3512|1|
 
 ## 6_block_gemm_cuda (4096 elements)
@@ -554,6 +555,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |-----|----|------|----|
 |**FAST**|**FAST**|**0.0776**|**-**|
 |3822B1FI1|solovev_alexey|0.1424|1|
+|3822B1PE4|podovinnikov_artyom|0.1486|1|
 |3822B1PE1|rams_sergei|0.1877|1|
 |3822B1PE1|moiseev_artem|0.1888|2|
 |**REF**|**REF**|**0.3026**|**-**|
@@ -564,6 +566,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE1|moiseev_artem|0.0446|1|
 |3822B1FI1|solovev_alexey|0.0447|1|
 |**FAST**|**FAST**|**0.0453**|**-**|
+|3822B1PE4|podovinnikov_artyom|0.0535|1|
 |**REF**|**REF**|**0.0563**|**-**|
 
 ## 8_fft_cufft (131072 elements)
@@ -632,7 +635,7 @@ Passed: 0
 |Group|Name|Passed|Score|
 |-----|----|------|-----|
 |3822B1PE4|kolokolova_darya|2/9|123|
-|3822B1PE4|podovinnikov_artyom|4/9|251|
+|3822B1PE4|podovinnikov_artyom|7/9|443|
 |3822B1PE4|shuravina_oksana|4/9|250|
 
 Passed: 0
