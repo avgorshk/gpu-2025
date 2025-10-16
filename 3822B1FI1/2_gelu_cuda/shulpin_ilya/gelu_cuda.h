@@ -1,6 +1,7 @@
 #ifndef __GELU_CUDA_H
 #define __GELU_CUDA_H
 
+#include <algorithm>
 #include <cmath>
 #include <cstdio>
 #include <cstdlib>
