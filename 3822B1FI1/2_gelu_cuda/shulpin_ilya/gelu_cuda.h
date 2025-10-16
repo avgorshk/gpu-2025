@@ -2,6 +2,8 @@
 #define __GELU_CUDA_H
 
 #include <cmath>
+#include <cstdio>
+#include <cstdlib>
 #include <cuda_runtime.h>
 #include <vector>
 
