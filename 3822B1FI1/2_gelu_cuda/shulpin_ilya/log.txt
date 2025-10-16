@@ -1,0 +1,65 @@
+/home/crazyproger/sandbox/gpu-2025/3822B1FI1/2_gelu_cuda/shulpin_ilya/gelu_cuda.cu(43): error: identifier "stderr" is undefined
+      do { cudaError_t err = (cudaMalloc(&d_in, bytes)); if (err != cudaSuccess) { fprintf(stderr, "CUDA error %s:%d: %s\n", "/home/crazyproger/sandbox/gpu-2025/3822B1FI1/2_gelu_cuda/shulpin_ilya/gelu_cuda.cu", 43, cudaGetErrorString(err)); std::exit(
+                                                                                           ^
+
+/home/crazyproger/sandbox/gpu-2025/3822B1FI1/2_gelu_cuda/shulpin_ilya/gelu_cuda.cu(43): error: identifier "fprintf" is undefined
+      do { cudaError_t err = (cudaMalloc(&d_in, bytes)); if (err != cudaSuccess) { fprintf(stderr, "CUDA error %s:%d: %s\n", "/home/crazyproger/sandbox/gpu-2025/3822B1FI1/2_gelu_cuda/shulpin_ilya/gelu_cuda.cu", 43, cudaGetErrorString(err)); std::exit(
+                                                                                   ^
+
+/home/crazyproger/sandbox/gpu-2025/3822B1FI1/2_gelu_cuda/shulpin_ilya/gelu_cuda.cu(44): error: identifier "stderr" is undefined
+      do { cudaError_t err = (cudaMalloc(&d_out, bytes)); if (err != cudaSuccess) { fprintf(stderr, "CUDA error %s:%d: %s\n", "/home/crazyproger/sandbox/gpu-2025/3822B1FI1/2_gelu_cuda/shulpin_ilya/gelu_cuda.cu", 44, cudaGetErrorString(err)); std::exit(
+                                                                                            ^
+
+/home/crazyproger/sandbox/gpu-2025/3822B1FI1/2_gelu_cuda/shulpin_ilya/gelu_cuda.cu(44): error: identifier "fprintf" is undefined
+      do { cudaError_t err = (cudaMalloc(&d_out, bytes)); if (err != cudaSuccess) { fprintf(stderr, "CUDA error %s:%d: %s\n", "/home/crazyproger/sandbox/gpu-2025/3822B1FI1/2_gelu_cuda/shulpin_ilya/gelu_cuda.cu", 44, cudaGetErrorString(err)); std::exit(
+                                                                                    ^
+
+/home/crazyproger/sandbox/gpu-2025/3822B1FI1/2_gelu_cuda/shulpin_ilya/gelu_cuda.cu(46): error: identifier "stderr" is undefined
+      do { cudaError_t err = (cudaMemcpy(d_in, input.data(), bytes, cudaMemcpyHostToDevice)); if (err != cudaSuccess) { fprintf(stderr, "CUDA error %s:%d: %s\n", "/home/crazyproger/sandbox/gpu-2025/3822B1FI1/2_gelu_cuda/shulpin_ilya/gelu_cuda.cu", 46, cudaGetErrorString(err)); std::exit(
+                                                                                                                                ^
+
+/home/crazyproger/sandbox/gpu-2025/3822B1FI1/2_gelu_cuda/shulpin_ilya/gelu_cuda.cu(46): error: identifier "fprintf" is undefined
+      do { cudaError_t err = (cudaMemcpy(d_in, input.data(), bytes, cudaMemcpyHostToDevice)); if (err != cudaSuccess) { fprintf(stderr, "CUDA error %s:%d: %s\n", "/home/crazyproger/sandbox/gpu-2025/3822B1FI1/2_gelu_cuda/shulpin_ilya/gelu_cuda.cu", 46, cudaGetErrorString(err)); std::exit(
+                                                                                                                        ^
+
+/home/crazyproger/sandbox/gpu-2025/3822B1FI1/2_gelu_cuda/shulpin_ilya/gelu_cuda.cu(53): error: identifier "stderr" is undefined
+      do { cudaError_t err = (cudaGetLastError()); if (err != cudaSuccess) { fprintf(stderr, "CUDA error %s:%d: %s\n", "/home/crazyproger/sandbox/gpu-2025/3822B1FI1/2_gelu_cuda/shulpin_ilya/gelu_cuda.cu", 53, cudaGetErrorString(err)); std::exit(
+                                                                                     ^
+
+/home/crazyproger/sandbox/gpu-2025/3822B1FI1/2_gelu_cuda/shulpin_ilya/gelu_cuda.cu(53): error: identifier "fprintf" is undefined
+      do { cudaError_t err = (cudaGetLastError()); if (err != cudaSuccess) { fprintf(stderr, "CUDA error %s:%d: %s\n", "/home/crazyproger/sandbox/gpu-2025/3822B1FI1/2_gelu_cuda/shulpin_ilya/gelu_cuda.cu", 53, cudaGetErrorString(err)); std::exit(
+                                                                             ^
+
+/home/crazyproger/sandbox/gpu-2025/3822B1FI1/2_gelu_cuda/shulpin_ilya/gelu_cuda.cu(54): error: identifier "stderr" is undefined
+      do { cudaError_t err = (cudaDeviceSynchronize()); if (err != cudaSuccess) { fprintf(stderr, "CUDA error %s:%d: %s\n", "/home/crazyproger/sandbox/gpu-2025/3822B1FI1/2_gelu_cuda/shulpin_ilya/gelu_cuda.cu", 54, cudaGetErrorString(err)); std::exit(
+                                                                                          ^
+
+/home/crazyproger/sandbox/gpu-2025/3822B1FI1/2_gelu_cuda/shulpin_ilya/gelu_cuda.cu(54): error: identifier "fprintf" is undefined
+      do { cudaError_t err = (cudaDeviceSynchronize()); if (err != cudaSuccess) { fprintf(stderr, "CUDA error %s:%d: %s\n", "/home/crazyproger/sandbox/gpu-2025/3822B1FI1/2_gelu_cuda/shulpin_ilya/gelu_cuda.cu", 54, cudaGetErrorString(err)); std::exit(
+                                                                                  ^
+
+/home/crazyproger/sandbox/gpu-2025/3822B1FI1/2_gelu_cuda/shulpin_ilya/gelu_cuda.cu(57): error: identifier "stderr" is undefined
+      do { cudaError_t err = (cudaMemcpy(output.data(), d_out, bytes, cudaMemcpyDeviceToHost)); if (err != cudaSuccess) { fprintf(stderr, "CUDA error %s:%d: %s\n", "/home/crazyproger/sandbox/gpu-2025/3822B1FI1/2_gelu_cuda/shulpin_ilya/gelu_cuda.cu", 57, cudaGetErrorString(err)); std::exit(
+                                                                                                                                  ^
+
+/home/crazyproger/sandbox/gpu-2025/3822B1FI1/2_gelu_cuda/shulpin_ilya/gelu_cuda.cu(57): error: identifier "fprintf" is undefined
+      do { cudaError_t err = (cudaMemcpy(output.data(), d_out, bytes, cudaMemcpyDeviceToHost)); if (err != cudaSuccess) { fprintf(stderr, "CUDA error %s:%d: %s\n", "/home/crazyproger/sandbox/gpu-2025/3822B1FI1/2_gelu_cuda/shulpin_ilya/gelu_cuda.cu", 57, cudaGetErrorString(err)); std::exit(
+                                                                                                                          ^
+
+/home/crazyproger/sandbox/gpu-2025/3822B1FI1/2_gelu_cuda/shulpin_ilya/gelu_cuda.cu(59): error: identifier "stderr" is undefined
+      do { cudaError_t err = (cudaFree(d_in)); if (err != cudaSuccess) { fprintf(stderr, "CUDA error %s:%d: %s\n", "/home/crazyproger/sandbox/gpu-2025/3822B1FI1/2_gelu_cuda/shulpin_ilya/gelu_cuda.cu", 59, cudaGetErrorString(err)); std::exit(
+                                                                                 ^
+
+/home/crazyproger/sandbox/gpu-2025/3822B1FI1/2_gelu_cuda/shulpin_ilya/gelu_cuda.cu(59): error: identifier "fprintf" is undefined
+      do { cudaError_t err = (cudaFree(d_in)); if (err != cudaSuccess) { fprintf(stderr, "CUDA error %s:%d: %s\n", "/home/crazyproger/sandbox/gpu-2025/3822B1FI1/2_gelu_cuda/shulpin_ilya/gelu_cuda.cu", 59, cudaGetErrorString(err)); std::exit(
+                                                                         ^
+
+/home/crazyproger/sandbox/gpu-2025/3822B1FI1/2_gelu_cuda/shulpin_ilya/gelu_cuda.cu(60): error: identifier "stderr" is undefined
+      do { cudaError_t err = (cudaFree(d_out)); if (err != cudaSuccess) { fprintf(stderr, "CUDA error %s:%d: %s\n", "/home/crazyproger/sandbox/gpu-2025/3822B1FI1/2_gelu_cuda/shulpin_ilya/gelu_cuda.cu", 60, cudaGetErrorString(err)); std::exit(
+                                                                                  ^
+
+/home/crazyproger/sandbox/gpu-2025/3822B1FI1/2_gelu_cuda/shulpin_ilya/gelu_cuda.cu(60): error: identifier "fprintf" is undefined
+      do { cudaError_t err = (cudaFree(d_out)); if (err != cudaSuccess) { fprintf(stderr, "CUDA error %s:%d: %s\n", "/home/crazyproger/sandbox/gpu-2025/3822B1FI1/2_gelu_cuda/shulpin_ilya/gelu_cuda.cu", 60, cudaGetErrorString(err)); std::exit(
+                                                                          ^
+
+16 errors detected in the compilation of "/home/crazyproger/sandbox/gpu-2025/3822B1FI1/2_gelu_cuda/shulpin_ilya/gelu_cuda.cu".
