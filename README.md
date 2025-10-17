@@ -550,6 +550,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE1|shvedova_vitalina|0.1814|4|
 |3822B1PE1|korablev_vladlen|0.1959|1|
 |3822B1PE4|podovinnikov_artyom|0.2540|1|
+|3822B1PE3|sotskov_andrey|0.2963|2|
 |3822B1FI1|solovev_alexey|0.3512|1|
 
 ## 6_block_gemm_cuda (4096 elements)
@@ -630,7 +631,7 @@ Passed: 0
 |3822B1PE3|kazunin_nikita|2/9|121|
 |3822B1PE3|oturin_alexander|4/9|252|
 |3822B1PE3|sarafanov_maxim|1/9|59|
-|3822B1PE3|sotskov_andrey|4/9|252|
+|3822B1PE3|sotskov_andrey|5/9|314|
 
 Passed: 0
 
