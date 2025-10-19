@@ -105,7 +105,7 @@ std::vector<float> NaiveGemmCUDA(const std::vector<float>& a,
 
     cudaDeviceSynchronize();
 
-    cudaMemcpy(С.data(), d_C, bytes, cudaMemcpyDeviceToHost);
+    cudaMemcpy(C.data(), d_C, bytes, cudaMemcpyDeviceToHost);
 
     cudaFree(d_A);
     cudaFree(d_B);
