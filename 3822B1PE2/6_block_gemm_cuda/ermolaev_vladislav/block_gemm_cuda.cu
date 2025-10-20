@@ -11,9 +11,10 @@ int getBlockSize() {
     int maxThreadsPerBlock = prop.maxThreadsPerBlock;
     int sharedMemPerBlock = prop.sharedMemPerBlock;
     int maxBlockSizeFromSharedMem = sqrtf(sharedMemPerBlock / (2.0f * sizeof(float)));
+    int maxBlockSizeFromThreads = sqrtf(maxThreadsPerBlock);
     
     int blockSize = 1;
-    while (blockSize * 2 <= std::min(maxBlockSizeFromSharedMem, maxThreadsPerBlock)) {
+    while (blockSize * 2 <= std::min(maxBlockSizeFromSharedMem, maxBlockSizeFromThreads)) {
         blockSize <<= 1;
     }
     return blockSize;
@@ -73,7 +74,8 @@ std::vector<float> BlockGemmCUDA(const std::vector<float>& a,
     }
 
     dim3 threadsPerBlock(blockSize, blockSize);
-    dim3 numBlocks(n / blockSize, n / blockSize);
+    int num_blocks = (n + blockSize - 1) / blockSize;
+    dim3 numBlocks(num_blocks, num_blocks);
     size_t sharedMemSize = 2 * blockSize * blockSize * sizeof(float);
     
     blockGemmKernel<<<numBlocks, threadsPerBlock, sharedMemSize>>>(d_A, d_B, d_C, n, blockSize);
