@@ -580,9 +580,9 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE1|rams_sergei|0.1877|1|
 |3822B1PE1|moiseev_artem|0.1888|2|
 |3822B1PE3|sotskov_andrey|0.1993|1|
+|3822B1PE2|ermolaev_vladislav|0.2001|2|
 |**REF**|**REF**|**0.3026**|**-**|
 |3822B1PE4|shuravina_oksana|0.4180|2|
-|3822B1PE2|ermolaev_vladislav|TEST FAILED|-|
 
 ## 7_gemm_cublas (4096 elements)
 |Group|Name|Result|Rank|
@@ -646,7 +646,7 @@ Passed: 0
 ## 3822B1PE2
 |Group|Name|Passed|Score|
 |-----|----|------|-----|
-|3822B1PE2|ermolaev_vladislav|5/9|312|
+|3822B1PE2|ermolaev_vladislav|6/9|374|
 |3822B1PE2|kondratev_yaroslav|4/9|240|
 |3822B1PE2|korovin_nikita|2/9|121|
 |3822B1PE2|titov_semyon|7/9|441|
