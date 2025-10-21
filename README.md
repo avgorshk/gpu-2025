@@ -530,6 +530,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |Group|Name|Result|Rank|
 |-----|----|------|----|
 |**FAST**|**FAST**|**0.0776**|**-**|
+|3822B1FI1|shulpin_ilya|0.1419|2|
 |3822B1PE3|sotskov_andrey|0.1604|1|
 |3822B1PE4|podovinnikov_artyom|0.1717|1|
 |3822B1PE1|shvedova_vitalina|0.1729|4|
@@ -546,7 +547,6 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |**REF**|**REF**|**0.5798**|**-**|
 |3822B1PE2|titov_semyon|0.6015|1|
 |3822B1PE2|korovin_nikita|TOO SLOW|-|
-|3822B1FI1|shulpin_ilya|TEST FAILED|-|
 
 ## 5_block_gemm_omp (1024 elements)
 |Group|Name|Result|Rank|
@@ -614,8 +614,8 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 ## 3822B1FI1
 |Group|Name|Passed|Score|
 |-----|----|------|-----|
-|3822B1FI1|shulpin_ilya|4/9|250|
-|3822B1FI1|solovev_alexey|8/9|510|
+|3822B1FI1|shulpin_ilya|5/9|313|
+|3822B1FI1|solovev_alexey|8/9|509|
 
 Passed: 0
 
