@@ -36,11 +36,14 @@ void matmul_tiled_idx(const float* __restrict__ A,
             }
         }
 
-        idx_t kb = m + (idx_t)ty;
-        if (kb < N && col < N) {
-            Bs[ty][tx] = B[(size_t)kb * (size_t)N + (size_t)col];
-        } else {
-            Bs[ty][tx] = 0.0f;
+        #pragma unroll
+        for (int i = 0; i < BLOCK_ROWS; ++i) {
+            idx_t kb = m + (idx_t)(ty + i * BLOCK_ROWS);
+            if (kb < N && col < N) {
+                Bs[ty + i * BLOCK_ROWS][tx] = B[(size_t)kb * (size_t)N + (size_t)col];
+            } else {
+                Bs[ty + i * BLOCK_ROWS][tx] = 0.0f;
+            }
         }
 
         __syncthreads();
