@@ -1,1 +1,1 @@
-Source file /home/crazyproger/sandbox/gpu-2025/3822B1PE1/4_naive_gemm_cuda/sadikov_ivan/naive_gemm_cuda.cu not found
+Incorrect results, test input_128_1.bin, difference 1.0
