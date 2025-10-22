@@ -1,142 +1,103 @@
 #include "fft_cufft.h"
-#include <cufft.h>
 #include <cuda_runtime.h>
+#include <cufft.h>
 #include <iostream>
 #include <stdexcept>
-#include <vector>
+
+__global__ void normalize_kernel(cufftComplex* data, int total, float inv_n) {
+    int i = blockIdx.x * blockDim.x + threadIdx.x;
+    if (i < total) {
+        data[i].x *= inv_n;
+        data[i].y *= inv_n;
+    }
+}
 
 std::vector<float> FffCUFFT(const std::vector<float>& input, int batch) {
-    // Проверка входных данных
+    // Проверка входных параметров
+    if (batch <= 0) {
+        throw std::invalid_argument("Batch must be positive");
+    }
+    if (input.empty()) {
+        throw std::invalid_argument("Input cannot be empty");
+    }
     if (input.size() % (2 * batch) != 0) {
         throw std::invalid_argument("Input size must be divisible by 2 * batch");
     }
-    
-    int n = input.size() / (2 * batch);  // Длина каждого сигнала в комплексных числах
-    
-    if (n == 0) {
-        throw std::invalid_argument("Signal length cannot be zero");
-    }
 
-    cufftResult cufftStatus;
-    cudaError_t cudaStatus;
-    
-    // Создание плана для прямого БПФ
-    cufftHandle planForward;
-    cufftStatus = cufftPlan1d(&planForward, n, CUFFT_C2C, batch);
-    if (cufftStatus != CUFFT_SUCCESS) {
-        throw std::runtime_error("Failed to create forward FFT plan");
-    }
-    
-    // Создание плана для обратного БПФ
-    cufftHandle planInverse;
-    cufftStatus = cufftPlan1d(&planInverse, n, CUFFT_C2C, batch);
-    if (cufftStatus != CUFFT_SUCCESS) {
-        cufftDestroy(planForward);
-        throw std::runtime_error("Failed to create inverse FFT plan");
-    }
+    const int n = input.size() / (2 * batch);  // Длина каждого сигнала в комплексных числах
+    const int total_complex = n * batch;
+    const size_t bytes = sizeof(cufftComplex) * total_complex;
 
     // Выделение памяти на устройстве
-    cufftComplex *d_input, *d_fft, *d_result;
-    size_t complexSize = n * batch * sizeof(cufftComplex);
-    
-    cudaStatus = cudaMalloc(&d_input, complexSize);
+    cufftComplex* d_data = nullptr;
+    cudaError_t cudaStatus = cudaMalloc(&d_data, bytes);
     if (cudaStatus != cudaSuccess) {
-        cufftDestroy(planForward);
-        cufftDestroy(planInverse);
-        throw std::runtime_error("CUDA memory allocation for input failed");
+        throw std::runtime_error("CUDA memory allocation failed");
     }
-    
-    cudaStatus = cudaMalloc(&d_fft, complexSize);
+
+    // Копирование данных на устройство
+    cudaStatus = cudaMemcpy(d_data, input.data(), bytes, cudaMemcpyHostToDevice);
     if (cudaStatus != cudaSuccess) {
-        cudaFree(d_input);
-        cufftDestroy(planForward);
-        cufftDestroy(planInverse);
-        throw std::runtime_error("CUDA memory allocation for FFT failed");
+        cudaFree(d_data);
+        throw std::runtime_error("CUDA memcpy to device failed");
     }
-    
-    cudaStatus = cudaMalloc(&d_result, complexSize);
-    if (cudaStatus != cudaSuccess) {
-        cudaFree(d_input);
-        cudaFree(d_fft);
-        cufftDestroy(planForward);
-        cufftDestroy(planInverse);
-        throw std::runtime_error("CUDA memory allocation for result failed");
+
+    // Создание плана cuFFT
+    cufftHandle plan;
+    cufftResult cufftStatus = cufftPlan1d(&plan, n, CUFFT_C2C, batch);
+    if (cufftStatus != CUFFT_SUCCESS) {
+        cudaFree(d_data);
+        throw std::runtime_error("cuFFT plan creation failed");
     }
 
     try {
-        // Копирование входных данных на устройство
-        // Преобразование из пар float в cufftComplex
-        cudaStatus = cudaMemcpy(d_input, input.data(), complexSize, cudaMemcpyHostToDevice);
-        if (cudaStatus != cudaSuccess) {
-            throw std::runtime_error("Failed to copy input data to device");
-        }
-        
-        // Прямое преобразование Фурье
-        cufftStatus = cufftExecC2C(planForward, d_input, d_fft, CUFFT_FORWARD);
+        // Прямое БПФ
+        cufftStatus = cufftExecC2C(plan, d_data, d_data, CUFFT_FORWARD);
         if (cufftStatus != CUFFT_SUCCESS) {
-            throw std::runtime_error("Forward FFT execution failed");
+            throw std::runtime_error("Forward FFT failed");
         }
-        
-        // Обратное преобразование Фурье
-        cufftStatus = cufftExecC2C(planInverse, d_fft, d_result, CUFFT_INVERSE);
+
+        // Обратное БПФ
+        cufftStatus = cufftExecC2C(plan, d_data, d_data, CUFFT_INVERSE);
         if (cufftStatus != CUFFT_SUCCESS) {
-            throw std::runtime_error("Inverse FFT execution failed");
+            throw std::runtime_error("Inverse FFT failed");
         }
+
+        // Нормализация
+        const float inv_n = 1.0f / static_cast<float>(n);
+        const int blockSize = 256;
+        const int gridSize = (total_complex + blockSize - 1) / blockSize;
         
-        // Нормализация результата на устройстве
-        float scale = 1.0f / n;
+        normalize_kernel<<<gridSize, blockSize>>>(d_data, total_complex, inv_n);
         
-        // Запускаем ядро для нормализации
-        int totalElements = n * batch;
-        int blockSize = 256;
-        int numBlocks = (totalElements + blockSize - 1) / blockSize;
-        
-        // Kernel для нормализации
-        auto normalizeKernel = [](cufftComplex* data, float scale, int n) {
-            int idx = blockIdx.x * blockDim.x + threadIdx.x;
-            if (idx < n) {
-                data[idx].x *= scale;
-                data[idx].y *= scale;
-            }
-        };
-        
-        normalizeKernel<<<numBlocks, blockSize>>>(d_result, scale, totalElements);
-        
-        // Проверка ошибок ядра
         cudaStatus = cudaGetLastError();
         if (cudaStatus != cudaSuccess) {
-            throw std::runtime_error("Normalization kernel failed");
+            throw std::runtime_error("Kernel launch failed");
         }
-        
-        // Синхронизация для обеспечения завершения всех операций
+
+        // Синхронизация
         cudaStatus = cudaDeviceSynchronize();
         if (cudaStatus != cudaSuccess) {
-            throw std::runtime_error("CUDA device synchronization failed");
+            throw std::runtime_error("CUDA synchronization failed");
         }
-        
-        // Копирование результата обратно на хост
+
+        // Копирование результата обратно
         std::vector<float> output(input.size());
-        cudaStatus = cudaMemcpy(output.data(), d_result, complexSize, cudaMemcpyDeviceToHost);
+        cudaStatus = cudaMemcpy(output.data(), d_data, bytes, cudaMemcpyDeviceToHost);
         if (cudaStatus != cudaSuccess) {
-            throw std::runtime_error("Failed to copy result data from device");
+            throw std::runtime_error("CUDA memcpy to host failed");
         }
-        
+
         // Освобождение ресурсов
-        cudaFree(d_input);
-        cudaFree(d_fft);
-        cudaFree(d_result);
-        cufftDestroy(planForward);
-        cufftDestroy(planInverse);
-        
+        cufftDestroy(plan);
+        cudaFree(d_data);
+
         return output;
 
     } catch (const std::exception& e) {
-        // Освобождение ресурсов в случае ошибки
-        cudaFree(d_input);
-        cudaFree(d_fft);
-        cudaFree(d_result);
-        cufftDestroy(planForward);
-        cufftDestroy(planInverse);
+        // Освобождение ресурсов при ошибке
+        cufftDestroy(plan);
+        cudaFree(d_data);
         throw;
     }
 }
