@@ -6,8 +6,8 @@ __global__ void matrixMultiplication(const float* firstMatrix,
                                      float* resultMatrix,
                                      int size)
 {
-    int rowNum = blockIdx.x * blockDim.x + threadIdx.x;
-    int columnNum = blockIdx.y * blockDim.y + threadIdx.y;
+    int rowNum = blockIdx.y * blockDim.y + threadIdx.y;
+    int columnNum = blockIdx.x * blockDim.x + threadIdx.x;
 
     if (rowNum < size && columnNum < size)
     {
@@ -47,7 +47,7 @@ std::vector<float> NaiveGemmCUDA(const std::vector<float>& a,
     dim3 blocksCount((n + threadInLine - 1) / threadInLine,
                      (n + threadInLine - 1) / threadInLine);
 
-    matrixMultiplication <<<blocksCount, threadsCount >>> (firstMatrix, secondMatrix, resultMatrix, elementsCount);
+    matrixMultiplication <<<blocksCount, threadsCount >>> (firstMatrix, secondMatrix, resultMatrix, n);
 
     cudaMemcpy(result.data(), resultMatrix, bytesCount, cudaMemcpyDeviceToHost);
 
