@@ -22,7 +22,7 @@ static constexpr float myPow(float base, int degree)
 	return answer * finalMultiplicator;
 }
 
-std::vector<float> GeluCUDA(const std::vector<float>& input)
+std::vector<float> GeluOMP(const std::vector<float>& input)
 {
 	std::vector<float> answer(input.size());
 #pragma omp parallel
