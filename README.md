@@ -607,6 +607,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |-----|----|------|----|
 |**FAST**|**FAST**|**0.1075**|**-**|
 |3822B1PE1|moiseev_artem|0.1100|1|
+|3822B1PE4|podovinnikov_artyom|0.1235|1|
 |3822B1FI1|solovev_alexey|0.1304|1|
 |**REF**|**REF**|**0.2228**|**-**|
 |3822B1PE4|shuravina_oksana|BUILD FAILED|-|
@@ -617,6 +618,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |**FAST**|**FAST**|**0.1188**|**-**|
 |**REF**|**REF**|**0.3419**|**-**|
 |3822B1PE4|shuravina_oksana|BUILD FAILED|-|
+|3822B1PE4|podovinnikov_artyom|BUILD FAILED|-|
 
 # Tasks Done
 ## 3822B1FI1
@@ -675,7 +677,7 @@ Passed: 0
 |Group|Name|Passed|Score|
 |-----|----|------|-----|
 |3822B1PE4|kolokolova_darya|2/9|123|
-|3822B1PE4|podovinnikov_artyom|7/9|441|
+|3822B1PE4|podovinnikov_artyom|8/9|505|
 |3822B1PE4|shuravina_oksana|7/9|438|
 
 Passed: 0
