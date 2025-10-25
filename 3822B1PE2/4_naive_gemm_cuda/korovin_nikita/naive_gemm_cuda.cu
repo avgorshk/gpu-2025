@@ -1,17 +1,26 @@
 #include "naive_gemm_cuda.h"
 #include <cuda_runtime.h>
 #include <vector>
+#include <cmath> 
+#include <cstdio>
+#include <cstddef>
 
-#define BLOCK_SIZE 16
+#define BLOCK_SIZE 16 
 
 
-__global__ void MatrixMulKernel(const float* A, const float* B_T, float* C, int N) {
+__global__ void MatrixMulKernel(const float* A, const float* B, float* C, int N) {
     const int row = blockIdx.y * blockDim.y + threadIdx.y;
     const int col = blockIdx.x * blockDim.x + threadIdx.x;
     if (row < N && col < N) {
         float sum = 0.0f;
-        for (int k = 0; k < N; ++k) {
-            sum += A[row * N + k] * B_T[col * N + k];
+        const float4* A_vec = reinterpret_cast<const float4*>(A);
+        for (int k_vec = 0; k_vec < N / 4; ++k_vec) {
+            float4 a_vals = A_vec[row * (N / 4) + k_vec];
+            int k_base = k_vec * 4;
+            sum += a_vals.x * B[(k_base + 0) * N + col];
+            sum += a_vals.y * B[(k_base + 1) * N + col];
+            sum += a_vals.z * B[(k_base + 2) * N + col];
+            sum += a_vals.w * B[(k_base + 3) * N + col];
         }
         C[row * N + col] = sum;
     }
@@ -26,43 +35,39 @@ std::vector<float> NaiveGemmCUDA(const std::vector<float>& a,
     }
 
     const size_t matrix_size = static_cast<size_t>(n) * n;
+    const size_t size = matrix_size * sizeof(float);
+    
     if (a.size() != matrix_size || b.size() != matrix_size) {
         return std::vector<float>();
     }
 
-    std::vector<float> b_transposed(matrix_size);
-    for (int i = 0; i < n; ++i) {
-        for (int j = 0; j < n; ++j) {
-            b_transposed[i * n + j] = b[j * n + i];
-        }
-    }
-
-    std::vector<float> h_C(matrix_size);
-    float *d_A, *d_B_T, *d_C;
-    const size_t bytes = matrix_size * sizeof(float);
+    std::vector<float> h_C_result(matrix_size);
     
-    cudaMalloc((void**)&d_A, bytes);
-    cudaMalloc((void**)&d_B_T, bytes);
-    cudaMalloc((void**)&d_C, bytes);
+    float *d_A, *d_B, *d_C;
+    cudaMalloc(&d_A, size);
+    cudaMalloc(&d_B, size);
+    cudaMalloc(&d_C, size);
 
-    cudaMemcpy(d_A, a.data(), bytes, cudaMemcpyHostToDevice);
-    cudaMemcpy(d_B_T, b_transposed.data(), bytes, cudaMemcpyHostToDevice); 
+    cudaMemcpy(d_A, a.data(), size, cudaMemcpyHostToDevice);
+    cudaMemcpy(d_B, b.data(), size, cudaMemcpyHostToDevice);
     
-    dim3 blockDim(BLOCK_SIZE, BLOCK_SIZE);
-    const int gridDimSize = (n + BLOCK_SIZE - 1) / BLOCK_SIZE;
-    dim3 gridDim(gridDimSize, gridDimSize);
+    cudaDeviceProp prop;
+    cudaGetDeviceProperties(&prop, 0); 
 
-    MatrixMulKernel<<<gridDim, blockDim>>>(d_A, d_B_T, d_C, n);
+    const int KernelTileSide = BLOCK_SIZE;
+    dim3 KernelBlock(KernelTileSide, KernelTileSide);
+    int GridW = (n + KernelBlock.x - 1) / KernelBlock.x;
+    dim3 LaunchGrid(GridW, (n + KernelBlock.y - 1) / KernelBlock.y);
     
-    cudaGetLastError(); 
+    MatrixMulKernel<<<LaunchGrid, KernelBlock>>>(d_A, d_B, d_C, n);
 
-    cudaMemcpy(h_C.data(), d_C, bytes, cudaMemcpyDeviceToHost);
-    
     cudaDeviceSynchronize();
 
+    cudaMemcpy(h_C_result.data(), d_C, size, cudaMemcpyDeviceToHost);
+    
     cudaFree(d_A);
-    cudaFree(d_B_T);
+    cudaFree(d_B);
     cudaFree(d_C);
-
-    return h_C;
+    
+    return h_C_result;
 }
