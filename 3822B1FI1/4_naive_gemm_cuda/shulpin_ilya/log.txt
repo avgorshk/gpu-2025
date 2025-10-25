@@ -1,5 +1,0 @@
-/home/crazyproger/sandbox/gpu-2025/3822B1FI1/4_naive_gemm_cuda/shulpin_ilya/naive_gemm_cuda.cu(108): error: identifier "\u0421" is undefined
-      cudaMemcpy(\U00000421.data(), d_C, bytes, cudaMemcpyDeviceToHost);
-                 ^
-
-1 error detected in the compilation of "/home/crazyproger/sandbox/gpu-2025/3822B1FI1/4_naive_gemm_cuda/shulpin_ilya/naive_gemm_cuda.cu".
