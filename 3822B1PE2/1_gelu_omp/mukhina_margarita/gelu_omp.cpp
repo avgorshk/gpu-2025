@@ -7,7 +7,7 @@ std::vector<float> GeluOMP(const std::vector<float>& input) {
     const size_t size = input.size();
     std::vector<float> output(size);
     
-    const float COEFF = 2.0f / acosf(-1.0f);
+    const float COEFF = std::sqrt(2.0f / acosf(-1.0f));
     const float ALPHA = 0.044715f;
     
     #pragma omp parallel for schedule(static)
