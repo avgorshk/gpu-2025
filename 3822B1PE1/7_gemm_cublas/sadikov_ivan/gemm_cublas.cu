@@ -20,8 +20,8 @@ void multiplicator(const float* first,
 
    int size = data.size;
    cublasSgemm(handle, 
-               CUBLAS_OP_T, 
-               CUBLAS_OP_T, 
+               CUBLAS_OP_N, 
+               CUBLAS_OP_N, 
                size,
                size, 
                size,
