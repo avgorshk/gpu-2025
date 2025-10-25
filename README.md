@@ -557,6 +557,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 ## 5_block_gemm_omp (1024 elements)
 |Group|Name|Result|Rank|
 |-----|----|------|----|
+|3822B1PE2|mukhina_margarita|0.0221|3|
 |**FAST**|**FAST**|**0.0231**|**-**|
 |3822B1FI3|kholin_kirill|0.0294|1|
 |3822B1PE4|shuravina_oksana|0.0374|2|
@@ -662,11 +663,11 @@ Passed: 0
 ## 3822B1PE2
 |Group|Name|Passed|Score|
 |-----|----|------|-----|
-|3822B1PE2|ermolaev_vladislav|6/9|372|
+|3822B1PE2|ermolaev_vladislav|6/9|371|
 |3822B1PE2|kondratev_yaroslav|4/9|237|
 |3822B1PE2|korovin_nikita|2/9|119|
-|3822B1PE2|mukhina_margarita|4/9|237|
-|3822B1PE2|titov_semyon|7/9|439|
+|3822B1PE2|mukhina_margarita|5/9|299|
+|3822B1PE2|titov_semyon|7/9|438|
 
 Passed: 0
 
