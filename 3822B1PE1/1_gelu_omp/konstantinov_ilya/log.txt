@@ -1,5 +1,1 @@
-/home/crazyproger/sandbox/gpu-2025/3822B1PE1/1_gelu_omp/konstantinov_ilya/gelu_omp.cpp: In function ‘__m256 FastGeluSIMD(__m256)’:
-/home/crazyproger/sandbox/gpu-2025/3822B1PE1/1_gelu_omp/konstantinov_ilya/gelu_omp.cpp:40:20: error: ‘_mm256_exp_ps’ was not declared in this scope; did you mean ‘_mm256_rcp_ps’?
-   40 |   __m256 exp_val = _mm256_exp_ps(_mm256_sub_ps(_mm256_setzero_ps(), two_inner));
-      |                    ^~~~~~~~~~~~~
-      |                    _mm256_rcp_ps
+Incorrect results, test input_100_100.bin, difference 109.09563494472235
