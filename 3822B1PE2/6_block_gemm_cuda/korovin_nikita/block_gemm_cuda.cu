@@ -97,4 +97,4 @@ std::vector<float> BlockGemmCUDA(const std::vector<float>& a,
     cudaFree(d_C);
     
     return h_C_result;
-}
+} //
