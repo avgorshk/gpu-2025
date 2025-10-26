@@ -1,4 +1,0 @@
-/home/crazyproger/sandbox/gpu-2025/3822B1PE3/1_gelu_omp/oturin_alexander/gelu_omp.cpp: In function ‘std::vector<float> GeluOMP(const std::vector<float>&)’:
-/home/crazyproger/sandbox/gpu-2025/3822B1PE3/1_gelu_omp/oturin_alexander/gelu_omp.cpp:6:40: error: ‘std::numbers’ has not been declared
-    6 |   float sqrt_2_pi = std::sqrt(2 / std::numbers::pi);
-      |                                        ^~~~~~~
