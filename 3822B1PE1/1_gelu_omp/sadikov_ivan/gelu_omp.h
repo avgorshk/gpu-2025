@@ -2,12 +2,11 @@
 #define __GELU_OMP_H
 
 #include <vector>
-#include <numbers>
 #include <cmath>
 
 namespace constants
 {
-	const float sqrt = std::sqrt((2 / std::numbers::pi));
+	constexpr float sqrt = 0.7978;
 	constexpr float multiplicator = 0.044715;
 }
 

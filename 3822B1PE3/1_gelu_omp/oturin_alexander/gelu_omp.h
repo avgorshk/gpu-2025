@@ -2,7 +2,6 @@
 #define __GELU_OMP_H
 
 #include <cmath>
-#include <numbers>
 #include <vector>
 #include <omp.h>
 
