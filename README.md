@@ -563,6 +563,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE1|rams_sergei|0.3064|1|
 |**REF**|**REF**|**0.5798**|**-**|
 |3822B1PE2|titov_semyon|0.6015|1|
+|3822B1PE2|sorokin_andrey|1.0225|6|
 
 ## 5_block_gemm_omp (1024 elements)
 |Group|Name|Result|Rank|
@@ -574,6 +575,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE2|kondratev_yaroslav|0.0302|5|
 |3822B1PE4|shuravina_oksana|0.0374|2|
 |3822B1PE3|oturin_alexander|0.0943|1|
+|3822B1PE2|sorokin_andrey|0.0950|6|
 |3822B1PE3|kazunin_nikita|0.0958|3|
 |3822B1PE2|korovin_nikita|0.0959|4|
 |3822B1PE2|titov_semyon|0.0988|1|
@@ -699,13 +701,13 @@ Passed: 0
 ## 3822B1PE2
 |Group|Name|Passed|Score|
 |-----|----|------|-----|
-|3822B1PE2|ermolaev_vladislav|8/9|489|
+|3822B1PE2|ermolaev_vladislav|8/9|488|
 |3822B1PE2|kondratev_yaroslav|6/9|350|
-|3822B1PE2|korovin_nikita|6/9|351|
+|3822B1PE2|korovin_nikita|6/9|350|
 |3822B1PE2|mukhina_margarita|6/9|356|
 |3822B1PE2|muradov_mike|2/9|111|
-|3822B1PE2|sorokin_andrey|3/9|166|
-|3822B1PE2|titov_semyon|**9/9**|**559**|
+|3822B1PE2|sorokin_andrey|5/9|277|
+|3822B1PE2|titov_semyon|**9/9**|**558**|
 
 Passed: 1
 
