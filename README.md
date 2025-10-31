@@ -507,9 +507,9 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE1|moiseev_artem|0.2298|1|
 |3822B1PE2|muradov_mike|0.2306|7|
 |3822B1PE2|sorokin_andrey|0.2306|6|
+|3822B1PE1|konstantinov_ilya|0.2308|7|
 |3822B1FI3|kirill_kholin|0.2325|2|
 |3822B1PE1|morozov_egor|0.2372|4|
-|3822B1PE1|konstantinov_ilya|BUILD FAILED|-|
 
 ## 3_naive_gemm_omp (1024 elements)
 |Group|Name|Result|Rank|
@@ -520,6 +520,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE3|oturin_alexander|0.0264|2|
 |3822B1PE2|muradov_mike|0.0265|7|
 |3822B1FI3|kirill_kholin|0.0266|2|
+|3822B1PE1|konstantinov_ilya|0.0325|7|
 |3822B1PE3|sotskov_andrey|0.0940|1|
 |3822B1PE2|sorokin_andrey|0.1073|6|
 |3822B1PE2|titov_semyon|0.1089|1|
@@ -690,14 +691,14 @@ Passed: 0
 ## 3822B1PE1
 |Group|Name|Passed|Score|
 |-----|----|------|-----|
-|3822B1PE1|konstantinov_ilya|1/9|54|
+|3822B1PE1|konstantinov_ilya|3/9|163|
 |3822B1PE1|korablev_vladlen|5/9|300|
 |3822B1PE1|moiseev_artem|**9/9**|**556**|
-|3822B1PE1|morozov_egor|3/9|167|
+|3822B1PE1|morozov_egor|3/9|165|
 |3822B1PE1|odintsov_misha|1/9|50|
-|3822B1PE1|rams_sergei|6/9|364|
-|3822B1PE1|sadikov_ivan|5/9|289|
-|3822B1PE1|shvedova_vitalina|5/9|294|
+|3822B1PE1|rams_sergei|6/9|363|
+|3822B1PE1|sadikov_ivan|5/9|288|
+|3822B1PE1|shvedova_vitalina|5/9|293|
 |3822B1PE1|tyurin_mikhail|1/9|56|
 
 Passed: 1
