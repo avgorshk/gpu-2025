@@ -31,13 +31,13 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 
     std::vector<cl_platform_id> platforms(numPlatforms);
     clGetPlatformIDs(numPlatforms, platforms.data(), nullptr);
-    cl_platform_id platform = platforms[platform];
+    cl_platform_id platform_id = platforms[platform];
 
     cl_uint numDevices = 0;
-    clGetDeviceIDs(platform, CL_DEVICE_TYPE_GPU, 0, nullptr, &numDevices);
+    clGetDeviceIDs(platform_id, CL_DEVICE_TYPE_GPU, 0, nullptr, &numDevices);
 
     std::vector<cl_device_id> devices(numDevices);
-    clGetDeviceIDs(platform, CL_DEVICE_TYPE_GPU, numDevices, devices.data(), nullptr);
+    clGetDeviceIDs(platform_id, CL_DEVICE_TYPE_GPU, numDevices, devices.data(), nullptr);
     cl_device_id device = devices[0];
 
     cl_int err;
