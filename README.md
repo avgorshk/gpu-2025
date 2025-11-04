@@ -690,6 +690,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE2|muradov_mike|0.1422|4|
 |3822B1PE2|titov_semyon|0.1697|1|
 |**REF**|**REF**|**0.2228**|**-**|
+|3822B1PE3|kazunin_nikita|0.2308|1|
 |3822B1FI1|elvin_veliev|BUILD FAILED|-|
 
 ## 9_gelu_ocl (134217728 elements)
@@ -769,7 +770,7 @@ Passed: 1
 ## 3822B1PE3
 |Group|Name|Passed|Score|
 |-----|----|------|-----|
-|3822B1PE3|kazunin_nikita|6/9|365|
+|3822B1PE3|kazunin_nikita|7/9|429|
 |3822B1PE3|oturin_alexander|5/9|314|
 |3822B1PE3|sarafanov_maxim|1/9|59|
 |3822B1PE3|sotskov_andrey|7/9|440|
