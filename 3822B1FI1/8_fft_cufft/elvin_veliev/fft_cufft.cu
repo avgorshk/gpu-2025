@@ -8,7 +8,7 @@ __global__ void normalize(cufftComplex* data, int n, int batch) {
     int total = n * batch;
     if (idx < total) {
         data[idx].x /= n;
-	data[idx].y /= n;
+		data[idx].y /= n;
     }
 }
 
