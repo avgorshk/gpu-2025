@@ -7,12 +7,6 @@
 #include <vector>
 
 namespace {
-float ApproxExp(float x) {
-  return (362880 +
-          x * (362880 + x * (181440 + x * (60480 + x * (15120 + x * (3024 + x * (504 + x * (72 + x * (9 + x))))))))) *
-         2.75573192e-6;
-}
-
 template <typename Vec>
 void ResizeUninitialized(Vec& v, std::size_t size) {
   struct stub {
@@ -36,7 +30,7 @@ std::vector<float> GeluOMP(const std::vector<float>& input) {
 #pragma omp parallel for simd schedule(static)
   for (std::size_t i = 0; i < n; ++i) {
     const auto x{p_input[i]};
-    p_output[i] = x / (1.f + ApproxExp(-2.f * kSQRT2DPI * (x + 0.044715f * (x * x * x))));
+    p_output[i] = x / (1.f + std::exp(-2.f * kSQRT2DPI * (x + 0.044715f * (x * x * x))));
   }
 
   return output;
