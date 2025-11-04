@@ -1,5 +1,8 @@
 #include "gelu_ocl.h"
+
+#define CL_TARGET_OPENCL_VERSION 120
 #include <CL/cl.h>
+#include <cstring>
 #include <iostream>
 #include <vector>
 #include <stdexcept>
@@ -51,13 +54,13 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform_index) 
     if (err != CL_SUCCESS)
         throw std::runtime_error("Failed to create OpenCL context.");
 
-    cl_command_queue queue = clCreateCommandQueue(context, device, 0, &err);
+    cl_command_queue_properties props[] = {0};
+    cl_command_queue queue = clCreateCommandQueueWithProperties(context, device, props, &err);
     if (err != CL_SUCCESS)
         throw std::runtime_error("Failed to create command queue.");
 
-    const char* src = gelu_kernel_src;
-    size_t src_len = strlen(src);
-    cl_program program = clCreateProgramWithSource(context, 1, &src, &src_len, &err);
+    size_t src_len = std::strlen(gelu_kernel_src);
+    cl_program program = clCreateProgramWithSource(context, 1, &gelu_kernel_src, &src_len, &err);
     if (err != CL_SUCCESS)
         throw std::runtime_error("Failed to create program.");
 
@@ -76,14 +79,14 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform_index) 
         throw std::runtime_error("Failed to create kernel.");
 
     size_t bytes = n * sizeof(float);
-    cl_mem buf_in = clCreateBuffer(context, CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR, bytes, (void*)input.data(), &err);
+    cl_mem buf_in  = clCreateBuffer(context, CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR, bytes, (void*)input.data(), &err);
     cl_mem buf_out = clCreateBuffer(context, CL_MEM_WRITE_ONLY, bytes, nullptr, &err);
 
     clSetKernelArg(kernel, 0, sizeof(cl_mem), &buf_in);
     clSetKernelArg(kernel, 1, sizeof(cl_mem), &buf_out);
     clSetKernelArg(kernel, 2, sizeof(int), &n);
 
-    size_t local_size = 256;
+    size_t local_size  = 256;
     size_t global_size = ((n + local_size - 1) / local_size) * local_size;
 
     err = clEnqueueNDRangeKernel(queue, kernel, 1, nullptr, &global_size, &local_size, 0, nullptr, nullptr);
