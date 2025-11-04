@@ -7,7 +7,8 @@ __global__ void normalize(cufftComplex* data, int n, int batch) {
     int idx = blockIdx.x * blockDim.x + threadIdx.x;
     int total = n * batch;
     if (idx < total) {
-        data[idx] /= n;
+        data[idx].x /= n;
+	data[idx].y /= n;
     }
 }
 
