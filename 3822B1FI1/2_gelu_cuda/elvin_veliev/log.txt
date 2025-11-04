@@ -1,0 +1,19 @@
+/home/crazyproger/sandbox/gpu-2025/3822B1FI1/2_gelu_cuda/elvin_veliev/gelu_cuda.cu(11): error: __host__ or __device__ annotation on lambda requires --extended-lambda nvcc flag
+      auto gelu = [] __attribute__((device)) (float x) __inline__ __attribute__((always_inline)) -> float {
+                                             ^
+
+/home/crazyproger/sandbox/gpu-2025/3822B1FI1/2_gelu_cuda/elvin_veliev/gelu_cuda.cu(11): error: expected a "{" introducing a lambda body
+      auto gelu = [] __attribute__((device)) (float x) __inline__ __attribute__((always_inline)) -> float {
+                                                       ^
+
+/home/crazyproger/sandbox/gpu-2025/3822B1FI1/2_gelu_cuda/elvin_veliev/gelu_cuda.cu(11): error: expected a ";"
+      auto gelu = [] __attribute__((device)) (float x) __inline__ __attribute__((always_inline)) -> float {
+                                                       ^
+
+/home/crazyproger/sandbox/gpu-2025/3822B1FI1/2_gelu_cuda/elvin_veliev/gelu_cuda.cu(18): warning #12-D: parsing restarts here after previous syntax error
+      };
+       ^
+
+Remark: The warnings can be suppressed with "-diag-suppress <warning-number>"
+
+3 errors detected in the compilation of "/home/crazyproger/sandbox/gpu-2025/3822B1FI1/2_gelu_cuda/elvin_veliev/gelu_cuda.cu".

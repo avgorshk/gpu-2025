@@ -1,0 +1,9 @@
+/home/crazyproger/sandbox/gpu-2025/3822B1FI1/8_fft_cufft/elvin_veliev/fft_cufft.cu(10): error: no operator "/=" matches these operands
+            operand types are: cufftComplex /= int
+          data[idx] /= n;
+                    ^
+/home/crazyproger/sandbox/gpu-2025/3822B1FI1/8_fft_cufft/elvin_veliev/fft_cufft.cu(10): note #3328-D: built-in operator/=(<arithmetic>, <promoted arithmetic>) does not match because argument #1 does not match parameter
+          data[idx] /= n;
+                    ^
+
+1 error detected in the compilation of "/home/crazyproger/sandbox/gpu-2025/3822B1FI1/8_fft_cufft/elvin_veliev/fft_cufft.cu".
