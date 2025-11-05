@@ -4,21 +4,20 @@
 #include <cmath>
 #include <cuda_runtime.h>
 
-__global__ void kernel(const float* in, float* out, size_t n) {
+__device__ __forceinline__ float gelu_device(float x) {
+    const float c = 0.044715f;
+    const float sqrt_2_over_pi = 0.7978845608028654f;
+    float x3 = x * x * x;
+    float z  = sqrt_2_over_pi * (x + c * x3);
+    float s  = 1.0f / (1.0f + expf(-2.0f * z));
+    return x * s;
+}
+
+__global__ void kernel(const float* __restrict__ in, float* __restrict__ out, size_t n) {
     size_t idx = blockIdx.x * blockDim.x + threadIdx.x;
     size_t stride = static_cast<size_t>(blockDim.x) * static_cast<size_t>(gridDim.x);
-
-    auto gelu = [] __device__ (float x) __forceinline__ -> float {
-        const float c = 0.044715f;
-        const float sqrt_2_over_pi = 0.7978845608028654f;
-        float x3 = x * x * x;
-        float z  = sqrt_2_over_pi * (x + c * x3);
-        float s  = 1.0f / (1.0f + expf(-2.0f * z));
-        return x * s;
-    };
-
     for (size_t i = idx; i < n; i += stride) {
-        out[i] = gelu(in[i]);
+        out[i] = gelu_device(in[i]);
     }
 }
 
