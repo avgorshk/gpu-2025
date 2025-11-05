@@ -4,6 +4,7 @@
 #define TILE_SIZE 16
 
 __global__ void gemm_kernel(const float* A, const float* B, float* C, int n) {
+
     int row = blockIdx.y * blockDim.y + threadIdx.y;
     int col = blockIdx.x * blockDim.x + threadIdx.x;
 
@@ -22,7 +23,6 @@ __global__ void gemm_kernel(const float* A, const float* B, float* C, int n) {
 std::vector<float> NaiveGemmCUDA(const std::vector<float>& a, const std::vector<float>& b, int n) {
 
     const int size = n * n;
-
     float* data_A, * data_B, * data_C;
     cudaMalloc(&data_A, size * sizeof(float));
     cudaMalloc(&data_B, size * sizeof(float));
@@ -34,7 +34,7 @@ std::vector<float> NaiveGemmCUDA(const std::vector<float>& a, const std::vector<
     dim3 threads(TILE_SIZE, TILE_SIZE);
     dim3 blocks((n + TILE_SIZE - 1) / TILE_SIZE, (n + TILE_SIZE - 1) / TILE_SIZE);
 
-    gemm_kernel << <blocks, threads >> > (data_A, data_B, data_C, n);
+    gemm_kernel<<<blocks, threads>>>(data_A, data_B, data_C, n);
     cudaDeviceSynchronize();
 
     std::vector<float> c(n * n);
@@ -45,4 +45,5 @@ std::vector<float> NaiveGemmCUDA(const std::vector<float>& a, const std::vector<
     cudaFree(data_C);
 
     return c;
+
 }
