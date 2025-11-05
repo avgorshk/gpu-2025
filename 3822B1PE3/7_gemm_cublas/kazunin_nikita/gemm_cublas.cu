@@ -4,11 +4,13 @@
 #include <stdexcept>
 #include <iostream>
 
-std::vector<float> GemmCUBLAS(const std::vector<float>& a,
-                              const std::vector<float>& b,
-                              int n) {
+std::vector<float> GemmCUBLAS(const std::vector<float> &a,
+                              const std::vector<float> &b,
+                              int n)
+{
     if (a.size() != static_cast<size_t>(n * n) ||
-        b.size() != static_cast<size_t>(n * n)) {
+        b.size() != static_cast<size_t>(n * n))
+    {
         throw std::invalid_argument("Matrix dimensions mismatch");
     }
 
@@ -31,8 +33,8 @@ std::vector<float> GemmCUBLAS(const std::vector<float>& a,
 
     cublasStatus_t status = cublasSgemm(
         handle,
-        CUBLAS_OP_T,
-        CUBLAS_OP_T,
+        CUBLAS_OP_N,
+        CUBLAS_OP_N,
         n,
         n,
         n,
@@ -43,7 +45,8 @@ std::vector<float> GemmCUBLAS(const std::vector<float>& a,
         d_C, n
     );
 
-    if (status != CUBLAS_STATUS_SUCCESS) {
+    if (status != CUBLAS_STATUS_SUCCESS)
+    {
         cudaFree(d_A);
         cudaFree(d_B);
         cudaFree(d_C);
