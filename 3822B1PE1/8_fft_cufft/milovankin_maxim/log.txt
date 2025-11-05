@@ -1,0 +1,17 @@
+/home/crazyproger/sandbox/gpu-2025/3822B1PE1/8_fft_cufft/milovankin_maxim/fft_cufft.cu(9): error: identifier "total_elements" is undefined
+      if (idx < total_elements) {
+                ^
+
+/home/crazyproger/sandbox/gpu-2025/3822B1PE1/8_fft_cufft/milovankin_maxim/fft_cufft.cu(11): error: expression must have class type but it has type "float"
+          data[idx].x *= scale_factor;
+          ^
+
+/home/crazyproger/sandbox/gpu-2025/3822B1PE1/8_fft_cufft/milovankin_maxim/fft_cufft.cu(12): error: expression must have class type but it has type "float"
+          data[idx].y *= scale_factor;
+          ^
+
+/home/crazyproger/sandbox/gpu-2025/3822B1PE1/8_fft_cufft/milovankin_maxim/fft_cufft.cu(64): error: argument of type "cufftComplex *" (aka "float2 *") is incompatible with parameter of type "float *"
+      scale_complex<<<blocks, threads>>>(gpu_data, fft_len, static_cast<int>(complex_cnt));
+                                         ^
+
+4 errors detected in the compilation of "/home/crazyproger/sandbox/gpu-2025/3822B1PE1/8_fft_cufft/milovankin_maxim/fft_cufft.cu".
