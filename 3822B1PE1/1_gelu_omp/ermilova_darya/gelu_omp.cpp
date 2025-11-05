@@ -7,12 +7,14 @@ std::vector<float> GeluOMP(const std::vector<float>& input) {
     int n = static_cast<int>(input.size());
     std::vector<float> output(n);
     const float sqr = std::sqrt(2.0f / M_PI);
+    constexpr float GELU_COEFF = 0.044715f;
+
 
 #pragma omp parallel for schedule(static)
     for (int i = 0; i < n; ++i) {
         float x = input[i];
         float x3 = x * x * x;
-        output[i] = 0.5f * x * (1.0f + std::tanh(sqr * (x + 0.044715f * x3)));
+        output[i] = 0.5f * x * (1.0f + std::tanh(sqr * (x + GELU_COEFF * x3)));
     }
     return output;
 }
