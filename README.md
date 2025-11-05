@@ -497,6 +497,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE3|kazunin_nikita|0.2204|3|
 |**REF**|**REF**|**0.2209**|**-**|
 |3822B1PE1|milovankin_maxim|0.2217|10|
+|3822B1FI1|elvin_veliev|0.2220|3|
 |3822B1FI1|shulpin_ilya|0.2222|2|
 |3822B1PE4|podovinnikov_artyom|0.2227|3|
 |3822B1PE1|gnitienko_kirill|0.2228|9|
@@ -520,7 +521,6 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1FI3|kirill_kholin|0.2325|2|
 |3822B1PE1|morozov_egor|0.2372|4|
 |3822B1PE1|krylov_mikhail|0.2577|11|
-|3822B1FI1|elvin_veliev|BUILD FAILED|-|
 
 ## 3_naive_gemm_omp (1024 elements)
 |Group|Name|Result|Rank|
@@ -721,11 +721,11 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 ## 3822B1FI1
 |Group|Name|Passed|Score|
 |-----|----|------|-----|
-|3822B1FI1|elvin_veliev|8/9|489|
-|3822B1FI1|shulpin_ilya|**9/9**|**558**|
+|3822B1FI1|elvin_veliev|**9/9**|**550**|
+|3822B1FI1|shulpin_ilya|**9/9**|**557**|
 |3822B1FI1|solovev_alexey|**9/9**|**567**|
 
-Passed: 2
+Passed: 3
 
 ## 3822B1FI2
 |Group|Name|Passed|Score|
@@ -795,7 +795,7 @@ Passed: 0
 
 Passed: 2
 
-**Total Passed: 8**
+**Total Passed: 9**
 
 ---
 *Maximum Score: 576 (64 per task)
