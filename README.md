@@ -665,12 +665,12 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE4|podovinnikov_artyom|0.0535|1|
 |3822B1FI1|shulpin_ilya|0.0538|2|
 |3822B1PE1|krylov_mikhail|0.0547|2|
+|3822B1PE3|kazunin_nikita|0.0547|2|
 |**REF**|**REF**|**0.0563**|**-**|
 |3822B1FI3|kudryashova_irina|0.0589|1|
 |3822B1PE2|muradov_mike|0.0590|6|
 |3822B1PE2|mukhina_margarita|TEST FAILED|-|
 |3822B1PE1|sadikov_ivan|TEST FAILED|-|
-|3822B1PE3|kazunin_nikita|TEST FAILED|-|
 |3822B1FI3|kholin_kirill|TEST FAILED|-|
 
 ## 8_fft_cufft (131072 elements)
@@ -771,7 +771,7 @@ Passed: 1
 ## 3822B1PE3
 |Group|Name|Passed|Score|
 |-----|----|------|-----|
-|3822B1PE3|kazunin_nikita|7/9|429|
+|3822B1PE3|kazunin_nikita|8/9|491|
 |3822B1PE3|oturin_alexander|5/9|314|
 |3822B1PE3|sarafanov_maxim|1/9|59|
 |3822B1PE3|sotskov_andrey|7/9|440|
