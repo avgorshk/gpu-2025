@@ -3,9 +3,9 @@
 #include <cufft.h>
 #include <vector>
 
-__global__ void scale_complex(float* data, int n, int batch_sz) {
+__global__ void scale_complex(cufftComplex* data, int n, int total_elements) {
     int idx = blockIdx.x * blockDim.x + threadIdx.x;
-    
+
     if (idx < total_elements) {
         float scale_factor = 1.0f / static_cast<float>(n);
         data[idx].x *= scale_factor;
@@ -26,6 +26,7 @@ std::vector<float> FffCUFFT(const std::vector<float>& input, int batch) {
 
     int fft_len = static_cast<int>(input_sz / (2 * batch));
     size_t complex_cnt = static_cast<size_t>(fft_len) * batch;
+    int total_elements = static_cast<int>(complex_cnt);
     size_t dev_mem = complex_cnt * sizeof(cufftComplex);
 
     cufftComplex* gpu_data = nullptr;
@@ -60,8 +61,8 @@ std::vector<float> FffCUFFT(const std::vector<float>& input, int batch) {
 
     // Normalize the result on the GPU
     int threads = 256;
-    int blocks = (static_cast<int>(complex_cnt) + threads - 1) / threads;
-    scale_complex<<<blocks, threads>>>(gpu_data, fft_len, static_cast<int>(complex_cnt));
+    int blocks = (total_elements + threads - 1) / threads;
+    scale_complex<<<blocks, threads>>>(gpu_data, fft_len, total_elements);
 
     cudaDeviceSynchronize();
 
