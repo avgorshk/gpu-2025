@@ -705,6 +705,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE2|muradov_mike|0.1422|4|
 |3822B1PE2|titov_semyon|0.1697|1|
 |**REF**|**REF**|**0.2228**|**-**|
+|3822B1PE1|konstantinov_ilya|0.2411|3|
 |3822B1PE1|milovankin_maxim|BUILD FAILED|-|
 |3822B1PE1|sadikov_ivan|TEST FAILED|-|
 
@@ -723,6 +724,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1FI1|solovev_alexey|0.3438|2|
 |3822B1PE2|mukhina_margarita|0.3493|2|
 |3822B1PE2|titov_semyon|0.3591|1|
+|3822B1PE1|konstantinov_ilya|0.3629|4|
 |3822B1FI3|kirill_kholin|TEST FAILED|-|
 |3822B1PE3|kazunin_nikita|BUILD FAILED|-|
 
@@ -758,7 +760,7 @@ Passed: 0
 |-----|----|------|-----|
 |3822B1PE1|ermilova_darya|2/9|91|
 |3822B1PE1|gnitienko_kirill|5/9|249|
-|3822B1PE1|konstantinov_ilya|7/9|388|
+|3822B1PE1|konstantinov_ilya|**9/9**|**506**|
 |3822B1PE1|korablev_vladlen|5/9|288|
 |3822B1PE1|krylov_mikhail|**9/9**|**505**|
 |3822B1PE1|milovankin_maxim|8/9|440|
@@ -771,7 +773,7 @@ Passed: 0
 |3822B1PE1|shvedova_vitalina|5/9|280|
 |3822B1PE1|tyurin_mikhail|3/9|165|
 
-Passed: 2
+Passed: 3
 
 ## 3822B1PE2
 |Group|Name|Passed|Score|
@@ -806,7 +808,7 @@ Passed: 0
 
 Passed: 2
 
-**Total Passed: 9**
+**Total Passed: 10**
 
 ---
 *Maximum Score: 576 (64 per task)
