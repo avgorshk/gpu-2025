@@ -566,6 +566,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 ## 4_naive_gemm_cuda (4096 elements)
 |Group|Name|Result|Rank|
 |-----|----|------|----|
+|3822B1PE1|nikolaev_roman|0.0626|10|
 |3822B1PE3|oturin_alexander|0.0638|3|
 |**FAST**|**FAST**|**0.0776**|**-**|
 |3822B1PE1|krylov_mikhail|0.1392|7|
@@ -764,18 +765,18 @@ Passed: 0
 |Group|Name|Passed|Score|
 |-----|----|------|-----|
 |3822B1PE1|ermilova_darya|2/9|91|
-|3822B1PE1|gnitienko_kirill|5/9|248|
-|3822B1PE1|konstantinov_ilya|**9/9**|**503**|
-|3822B1PE1|korablev_vladlen|5/9|288|
-|3822B1PE1|krylov_mikhail|**9/9**|**502**|
-|3822B1PE1|milovankin_maxim|**9/9**|**496**|
-|3822B1PE1|moiseev_artem|**9/9**|**536**|
+|3822B1PE1|gnitienko_kirill|5/9|247|
+|3822B1PE1|konstantinov_ilya|**9/9**|**502**|
+|3822B1PE1|korablev_vladlen|5/9|287|
+|3822B1PE1|krylov_mikhail|**9/9**|**501**|
+|3822B1PE1|milovankin_maxim|**9/9**|**495**|
+|3822B1PE1|moiseev_artem|**9/9**|**535**|
 |3822B1PE1|morozov_egor|3/9|156|
-|3822B1PE1|nikolaev_roman|3/9|131|
+|3822B1PE1|nikolaev_roman|4/9|186|
 |3822B1PE1|odintsov_misha|1/9|45|
-|3822B1PE1|rams_sergei|8/9|465|
-|3822B1PE1|sadikov_ivan|6/9|327|
-|3822B1PE1|shvedova_vitalina|5/9|279|
+|3822B1PE1|rams_sergei|8/9|464|
+|3822B1PE1|sadikov_ivan|6/9|326|
+|3822B1PE1|shvedova_vitalina|5/9|278|
 |3822B1PE1|tyurin_mikhail|3/9|165|
 
 Passed: 4
