@@ -661,6 +661,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 ## 7_gemm_cublas (4096 elements)
 |Group|Name|Result|Rank|
 |-----|----|------|----|
+|3822B1PE1|rams_sergei|0.0432|6|
 |3822B1PE1|milovankin_maxim|0.0438|4|
 |3822B1PE2|korovin_nikita|0.0445|5|
 |3822B1PE1|moiseev_artem|0.0446|1|
@@ -760,16 +761,16 @@ Passed: 0
 |-----|----|------|-----|
 |3822B1PE1|ermilova_darya|2/9|91|
 |3822B1PE1|gnitienko_kirill|5/9|249|
-|3822B1PE1|konstantinov_ilya|**9/9**|**506**|
+|3822B1PE1|konstantinov_ilya|**9/9**|**505**|
 |3822B1PE1|korablev_vladlen|5/9|288|
-|3822B1PE1|krylov_mikhail|**9/9**|**505**|
-|3822B1PE1|milovankin_maxim|8/9|440|
-|3822B1PE1|moiseev_artem|**9/9**|**538**|
+|3822B1PE1|krylov_mikhail|**9/9**|**504**|
+|3822B1PE1|milovankin_maxim|8/9|439|
+|3822B1PE1|moiseev_artem|**9/9**|**537**|
 |3822B1PE1|morozov_egor|3/9|157|
 |3822B1PE1|nikolaev_roman|2/9|83|
 |3822B1PE1|odintsov_misha|1/9|45|
-|3822B1PE1|rams_sergei|6/9|346|
-|3822B1PE1|sadikov_ivan|6/9|329|
+|3822B1PE1|rams_sergei|7/9|405|
+|3822B1PE1|sadikov_ivan|6/9|328|
 |3822B1PE1|shvedova_vitalina|5/9|280|
 |3822B1PE1|tyurin_mikhail|3/9|165|
 
