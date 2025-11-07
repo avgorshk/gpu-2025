@@ -1,0 +1,23 @@
+/home/crazyproger/sandbox/gpu-2025/3822B1PE1/5_block_gemm_omp/nikolaev_roman/block_gemm_omp.cpp:7:50: error: expected ‘,’ or ‘...’ before ‘A_block’
+    7 | static void multiplyBlocks(const float* restrict A_block,
+      |                                                  ^~~~~~~
+/home/crazyproger/sandbox/gpu-2025/3822B1PE1/5_block_gemm_omp/nikolaev_roman/block_gemm_omp.cpp: In function ‘void multiplyBlocks(const float*)’:
+/home/crazyproger/sandbox/gpu-2025/3822B1PE1/5_block_gemm_omp/nikolaev_roman/block_gemm_omp.cpp:13:25: error: ‘block_size’ was not declared in this scope
+   13 |     for (int i = 0; i < block_size; ++i) {
+      |                         ^~~~~~~~~~
+/home/crazyproger/sandbox/gpu-2025/3822B1PE1/5_block_gemm_omp/nikolaev_roman/block_gemm_omp.cpp:18:31: error: ‘A_block’ was not declared in this scope
+   18 |                 float a_val = A_block[i * block_size + k];
+      |                               ^~~~~~~
+/home/crazyproger/sandbox/gpu-2025/3822B1PE1/5_block_gemm_omp/nikolaev_roman/block_gemm_omp.cpp:20:35: error: ‘B_block’ was not declared in this scope
+   20 |                 sum[0] += a_val * B_block[k * block_size + j + 0];
+      |                                   ^~~~~~~
+/home/crazyproger/sandbox/gpu-2025/3822B1PE1/5_block_gemm_omp/nikolaev_roman/block_gemm_omp.cpp:29:13: error: ‘C_block’ was not declared in this scope
+   29 |             C_block[i * block_size + j + 0] += sum[0];
+      |             ^~~~~~~
+/home/crazyproger/sandbox/gpu-2025/3822B1PE1/5_block_gemm_omp/nikolaev_roman/block_gemm_omp.cpp: In function ‘std::vector<float> BlockGemmOMP(const std::vector<float>&, const std::vector<float>&, int)’:
+/home/crazyproger/sandbox/gpu-2025/3822B1PE1/5_block_gemm_omp/nikolaev_roman/block_gemm_omp.cpp:56:31: error: too many arguments to function ‘void multiplyBlocks(const float*)’
+   56 |                 multiplyBlocks(A_block, B_block, C_block, BLOCK_SIZE);
+      |                 ~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/crazyproger/sandbox/gpu-2025/3822B1PE1/5_block_gemm_omp/nikolaev_roman/block_gemm_omp.cpp:7:13: note: declared here
+    7 | static void multiplyBlocks(const float* restrict A_block,
+      |             ^~~~~~~~~~~~~~
