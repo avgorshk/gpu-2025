@@ -43,7 +43,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 
   kernel.setArg(0, input_buf);
   kernel.setArg(1, output_buf);
-  kernel.setArg(2, input.size());
+  kernel.setArg(2, static_cast<int>(input.size()));
 
   queue.enqueueNDRangeKernel(kernel, cl::NullRange, cl::NDRange(input.size()), cl::NullRange);
 
