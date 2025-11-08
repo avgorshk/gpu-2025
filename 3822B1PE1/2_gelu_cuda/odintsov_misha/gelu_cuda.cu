@@ -4,19 +4,19 @@
 #include <cuda_runtime.h>
 
 __device__ float gelu_exp_formula(float x) {
-    return 0.5f * x * (1.0f + expf(-0.5f * x * x));  // Формула GELU с экспоненцией
+    return 0.5f * x * (1.0f + expf(-0.5f * x * x));  
 }
 
 __global__ void gelu_kernel(float* output, const float* input, size_t len) {
     int i = blockIdx.x * blockDim.x + threadIdx.x;  // Индекс текущего потока
     if (i < len) {
-        output[i] = gelu_exp_formula(input[i]);  // Применение GELU с экспонентой
+        output[i] = gelu_exp_formula(input[i]); 
     }
 }
 
 std::vector<float> GeluCUDA(const std::vector<float>& input) {
     size_t len = input.size();
-    std::vector<float> output(len);  // Результат вычисления
+    std::vector<float> output(len); 
 
     float* d_input;
     float* d_output;
@@ -26,8 +26,8 @@ std::vector<float> GeluCUDA(const std::vector<float>& input) {
 
     cudaMemcpy(d_input, input.data(), len * sizeof(float), cudaMemcpyHostToDevice);
 
-    int blockSize = 256;  // Количество потоков в блоке
-    int numBlocks = (len + blockSize - 1) / blockSize;  // Количество блоков
+    int blockSize = 256;  
+    int numBlocks = (len + blockSize - 1) / blockSize;  
 
     gelu_kernel<<<numBlocks, blockSize>>>(d_output, d_input, len);
 
