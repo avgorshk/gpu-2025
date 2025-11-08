@@ -40,7 +40,7 @@ std::vector<float> NaiveGemmCUDA(const std::vector<float>& A,
     cudaMemcpy(dA, A.data(), bytes, cudaMemcpyHostToDevice);
     cudaMemcpy(dB, B.data(), bytes, cudaMemcpyHostToDevice);
 
-    dim3 block(32, 8);
+    dim3 block(32, 32);
     dim3 grid((n + block.x - 1) / block.x, (n + block.y - 1) / block.y);
 
     gemm_kernel<<<grid, block>>>(dA, dB, dC, n);
