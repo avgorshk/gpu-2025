@@ -18,11 +18,11 @@ std::vector<float> FffCUFFT(const std::vector<float>& input, int batch)
     std::vector<float> result(input.size());
     int size = static_cast<int>(input.size() / (2 * batch));
     constexpr int threadsCount {256};
-    const int blocksCount = (size + threadsCount - 1) / threadsCount;
+    const int blocksCount = (size * batch + threadsCount - 1) / threadsCount;
 
     cufftComplex* buffer;
-    cudaMalloc(&buffer, size * sizeof(cufftComplex) * batch);
-    cudaMemcpy(buffer, input.data(), size * sizeof(cufftComplex) * batch, cudaMemcpyHostToDevice);
+    cudaMalloc(&buffer, input.size() * sizeof(float));
+    cudaMemcpy(buffer, input.data(), input.size() * sizeof(float), cudaMemcpyHostToDevice);
 
     cufftHandle plan;
     cufftPlan1d(&plan, size, CUFFT_C2C, batch);
@@ -31,7 +31,7 @@ std::vector<float> FffCUFFT(const std::vector<float>& input, int batch)
 
     normalize<<<blocksCount, threadsCount>>>(buffer, size * batch, 1.0f/size);
 
-    cudaMemcpy(result.data(), buffer, size * sizeof(cufftComplex) * batch, cudaMemcpyDeviceToHost);
+    cudaMemcpy(result.data(), buffer, input.size() * sizeof(float), cudaMemcpyDeviceToHost);
 
     cufftDestroy(plan);
     cudaFree(buffer);
