@@ -459,6 +459,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE2|muradov_mike|0.2782|7|
 |3822B1PE4|zinoviev_alexander|0.2783|4|
 |3822B1PE2|ermolaev_vladislav|0.2792|3|
+|3822B1PE2|filatieva_elizaveta|0.2795|8|
 |3822B1FI3|kudryashova_irina|0.2810|1|
 |3822B1PE3|sotskov_andrey|0.2822|1|
 |3822B1PE2|mukhina_margarita|0.2859|5|
@@ -558,6 +559,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE4|kolokolova_darya|0.7264|3|
 |3822B1PE2|ermolaev_vladislav|0.7310|2|
 |3822B1PE1|gnitienko_kirill|0.7319|10|
+|3822B1PE2|filatieva_elizaveta|0.7385|8|
 |3822B1FI1|solovev_alexey|0.7486|1|
 |3822B1PE2|kondratev_yaroslav|0.7529|3|
 |**REF**|**REF**|**0.7773**|**-**|
@@ -626,6 +628,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE4|kolokolova_darya|0.1430|4|
 |3822B1PE1|konstantinov_ilya|0.1458|6|
 |3822B1PE1|tyurin_mikhail|0.1463|10|
+|3822B1PE2|filatieva_elizaveta|0.1464|8|
 |**REF**|**REF**|**0.1670**|**-**|
 |3822B1FI1|shulpin_ilya|0.1761|2|
 |3822B1PE1|moiseev_artem|0.1767|2|
@@ -739,6 +742,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1FI1|elvin_veliev|0.3385|3|
 |**REF**|**REF**|**0.3419**|**-**|
 |3822B1FI1|solovev_alexey|0.3438|2|
+|3822B1PE2|filatieva_elizaveta|0.3476|4|
 |3822B1PE2|mukhina_margarita|0.3493|2|
 |3822B1PE2|titov_semyon|0.3591|1|
 |3822B1PE1|konstantinov_ilya|0.3629|4|
@@ -796,13 +800,14 @@ Passed: 5
 ## 3822B1PE2
 |Group|Name|Passed|Score|
 |-----|----|------|-----|
-|3822B1PE2|ermolaev_vladislav|8/9|482|
-|3822B1PE2|kondratev_yaroslav|7/9|405|
-|3822B1PE2|korovin_nikita|8/9|468|
-|3822B1PE2|mukhina_margarita|**9/9**|**527**|
+|3822B1PE2|ermolaev_vladislav|8/9|481|
+|3822B1PE2|filatieva_elizaveta|4/9|218|
+|3822B1PE2|kondratev_yaroslav|7/9|403|
+|3822B1PE2|korovin_nikita|8/9|467|
+|3822B1PE2|mukhina_margarita|**9/9**|**525**|
 |3822B1PE2|muradov_mike|8/9|446|
-|3822B1PE2|sorokin_andrey|**9/9**|**505**|
-|3822B1PE2|titov_semyon|**9/9**|**549**|
+|3822B1PE2|sorokin_andrey|**9/9**|**503**|
+|3822B1PE2|titov_semyon|**9/9**|**547**|
 
 Passed: 3
 
