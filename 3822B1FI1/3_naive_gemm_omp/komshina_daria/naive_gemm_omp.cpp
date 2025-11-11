@@ -35,4 +35,4 @@ std::vector<float> NaiveGemmOMP(const std::vector<float>& a,
     }
 
     return c;
-}
+}
