@@ -1,0 +1,15 @@
+/home/crazyproger/sandbox/gpu-2025/3822B1PE1/2_gelu_cuda/vershinina_alexandra/gelu_cuda.cu(10): error: expected a declaration
+     do {
+     ^
+
+/home/crazyproger/sandbox/gpu-2025/3822B1PE1/2_gelu_cuda/vershinina_alexandra/gelu_cuda.cu(18): warning #12-D: parsing restarts here after previous syntax error
+  constexpr float SQRT_2_OVER_PI = 0.7978845608028654f;
+                                                      ^
+
+Remark: The warnings can be suppressed with "-diag-suppress <warning-number>"
+
+/home/crazyproger/sandbox/gpu-2025/3822B1PE1/2_gelu_cuda/vershinina_alexandra/gelu_cuda.cu(29): error: identifier "SQRT_2_OVER_PI" is undefined
+      float t = SQRT_2_OVER_PI * (x + GELU_CONST * x3);
+                ^
+
+2 errors detected in the compilation of "/home/crazyproger/sandbox/gpu-2025/3822B1PE1/2_gelu_cuda/vershinina_alexandra/gelu_cuda.cu".
