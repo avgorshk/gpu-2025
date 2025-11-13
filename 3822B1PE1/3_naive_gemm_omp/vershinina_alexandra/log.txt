@@ -1,0 +1,4 @@
+/home/crazyproger/sandbox/gpu-2025/3822B1PE1/3_naive_gemm_omp/vershinina_alexandra/naive_gemm_omp.cpp: In function ‘std::vector<float> NaiveGemmOMP(const std::vector<float>&, const std::vector<float>&, int)’:
+/home/crazyproger/sandbox/gpu-2025/3822B1PE1/3_naive_gemm_omp/vershinina_alexandra/naive_gemm_omp.cpp:28:13: error: expected iteration declaration or initialization
+   28 |             for (; k <= n - UNROLL; k += UNROLL) {
+      |             ^~~
