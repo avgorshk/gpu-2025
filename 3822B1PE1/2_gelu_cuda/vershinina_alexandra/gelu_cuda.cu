@@ -1,111 +1,101 @@
 #include "gelu_cuda.h"
 
 #include <cuda_runtime.h>
-#include <vector>
 #include <stdexcept>
-#include <cstring> 
-#include <cmath>
+#include <vector>
+#include <cstring>   
+#include <cmath>     
+#include <string>
 
-#define CUDA_CHECK(call)                                                       
-    do {                                                                       
-        cudaError_t err = (call);                                              
-        if (err != cudaSuccess) {                                              
-            throw std::runtime_error(std::string("CUDA error: ") +            
-                                     cudaGetErrorString(err));                
-        }                                                                      
-    } while (0)
+inline void cudaCheck(cudaError_t err, const char* msg) {
+    if (err != cudaSuccess) {
+        throw std::runtime_error(std::string(msg) + ": " + cudaGetErrorString(err));
+    }
+}
 
-constexpr float SQRT_2_OVER_PI = 0.7978845608028654f;
-constexpr float GELU_CONST = 0.044715f;
-
-__global__ void gelu_kernel(const float* __restrict__ input,
-                            float* __restrict__ output,
-                            size_t n) {
-    const size_t idx = blockIdx.x * blockDim.x + threadIdx.x;
+__global__ void gelu_kernel(const float* __restrict__ in, float* __restrict__ out, size_t n) {
+    const size_t idx = (size_t)blockIdx.x * (size_t)blockDim.x + (size_t)threadIdx.x;
     if (idx >= n) return;
 
-    float x = input[idx];
-    float x3 = x * x * x;
-    float t = SQRT_2_OVER_PI * (x + GELU_CONST * x3);
+    const float x = in[idx];
+    const float x3 = x * x * x;
 
-    float tanh_t;
-    if (t >= 0.0f) {
-        // tanh(t) = (1 - exp(-2t)) / (1 + exp(-2t))
-        float z = __expf(-2.0f * t);
-        tanh_t = (1.0f - z) / (1.0f + z);
+    constexpr float k = 0.7978845608028654f;
+    constexpr float coeff = 0.044715f;
+
+    float inner = k * fmaf(coeff, x3, x); 
+
+    float tanh_val;
+    if (inner >= 0.0f) {
+        float z = __expf(-2.0f * inner);
+        tanh_val = (1.0f - z) / (1.0f + z);
     } else {
-        // tanh(t) = (exp(2t) - 1) / (exp(2t) + 1)
-        float z = __expf(2.0f * t);
-        tanh_t = (z - 1.0f) / (z + 1.0f);
+        float z = __expf(2.0f * inner);
+        tanh_val = (z - 1.0f) / (z + 1.0f);
     }
 
-    output[idx] = 0.5f * x * (1.0f + tanh_t);
+    out[idx] = 0.5f * x * (1.0f + tanh_val);
 }
 
 std::vector<float> GeluCUDA(const std::vector<float>& input) {
     const size_t n = input.size();
     if (n == 0) return {};
 
-    const size_t bytes = n * sizeof(float);
+    std::vector<float> result(n);
 
-    float* d_input = nullptr;
-    float* d_output = nullptr;
-
-    float* pinned_in = nullptr;
-    float* pinned_out = nullptr;
-
+    float *d_in = nullptr, *d_out = nullptr;
+    float *pinned_in = nullptr, *pinned_out = nullptr;
     cudaStream_t stream = nullptr;
 
     try {
+        const size_t bytes = n * sizeof(float);
 
-        CUDA_CHECK(cudaMalloc(&d_input, bytes));
-        CUDA_CHECK(cudaMalloc(&d_output, bytes));
+        cudaCheck(cudaMalloc((void**)&d_in, bytes), "cudaMalloc d_in");
+        cudaCheck(cudaMalloc((void**)&d_out, bytes), "cudaMalloc d_out");
 
-        CUDA_CHECK(cudaMallocHost(&pinned_in, bytes)); 
-        CUDA_CHECK(cudaMallocHost(&pinned_out, bytes)); 
-
-        CUDA_CHECK(cudaStreamCreate(&stream));
+        cudaCheck(cudaMallocHost((void**)&pinned_in, bytes), "cudaMallocHost pinned_in");
+        cudaCheck(cudaMallocHost((void**)&pinned_out, bytes), "cudaMallocHost pinned_out");
 
         std::memcpy(pinned_in, input.data(), bytes);
 
-        CUDA_CHECK(cudaMemcpyAsync(d_input, pinned_in, bytes,
-                                   cudaMemcpyHostToDevice, stream));
+        cudaCheck(cudaStreamCreate(&stream), "cudaStreamCreate");
+
+        cudaCheck(cudaMemcpyAsync(d_in, pinned_in, bytes, cudaMemcpyHostToDevice, stream), "cudaMemcpyAsync H2D");
 
         int blockSize = 256;
         int minGridSize = 0;
-        CUDA_CHECK(cudaOccupancyMaxPotentialBlockSize(&minGridSize, &blockSize,
-                                                      (void*)gelu_kernel, 0, 0));
+        cudaError_t occ_err = cudaOccupancyMaxPotentialBlockSize(&minGridSize, &blockSize, (void*)gelu_kernel, 0, 0);
+        if (occ_err != cudaSuccess) {
+            blockSize = 256;
+        }
         if (blockSize <= 0) blockSize = 256;
         if (blockSize > 1024) blockSize = 1024;
 
         const int grid = static_cast<int>((n + blockSize - 1) / blockSize);
 
-        gelu_kernel<<<grid, blockSize, 0, stream>>>(d_input, d_output, n);
+        gelu_kernel<<<grid, blockSize, 0, stream>>>(d_in, d_out, n);
 
-        CUDA_CHECK(cudaGetLastError());
+        cudaCheck(cudaGetLastError(), "Kernel launch");
 
-        CUDA_CHECK(cudaMemcpyAsync(pinned_out, d_output, bytes,
-                                   cudaMemcpyDeviceToHost, stream));
+        cudaCheck(cudaMemcpyAsync(pinned_out, d_out, bytes, cudaMemcpyDeviceToHost, stream), "cudaMemcpyAsync D2H");
 
-        CUDA_CHECK(cudaStreamSynchronize(stream));
+        cudaCheck(cudaStreamSynchronize(stream), "cudaStreamSynchronize");
 
-        std::vector<float> result(n);
         std::memcpy(result.data(), pinned_out, bytes);
 
-        CUDA_CHECK(cudaStreamDestroy(stream));
-        CUDA_CHECK(cudaFreeHost(pinned_in));
-        CUDA_CHECK(cudaFreeHost(pinned_out));
-        CUDA_CHECK(cudaFree(d_input));
-        CUDA_CHECK(cudaFree(d_output));
+        cudaCheck(cudaStreamDestroy(stream), "cudaStreamDestroy");
+        cudaCheck(cudaFreeHost(pinned_in), "cudaFreeHost pinned_in");
+        cudaCheck(cudaFreeHost(pinned_out), "cudaFreeHost pinned_out");
+        cudaCheck(cudaFree(d_in), "cudaFree d_in");
+        cudaCheck(cudaFree(d_out), "cudaFree d_out");
 
         return result;
     } catch (...) {
-
         if (stream) cudaStreamDestroy(stream);
         if (pinned_in) cudaFreeHost(pinned_in);
         if (pinned_out) cudaFreeHost(pinned_out);
-        if (d_input) cudaFree(d_input);
-        if (d_output) cudaFree(d_output);
-        throw; 
+        if (d_in) cudaFree(d_in);
+        if (d_out) cudaFree(d_out);
+        throw;
     }
 }
