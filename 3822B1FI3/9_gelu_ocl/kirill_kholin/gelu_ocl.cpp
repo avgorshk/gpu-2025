@@ -1,6 +1,6 @@
 #include "gelu_ocl.h"
 #include <CL/cl.h>
-#include <cstring>
+#include <cmath>
 #include <vector>
 
 const char *GELU_KERNEL = R"(
@@ -14,84 +14,53 @@ __kernel void gelu(__global const float* input, __global float* output, const in
 }
 )";
 
-cl_context context = nullptr;
-cl_device_id device = nullptr;
-cl_command_queue queue = nullptr;
-cl_program program = nullptr;
-cl_kernel kernel = nullptr;
-
 std::vector<float> GeluOCL(const std::vector<float> &input, int platform) {
-  std::vector<float> results(input.size());
+  cl_uint num_platforms;
+  clGetPlatformIDs(0, NULL, &num_platforms);
 
-  if (!context) {
-    cl_uint numPlatforms = 0;
-    clGetPlatformIDs(0, NULL, &numPlatforms);
-    cl_platform_id platform_id = NULL;
+  std::vector<cl_platform_id> platforms(num_platforms);
+  clGetPlatformIDs(num_platforms, platforms.data(), NULL);
 
-    if (0 < numPlatforms) {
-      cl_platform_id *platforms = new cl_platform_id[numPlatforms];
-      clGetPlatformIDs(numPlatforms, platforms, NULL);
-      platform_id = platforms[platform];
-      delete[] platforms;
-    }
+  cl_platform_id selected_platform = platforms[platform];
 
-    cl_context_properties properties[] = {
-        CL_CONTEXT_PLATFORM, (cl_context_properties)platform_id, 0};
+  cl_device_id device;
+  clGetDeviceIDs(selected_platform, CL_DEVICE_TYPE_GPU, 1, &device, NULL);
 
-    context = clCreateContextFromType(properties, CL_DEVICE_TYPE_GPU, NULL,
-                                      NULL, NULL);
+  cl_context context = clCreateContext(NULL, 1, &device, NULL, NULL, NULL);
+  cl_command_queue queue = clCreateCommandQueue(context, device, 0, NULL);
 
-    size_t size = 0;
-    clGetContextInfo(context, CL_CONTEXT_DEVICES, 0, NULL, &size);
+  const char *sources[] = {GELU_KERNEL};
+  cl_program program =
+      clCreateProgramWithSource(context, 1, sources, NULL, NULL);
+  clBuildProgram(program, 1, &device, NULL, NULL, NULL);
 
-    if (size > 0) {
-      cl_device_id *devices = (cl_device_id *)alloca(size);
-      clGetContextInfo(context, CL_CONTEXT_DEVICES, size, devices, NULL);
-      device = devices[0];
-    }
+  cl_kernel kernel = clCreateKernel(program, "gelu", NULL);
 
-    queue = clCreateCommandQueue(context, device, 0, NULL);
+  size_t n = input.size();
+  std::vector<float> output(n);
 
-    size_t source_len = strlen(GELU_KERNEL);
-    program =
-        clCreateProgramWithSource(context, 1, &GELU_KERNEL, &source_len, NULL);
-    clBuildProgram(program, 1, &device, NULL, NULL, NULL);
-    kernel = clCreateKernel(program, "gelu", NULL);
-  }
-
-  size_t data_size = input.size() * sizeof(float);
   cl_mem input_buffer =
-      clCreateBuffer(context, CL_MEM_READ_ONLY, data_size, NULL, NULL);
+      clCreateBuffer(context, CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR,
+                     n * sizeof(float), (void *)input.data(), NULL);
   cl_mem output_buffer =
-      clCreateBuffer(context, CL_MEM_WRITE_ONLY, data_size, NULL, NULL);
+      clCreateBuffer(context, CL_MEM_WRITE_ONLY, n * sizeof(float), NULL, NULL);
 
-  cl_event write_event;
-  clEnqueueWriteBuffer(queue, input_buffer, CL_FALSE, 0, data_size,
-                       input.data(), 0, NULL, &write_event);
-
-  int count = static_cast<int>(input.size());
   clSetKernelArg(kernel, 0, sizeof(cl_mem), &input_buffer);
   clSetKernelArg(kernel, 1, sizeof(cl_mem), &output_buffer);
-  clSetKernelArg(kernel, 2, sizeof(int), &count);
+  clSetKernelArg(kernel, 2, sizeof(int), &n);
 
-  size_t global_size = input.size();
-  size_t local_size = 256;
+  size_t global_size = n;
+  clEnqueueNDRangeKernel(queue, kernel, 1, NULL, &global_size, NULL, 0, NULL,
+                         NULL);
+  clEnqueueReadBuffer(queue, output_buffer, CL_TRUE, 0, n * sizeof(float),
+                      output.data(), 0, NULL, NULL);
 
-  cl_event kernel_event;
-  clEnqueueNDRangeKernel(queue, kernel, 1, NULL, &global_size, &local_size, 1,
-                         &write_event, &kernel_event);
-
-  cl_event read_event;
-  clEnqueueReadBuffer(queue, output_buffer, CL_FALSE, 0, data_size,
-                      results.data(), 1, &kernel_event, &read_event);
-
-  clWaitForEvents(1, &read_event);
-
-  clReleaseMemObject(input_buffer);
   clReleaseMemObject(output_buffer);
-  clReleaseEvent(write_event);
-  clReleaseEvent(kernel_event);
-  clReleaseEvent(read_event);
+  clReleaseMemObject(input_buffer);
+  clReleaseKernel(kernel);
+  clReleaseProgram(program);
+  clReleaseCommandQueue(queue);
+  clReleaseContext(context);
 
-  return results;
+  return output;
 }
