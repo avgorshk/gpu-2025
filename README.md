@@ -613,6 +613,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE1|korablev_vladlen|0.2780|3|
 |3822B1PE1|rams_sergei|0.3064|1|
 |3822B1PE1|gnitienko_kirill|0.3485|9|
+|3822B1PE1|khasanyanov_kirill|0.4413|13|
 |3822B1PE1|odintsov_misha|0.4525|12|
 |**REF**|**REF**|**0.5798**|**-**|
 |3822B1PE2|titov_semyon|0.6015|1|
@@ -829,7 +830,7 @@ Passed: 0
 |3822B1PE1|ermilova_darya|3/9|135|
 |3822B1PE1|gnitienko_kirill|7/9|347|
 |3822B1PE1|kalyakina_anastasia|2/9|86|
-|3822B1PE1|khasanyanov_kirill|3/9|128|
+|3822B1PE1|khasanyanov_kirill|4/9|169|
 |3822B1PE1|konstantinov_ilya|**9/9**|**480**|
 |3822B1PE1|korablev_vladlen|**9/9**|**485**|
 |3822B1PE1|krylov_mikhail|**9/9**|**493**|
@@ -837,7 +838,7 @@ Passed: 0
 |3822B1PE1|moiseev_artem|**9/9**|**522**|
 |3822B1PE1|morozov_egor|3/9|149|
 |3822B1PE1|nikolaev_roman|**9/9**|**437**|
-|3822B1PE1|odintsov_misha|7/9|301|
+|3822B1PE1|odintsov_misha|7/9|300|
 |3822B1PE1|rams_sergei|**9/9**|**516**|
 |3822B1PE1|sadikov_ivan|8/9|418|
 |3822B1PE1|shvedova_vitalina|**9/9**|**479**|
