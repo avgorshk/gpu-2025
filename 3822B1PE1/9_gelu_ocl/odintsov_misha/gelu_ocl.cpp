@@ -9,13 +9,11 @@ const std::string gelu_kernel_code = R"(
         int i = get_global_id(0);
         if (i < size) {
             float x = input[i];
-            float result = 0.5f * x * (1.0f + tanh(sqrt(2.0f / M_PI) * (x + 0.044715f * x * x * x)));
+            float result = 0.5f * x * (1.0f + tanh(0.79788456f * (x + 0.044715f * x * x * x)));
             output[i] = result;
         }
     }
 )";
-
-
 
 std::vector<float> GeluOCL(const std::vector<float>& input, int platform_id) {
     cl_int err;
@@ -37,7 +35,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform_id) {
     clGetDeviceIDs(platform, CL_DEVICE_TYPE_GPU, 1, &device, nullptr);
   
     cl_context context = clCreateContext(nullptr, 1, &device, nullptr, nullptr, &err);
-    cl_command_queue queue = clCreateCommandQueue(context, device, 0, &err);
+    cl_command_queue queue = clCreateCommandQueueWithProperties(context, device, nullptr, &err);
     
 
     size_t max_work_group_size;
