@@ -1,7 +1,7 @@
 #include "naive_gemm_cuda.h"
 #include <cuda_runtime.h>
 
-constexpr int cuda_block_size = 64;
+constexpr int cuda_block_size = 16;
 using std::vector;
 
 __global__ void MatMul(const float* a, const float* b, float* ans, int n) {
@@ -21,9 +21,14 @@ __global__ void MatMul(const float* a, const float* b, float* ans, int n) {
 __host__ vector<float> NaiveGemmCUDA(const vector<float>& a,
                                      const vector<float>& b,
                                      int n) {
+
+    if (n <= 0 || a.size() != n * n || b.size() != n * n) {
+        return vector<float>();
+    }
+
     int req_mem = n * n * sizeof(float);
     float* in1, *in2, *ans;
-	vector<float> result(n * n);
+	vector<float> result(n * n, 0.0f);
 
     cudaMalloc(&in1, req_mem);
     cudaMalloc(&in2, req_mem);
