@@ -2,18 +2,20 @@
 #include <cublas_v2.h>
 #include <cuda_runtime.h>
 #include <vector>
-#include <iostream>
 
 std::vector<float> GemmCUBLAS(const std::vector<float>& a,
                               const std::vector<float>& b,
                               int n) {
-    size_t size = n * n * sizeof(float);
+    const size_t size = n * n * sizeof(float);
     std::vector<float> c(n * n);
     
     cublasHandle_t handle;
     cublasCreate(&handle);
     
-    float *d_a, *d_b, *d_c;
+    float* d_a = nullptr;
+    float* d_b = nullptr;
+    float* d_c = nullptr;
+    
     cudaMalloc(&d_a, size);
     cudaMalloc(&d_b, size);
     cudaMalloc(&d_c, size);
@@ -25,15 +27,14 @@ std::vector<float> GemmCUBLAS(const std::vector<float>& a,
     const float beta = 0.0f;
     
     cublasSgemm(handle,
-                CUBLAS_OP_T, CUBLAS_OP_T,
+                CUBLAS_OP_N, CUBLAS_OP_N,
                 n, n, n,
                 &alpha,
-                d_a, n,
                 d_b, n,
+                d_a, n,
                 &beta,
                 d_c, n);
     
-    cudaDeviceSynchronize();
     cudaMemcpy(c.data(), d_c, size, cudaMemcpyDeviceToHost);
     
     cudaFree(d_a);
