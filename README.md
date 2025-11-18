@@ -608,6 +608,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE1|tyurin_mikhail|0.1837|11|
 |3822B1PE2|ermolaev_vladislav|0.1841|2|
 |3822B1PE1|kalyakina_anastasia|0.1853|14|
+|3822B1PE1|vershinina_alexandra|0.1856|16|
 |3822B1PE4|shuravina_oksana|0.1955|2|
 |3822B1FI1|komshina_daria|0.2030|4|
 |3822B1PE3|kazunin_nikita|0.2165|2|
@@ -625,7 +626,6 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE2|titov_semyon|0.6015|1|
 |3822B1PE2|sorokin_andrey|1.0225|6|
 |3822B1PE1|morozov_egor|BUILD FAILED|-|
-|3822B1PE1|vershinina_alexandra|BUILD FAILED|-|
 |3822B1FI3|lavrentyev_alexey|TEST FAILED|-|
 
 ## 5_block_gemm_omp (1024 elements)
@@ -848,22 +848,22 @@ Passed: 0
 |Group|Name|Passed|Score|
 |-----|----|------|-----|
 |3822B1PE1|ermilova_darya|**9/9**|**412**|
-|3822B1PE1|gnitienko_kirill|7/9|342|
+|3822B1PE1|gnitienko_kirill|7/9|341|
 |3822B1PE1|kalyakina_anastasia|4/9|170|
-|3822B1PE1|khasanyanov_kirill|**9/9**|**407**|
+|3822B1PE1|khasanyanov_kirill|**9/9**|**406**|
 |3822B1PE1|konstantinov_ilya|**9/9**|**474**|
-|3822B1PE1|korablev_vladlen|**9/9**|**477**|
+|3822B1PE1|korablev_vladlen|**9/9**|**476**|
 |3822B1PE1|krylov_mikhail|**9/9**|**489**|
-|3822B1PE1|milovankin_maxim|**9/9**|**477**|
-|3822B1PE1|moiseev_artem|**9/9**|**516**|
+|3822B1PE1|milovankin_maxim|**9/9**|**476**|
+|3822B1PE1|moiseev_artem|**9/9**|**515**|
 |3822B1PE1|morozov_egor|3/9|148|
 |3822B1PE1|nikolaev_roman|**9/9**|**428**|
-|3822B1PE1|odintsov_misha|8/9|334|
-|3822B1PE1|rams_sergei|**9/9**|**510**|
+|3822B1PE1|odintsov_misha|8/9|333|
+|3822B1PE1|rams_sergei|**9/9**|**509**|
 |3822B1PE1|sadikov_ivan|8/9|411|
 |3822B1PE1|shvedova_vitalina|**9/9**|**471**|
 |3822B1PE1|tyurin_mikhail|5/9|259|
-|3822B1PE1|vershinina_alexandra|6/9|245|
+|3822B1PE1|vershinina_alexandra|7/9|286|
 
 Passed: 10
 
