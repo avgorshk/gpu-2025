@@ -804,6 +804,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |Group|Name|Result|Rank|
 |-----|----|------|----|
 |**FAST**|**FAST**|**0.1188**|**-**|
+|3822B1PE2|korovin_nikita|0.2294|5|
 |3822B1PE1|khasanyanov_kirill|0.2711|10|
 |3822B1FI3|kudryashova_irina|0.2983|1|
 |3822B1FI1|shulpin_ilya|0.3014|1|
@@ -890,15 +891,15 @@ Passed: 10
 |Group|Name|Passed|Score|
 |-----|----|------|-----|
 |3822B1PE2|ermolaev_vladislav|8/9|481|
-|3822B1PE2|filatieva_elizaveta|4/9|218|
+|3822B1PE2|filatieva_elizaveta|4/9|217|
 |3822B1PE2|kondratev_yaroslav|8/9|457|
-|3822B1PE2|korovin_nikita|8/9|467|
-|3822B1PE2|mukhina_margarita|**9/9**|**525**|
+|3822B1PE2|korovin_nikita|**9/9**|**527**|
+|3822B1PE2|mukhina_margarita|**9/9**|**524**|
 |3822B1PE2|muradov_mike|8/9|446|
-|3822B1PE2|sorokin_andrey|**9/9**|**502**|
-|3822B1PE2|titov_semyon|**9/9**|**546**|
+|3822B1PE2|sorokin_andrey|**9/9**|**501**|
+|3822B1PE2|titov_semyon|**9/9**|**545**|
 
-Passed: 3
+Passed: 4
 
 ## 3822B1PE3
 |Group|Name|Passed|Score|
@@ -921,7 +922,7 @@ Passed: 0
 
 Passed: 2
 
-**Total Passed: 19**
+**Total Passed: 20**
 
 ---
 *Maximum Score: 576 (64 per task)
