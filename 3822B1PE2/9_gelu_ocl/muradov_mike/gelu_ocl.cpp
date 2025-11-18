@@ -45,8 +45,8 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
     clSetKernelArg(kernel, 1, sizeof(cl_mem), &d_out);
     clSetKernelArg(kernel, 2, sizeof(int), &n);
     
-    size_t global_size = n;
     size_t local_size = 256;
+    size_t global_size = ((n + local_size - 1) / local_size) * local_size;
     clEnqueueNDRangeKernel(queue, kernel, 1, NULL, &global_size, &local_size, 0, NULL, NULL);
     clEnqueueReadBuffer(queue, d_out, CL_TRUE, 0, n * sizeof(float), output.data(), 0, NULL, NULL);
     
