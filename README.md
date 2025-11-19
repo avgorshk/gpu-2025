@@ -773,6 +773,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE1|vershinina_alexandra|TEST FAILED|-|
 |3822B1FI1|komshina_daria|TEST FAILED|-|
 |3822B1FI3|kholin_kirill|TEST FAILED|-|
+|3822B1FI3|lavrentyev_alexey|BUILD FAILED|-|
 
 ## 8_fft_cufft (131072 elements)
 |Group|Name|Result|Rank|
@@ -813,6 +814,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |**REF**|**REF**|**0.2228**|**-**|
 |3822B1PE1|vershinina_alexandra|0.2334|10|
 |3822B1PE1|konstantinov_ilya|0.2411|3|
+|3822B1FI3|lavrentyev_alexey|TEST FAILED|-|
 
 ## 9_gelu_ocl (134217728 elements)
 |Group|Name|Result|Rank|
