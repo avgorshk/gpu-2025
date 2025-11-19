@@ -15,22 +15,31 @@
     }                                                                     \
   }
 
-std::vector<float> GeluOCL(const std::vector<float>& input) {
-  std::vector<cl::Platform> platforms;
-  cl::Platform::get(&platforms);
-  if (platforms.empty()) {
-    std::cerr << "\033[1;31merror\033[0m: no platform available\n";
+std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
+  std::vector<cl::Platform> all_platforms;
+  cl::Platform::get(&all_platforms);
+
+  if (all_platforms.empty()) {
+    std::cerr << "\033[1;31merror\033[0m: no OpenCL platforms available\n";
     return {};
   }
-  cl::Platform platform = platforms.front();
+
+  if (platform < 0 || platform >= static_cast<int>(all_platforms.size())) {
+    std::cerr << "\033[1;31merror\033[0m: invalid platform index: " << platform << '\n';
+    return {};
+  }
+
+  cl::Platform selected_platform = all_platforms[platform];
 
   std::vector<cl::Device> devices;
-  platform.getDevices(CL_DEVICE_TYPE_GPU, &devices);
+  selected_platform.getDevices(CL_DEVICE_TYPE_GPU, &devices);
+
   if (devices.empty()) {
-    std::cerr << "\033[1;31merror\033[0m: no device available\n";
+    std::cerr << "\033[1;31merror\033[0m: no GPU devices available on selected platform\n";
     return {};
   }
-  cl::Device device = devices.front();
+
+  cl::Device device = devices[0];
 
   cl::Context context(device);
   cl::CommandQueue queue(context);
@@ -41,8 +50,12 @@ __kernel void gelu_kernel(__global const float* x, __global float* y, int countE
 
   if (i < countElem) {
       float val = x[i];
-      float tmp = val * (1.595769122f + val * val * 0.071354816f);
-      y[i] = val - val / (1.0f + exp(tmp));
+      float x3 = val * val * val;
+      float inner = val + 0.044715f * x3;
+      float a = 0.7978845608f * inner;
+      float exp_2a = exp(2.0f * a);
+      float tanh_a = (exp_2a - 1.0f) / (exp_2a + 1.0f);
+      y[i] = val * 0.5f * (1.0f + tanh_a);
   }
 }
 )";
@@ -51,32 +64,35 @@ __kernel void gelu_kernel(__global const float* x, __global float* y, int countE
   sources.emplace_back(std::move(codeKernel));
 
   cl::Program program(context, sources);
-  if (program.build() != CL_SUCCESS) {
+  if (program.build(devices) != CL_SUCCESS) {
     std::cerr << "\033[1;31merror\033[0m: ";
     std::cerr << program.getBuildInfo<CL_PROGRAM_BUILD_LOG>(device) << '\n';
     return {};
   }
 
-  if (input.empty()) return {};
+  if (input.empty()) {
+    return {};
+  }
+
   auto size = input.size();
   auto countBytes = size * sizeof(float);
 
   cl::Buffer bufferInput(context, CL_MEM_READ_ONLY, countBytes);
   cl::Buffer bufferOutput(context, CL_MEM_WRITE_ONLY, countBytes);
 
-  CHECK_CL_ERROR(queue.enqueueWriteBuffer(bufferInput, CL_TRUE, 0, countBytes,
-                                          input.data()));
+  CHECK_CL_ERROR(queue.enqueueWriteBuffer(bufferInput, CL_FALSE, 0, countBytes, input.data()));
 
   cl::Kernel kernel(program, "gelu_kernel");
   kernel.setArg(0, bufferInput);
   kernel.setArg(1, bufferOutput);
   kernel.setArg(2, static_cast<int>(size));
-  CHECK_CL_ERROR(queue.enqueueNDRangeKernel(kernel, cl::NullRange,
-                                            cl::NDRange(size), cl::NullRange));
+
+  CHECK_CL_ERROR(queue.enqueueNDRangeKernel(kernel, cl::NullRange, cl::NDRange(size), cl::NullRange));
 
   std::vector<float> output(size);
-  CHECK_CL_ERROR(queue.enqueueReadBuffer(bufferOutput, CL_TRUE, 0, countBytes,
-                                         output.data()));
+  CHECK_CL_ERROR(queue.enqueueReadBuffer(bufferOutput, CL_FALSE, 0, countBytes, output.data()));
+
+  CHECK_CL_ERROR(queue.finish());
 
   return output;
 }
