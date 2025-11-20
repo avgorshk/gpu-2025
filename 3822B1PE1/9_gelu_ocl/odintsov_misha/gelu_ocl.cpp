@@ -33,14 +33,13 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
         std::cerr << "No OpenCL platforms found." << std::endl;
         exit(1);
     }
-
-    cl_platform_id cl_platform;
-    if (platform >= num_platforms) {
-        std::cerr << "Invalid platform ID" << std::endl;
-        exit(1);
+    std::vector<cl_platform_id> platforms(num_platforms);
+    clGetPlatformIDs(num_platforms, platforms.data(), nullptr);
+    if (platform >= static_cast<int>(num_platforms)) {
+        throw std::runtime_error("Platform index out of range");
     }
-    err = clGetPlatformIDs(platform + 1, &cl_platform, nullptr);
-    checkError(err, "clGetPlatformIDs");
+
+    cl_platform_id cl_platform = platforms[platform];
 
     cl_uint num_devices;
     err = clGetDeviceIDs(cl_platform, CL_DEVICE_TYPE_GPU, 0, nullptr, &num_devices);
