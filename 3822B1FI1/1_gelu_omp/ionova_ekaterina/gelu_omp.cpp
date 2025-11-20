@@ -1,4 +1,4 @@
-// Copyright (c) 2025 Ionova-Ekaterina
+// Copyright (c) 2025 Ionova-Ekaterina 
 #include "gelu_omp.h"
 
 #include <cmath>
