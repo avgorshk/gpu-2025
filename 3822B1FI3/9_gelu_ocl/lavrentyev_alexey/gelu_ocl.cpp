@@ -1,8 +1,9 @@
 #include "gelu_ocl.h"
 #include <CL/cl.h>
+#include <vector>
 
 using std::vector;
-const int block_size = 16
+const int block_size = 16;
 
 const char* GeluKernel = R"(
     __kernel void GeluKernel(__global const float* in, __global float* out, const int size) {
@@ -10,16 +11,16 @@ const char* GeluKernel = R"(
         if (index < size) {
             float var = in[index];
             float cube = var * var * var;
-            out[index] = 0.5f * x * (1.0f + tanh(0.797884f * (x + 0.044715f * cube)));
+            out[index] = 0.5f * var * (1.0f + tanh(0.797884f * (var + 0.044715f * cube)));
         }
     }
     )";
 
 vector<float> GeluOCL(const vector<float>& input) {
 
-    int size = input.size();
-    int memory = size * sizeof(float);
-    std::vector<float> ans(size);
+    size_t size = input.size();
+    size_t memory = size * sizeof(float);
+    vector<float> ans(size);
 
     cl_platform_id platform;
     cl_device_id device;
@@ -49,8 +50,8 @@ vector<float> GeluOCL(const vector<float>& input) {
     clSetKernelArg(kernel, 1, sizeof(cl_mem), &out);
     clSetKernelArg(kernel, 2, sizeof(int), &size);
 
-    int grid = (size + block_size - 1) / block_size * block_size;
-    int block = block_size;  
+    size_t grid = (size + block_size - 1) / block_size * block_size;
+    size_t block = block_size;
     clEnqueueNDRangeKernel(queue, kernel, 1, NULL, &grid, &block, 0, NULL, NULL);
     clEnqueueReadBuffer(queue, out, CL_TRUE, 0, memory, ans.data(), 0, NULL, NULL);
 
