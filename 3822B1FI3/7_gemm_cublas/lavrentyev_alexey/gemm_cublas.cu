@@ -9,13 +9,12 @@ vector<float> GemmCUBLAS(const vector<float>& a,
                          int n) {
     int size = n * n;
     int req_mem = size * sizeof(float);
-    float* in1, *in2, *ans, *transpose;
-	vector<float> result(size);
+    float* in1, *in2, *ans;
+	vector<float> result(size, 0.0f);
     
     cudaMalloc(&in1, req_mem);
     cudaMalloc(&in2, req_mem);
     cudaMalloc(&ans, req_mem);
-    cudaMalloc(&transpose, req_mem);
 
     cudaMemcpy(in1, a.data(), req_mem, cudaMemcpyHostToDevice);
     cudaMemcpy(in2, b.data(), req_mem, cudaMemcpyHostToDevice);
@@ -25,14 +24,13 @@ vector<float> GemmCUBLAS(const vector<float>& a,
     float one = 1.0f;
     float zero = 0.0f;
 
-    cublasSgemm(handler, CUBLAS_OP_T, CUBLAS_OP_T, n, n, n, &one, in1, n, in2, n, &zero, ans, n);
-    cublasSgeam(handler, CUBLAS_OP_T, CUBLAS_OP_N, n, n, &one, ans, n, &zero, nullptr, n, transpose, n);
-    cudaMemcpy(result.data(), transpose, req_mem, cudaMemcpyDeviceToHost);
+    cublasSgemm(handler, CUBLAS_OP_N, CUBLAS_OP_N, n, n, n, &one, in2, n, in1, n, &zero, ans, n);
+
+    cudaMemcpy(result.data(), ans, req_mem, cudaMemcpyDeviceToHost);
     
     cudaFree(in1);
     cudaFree(in2);
     cudaFree(ans);
-    cudaFree(transpose);
 
     cublasDestroy(handler);
 
