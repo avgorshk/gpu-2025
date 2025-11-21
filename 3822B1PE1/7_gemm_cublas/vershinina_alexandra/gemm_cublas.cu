@@ -56,33 +56,29 @@ std::vector<float> GemmCUBLAS(const std::vector<float>& a,
 
         const float alpha = 1.0f;
         const float beta  = 0.0f;
+
         checkCublas(
             cublasSgemm(handle,
-                        CUBLAS_OP_T, CUBLAS_OP_T,
+                        CUBLAS_OP_N, CUBLAS_OP_N,
                         n, n, n,
                         &alpha,
-                        dB, n,
-                        dA, n,
+                        dB, n,    
+                        dA, n,    
                         &beta,
                         dC, n),
             "cublasSgemm"
         );
 
         checkCuda(cudaMemcpyAsync(hC, dC, bytes, cudaMemcpyDeviceToHost, stream), "D2H dC");
-
         checkCuda(cudaStreamSynchronize(stream), "cudaStreamSynchronize");
 
         std::vector<float> result(elems);
         std::memcpy(result.data(), hC, bytes);
 
-        cudaFree(dA);
-        cudaFree(dB);
-        cudaFree(dC);
+        cudaFree(dA); cudaFree(dB); cudaFree(dC);
         cublasDestroy(handle);
         cudaStreamDestroy(stream);
-        cudaFreeHost(hA);
-        cudaFreeHost(hB);
-        cudaFreeHost(hC);
+        cudaFreeHost(hA); cudaFreeHost(hB); cudaFreeHost(hC);
 
         return result;
     } catch (...) {
