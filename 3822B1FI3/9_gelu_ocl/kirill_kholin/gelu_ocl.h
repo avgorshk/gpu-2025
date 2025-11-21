@@ -3,6 +3,6 @@
 
 #include <vector>
 
-std::vector<float> GeluOCL(const std::vector<float> &input, int platform = 0);
+std::vector<float> GeluOCL(const std::vector<float> &input, int platform_id);
 
 #endif // __GELU_OCL_H

@@ -18,32 +18,16 @@ static void multiplyBlocks(const float* RESTRICT A_block,
                            float* RESTRICT C_block,
                            int n,
                            int block_size) {
-    const int unroll_factor = 4;
-
     for (int i = 0; i < block_size; ++i) {
-        for (int j = 0; j < block_size; j += unroll_factor) {
-            float sum[4] = {0.0f, 0.0f, 0.0f, 0.0f};
-
-            const float* rowA = A_block + i * block_size;
-            float* rowC = C_block + i * n + j;
-
-            for (int k = 0; k < block_size; ++k) {
-                float a_val = rowA[k];
-                const float* rowB = B_block + k * block_size + j;
-
-                sum[0] += a_val * rowB[0];
-                if (j + 1 < block_size) sum[1] += a_val * rowB[1];
-                if (j + 2 < block_size) sum[2] += a_val * rowB[2];
-                if (j + 3 < block_size) sum[3] += a_val * rowB[3];
+        for (int k = 0; k < block_size; ++k) {
+            float a_val = A_block[i * n + k];
+            for (int j = 0; j < block_size; ++j) {
+                C_block[i * n + j] += a_val * B_block[k * n + j];
             }
-
-            rowC[0] += sum[0];
-            if (j + 1 < block_size) rowC[1] += sum[1];
-            if (j + 2 < block_size) rowC[2] += sum[2];
-            if (j + 3 < block_size) rowC[3] += sum[3];
         }
     }
 }
+
 
 std::vector<float> BlockGemmOMP(const std::vector<float>& a,
                                 const std::vector<float>& b,
@@ -65,12 +49,12 @@ std::vector<float> BlockGemmOMP(const std::vector<float>& a,
     #pragma omp parallel for collapse(2) schedule(static)
     for (int block_i = 0; block_i < num_blocks; ++block_i) {
         for (int block_j = 0; block_j < num_blocks; ++block_j) {
-            float* C_block = &c[(block_i * BLOCK_SIZE) * n + (block_j * BLOCK_SIZE)];
-
+            float* C_block = &c[block_i * BLOCK_SIZE * n + block_j * BLOCK_SIZE];
+            
             for (int block_k = 0; block_k < num_blocks; ++block_k) {
-                const float* A_block = &a[(block_i * BLOCK_SIZE) * n + (block_k * BLOCK_SIZE)];
-                const float* B_block = &b[(block_k * BLOCK_SIZE) * n + (block_j * BLOCK_SIZE)];
-
+                const float* A_block = &a[block_i * BLOCK_SIZE * n + block_k * BLOCK_SIZE];
+                const float* B_block = &b[block_k * BLOCK_SIZE * n + block_j * BLOCK_SIZE];
+                
                 multiplyBlocks(A_block, B_block, C_block, n, BLOCK_SIZE);
             }
         }

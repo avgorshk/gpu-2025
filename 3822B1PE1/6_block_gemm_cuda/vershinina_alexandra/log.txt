@@ -1,0 +1,111 @@
+/home/crazyproger/sandbox/gpu-2025/3822B1PE1/6_block_gemm_cuda/vershinina_alexandra/block_gemm_cuda.cu(17): error: expected a declaration
+     do {
+     ^
+
+/home/crazyproger/sandbox/gpu-2025/3822B1PE1/6_block_gemm_cuda/vershinina_alexandra/block_gemm_cuda.cu(50): warning #12-D: parsing restarts here after previous syntax error
+              As[ty][tx] = 0.0f;
+                               ^
+
+Remark: The warnings can be suppressed with "-diag-suppress <warning-number>"
+
+/home/crazyproger/sandbox/gpu-2025/3822B1PE1/6_block_gemm_cuda/vershinina_alexandra/block_gemm_cuda.cu(52): error: expected a declaration
+          if (b_row < n && col < n)
+          ^
+
+/home/crazyproger/sandbox/gpu-2025/3822B1PE1/6_block_gemm_cuda/vershinina_alexandra/block_gemm_cuda.cu(54): error: expected a declaration
+          else
+          ^
+
+/home/crazyproger/sandbox/gpu-2025/3822B1PE1/6_block_gemm_cuda/vershinina_alexandra/block_gemm_cuda.cu(57): error: explicit type is missing ("int" assumed)
+          __syncthreads();
+          ^
+
+/home/crazyproger/sandbox/gpu-2025/3822B1PE1/6_block_gemm_cuda/vershinina_alexandra/block_gemm_cuda.cu(57): error: cannot overload functions distinguished by return type alone
+          __syncthreads();
+          ^
+
+/home/crazyproger/sandbox/gpu-2025/3822B1PE1/6_block_gemm_cuda/vershinina_alexandra/block_gemm_cuda.cu(60): error: expected a declaration
+          for (int k = 0; k < 16; ++k) {
+          ^
+
+/home/crazyproger/sandbox/gpu-2025/3822B1PE1/6_block_gemm_cuda/vershinina_alexandra/block_gemm_cuda.cu(64): warning #12-D: parsing restarts here after previous syntax error
+          __syncthreads();
+                         ^
+
+/home/crazyproger/sandbox/gpu-2025/3822B1PE1/6_block_gemm_cuda/vershinina_alexandra/block_gemm_cuda.cu(65): error: expected a declaration
+      }
+      ^
+
+/home/crazyproger/sandbox/gpu-2025/3822B1PE1/6_block_gemm_cuda/vershinina_alexandra/block_gemm_cuda.cu(97): warning #12-D: parsing restarts here after previous syntax error
+          std::memcpy(pinned_A, a.data(), bytes);
+                                                ^
+
+/home/crazyproger/sandbox/gpu-2025/3822B1PE1/6_block_gemm_cuda/vershinina_alexandra/block_gemm_cuda.cu(98): error: this declaration has no storage class or type specifier
+          std::memcpy(pinned_B, b.data(), bytes);
+          ^
+
+/home/crazyproger/sandbox/gpu-2025/3822B1PE1/6_block_gemm_cuda/vershinina_alexandra/block_gemm_cuda.cu(98): error: namespace "std" has no actual member "memcpy"
+          std::memcpy(pinned_B, b.data(), bytes);
+               ^
+
+/home/crazyproger/sandbox/gpu-2025/3822B1PE1/6_block_gemm_cuda/vershinina_alexandra/block_gemm_cuda.cu(98): error: identifier "pinned_B" is undefined
+          std::memcpy(pinned_B, b.data(), bytes);
+                      ^
+
+/home/crazyproger/sandbox/gpu-2025/3822B1PE1/6_block_gemm_cuda/vershinina_alexandra/block_gemm_cuda.cu(98): error: identifier "b" is undefined
+          std::memcpy(pinned_B, b.data(), bytes);
+                                ^
+
+/home/crazyproger/sandbox/gpu-2025/3822B1PE1/6_block_gemm_cuda/vershinina_alexandra/block_gemm_cuda.cu(98): error: identifier "bytes" is undefined
+          std::memcpy(pinned_B, b.data(), bytes);
+                                          ^
+
+/home/crazyproger/sandbox/gpu-2025/3822B1PE1/6_block_gemm_cuda/vershinina_alexandra/block_gemm_cuda.cu(98): error: too many initializer values
+          std::memcpy(pinned_B, b.data(), bytes);
+                                ^
+
+/home/crazyproger/sandbox/gpu-2025/3822B1PE1/6_block_gemm_cuda/vershinina_alexandra/block_gemm_cuda.cu(106): error: identifier "n" is undefined
+          dim3 grid( (n + 16 - 1) / 16, (n + 16 - 1) / 16 );
+                      ^
+
+/home/crazyproger/sandbox/gpu-2025/3822B1PE1/6_block_gemm_cuda/vershinina_alexandra/block_gemm_cuda.cu(108): error: this declaration has no storage class or type specifier
+          block_gemm_kernel<<<grid, block, 0, stream>>>(d_A, d_B, d_C, n);
+          ^
+
+/home/crazyproger/sandbox/gpu-2025/3822B1PE1/6_block_gemm_cuda/vershinina_alexandra/block_gemm_cuda.cu(108): error: expected a ";"
+          block_gemm_kernel<<<grid, block, 0, stream>>>(d_A, d_B, d_C, n);
+                           ^
+
+/home/crazyproger/sandbox/gpu-2025/3822B1PE1/6_block_gemm_cuda/vershinina_alexandra/block_gemm_cuda.cu(114): error: identifier "elems" is undefined
+          std::vector<float> C(elems);
+                               ^
+
+/home/crazyproger/sandbox/gpu-2025/3822B1PE1/6_block_gemm_cuda/vershinina_alexandra/block_gemm_cuda.cu(115): error: this declaration has no storage class or type specifier
+          std::memcpy(C.data(), pinned_C, bytes);
+          ^
+
+/home/crazyproger/sandbox/gpu-2025/3822B1PE1/6_block_gemm_cuda/vershinina_alexandra/block_gemm_cuda.cu(115): error: namespace "std" has no actual member "memcpy"
+          std::memcpy(C.data(), pinned_C, bytes);
+               ^
+
+/home/crazyproger/sandbox/gpu-2025/3822B1PE1/6_block_gemm_cuda/vershinina_alexandra/block_gemm_cuda.cu(115): error: identifier "pinned_C" is undefined
+          std::memcpy(C.data(), pinned_C, bytes);
+                                ^
+
+/home/crazyproger/sandbox/gpu-2025/3822B1PE1/6_block_gemm_cuda/vershinina_alexandra/block_gemm_cuda.cu(115): error: too many initializer values
+          std::memcpy(C.data(), pinned_C, bytes);
+                                ^
+
+/home/crazyproger/sandbox/gpu-2025/3822B1PE1/6_block_gemm_cuda/vershinina_alexandra/block_gemm_cuda.cu(115): error: a value of type "float *" cannot be used to initialize an entity of type "int"
+          std::memcpy(C.data(), pinned_C, bytes);
+                      ^
+
+/home/crazyproger/sandbox/gpu-2025/3822B1PE1/6_block_gemm_cuda/vershinina_alexandra/block_gemm_cuda.cu(125): error: expected a declaration
+          return C;
+          ^
+
+/home/crazyproger/sandbox/gpu-2025/3822B1PE1/6_block_gemm_cuda/vershinina_alexandra/block_gemm_cuda.cu(126): error: expected a declaration
+      } catch (...) {
+      ^
+
+24 errors detected in the compilation of "/home/crazyproger/sandbox/gpu-2025/3822B1PE1/6_block_gemm_cuda/vershinina_alexandra/block_gemm_cuda.cu".

@@ -3,14 +3,17 @@
 #include <vector>
 #include <cuda_runtime.h>
 
-__device__ float gelu_exp_formula(float x) {
-    return 0.5f * x * (1.0f + expf(-0.5f * x * x));  
+constexpr float coeff = 0.7978845608f;
+
+__device__ float gelu_formula(float x) {
+    const float cubic_term = 0.044715f * x * x * x;
+    return 0.5f * x * (1.0f + tanhf(coeff * (x + cubic_term)));  
 }
 
 __global__ void gelu_kernel(float* output, const float* input, size_t len) {
     int i = blockIdx.x * blockDim.x + threadIdx.x;  // Индекс текущего потока
     if (i < len) {
-        output[i] = gelu_exp_formula(input[i]); 
+        output[i] = gelu_formula(input[i]);  
     }
 }
 

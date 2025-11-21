@@ -1,107 +1,112 @@
+#define CL_HPP_TARGET_OPENCL_VERSION 120
+#define CL_HPP_MINIMUM_OPENCL_VERSION 120
+#define CL_HPP_ENABLE_EXCEPTIONS
+
 #include "gelu_ocl.h"
-
-#define CL_TARGET_OPENCL_VERSION 120
-#include <CL/cl.h>
-#include <cstring>
+#include <CL/opencl.hpp>
 #include <iostream>
-#include <vector>
-#include <stdexcept>
+#include <mutex>
 #include <string>
-#include <cmath>
+#include <vector>
 
-static const char* gelu_kernel_src = R"CLC(
-__kernel void gelu_kernel(__global const float* x, __global float* y, const int n)
+namespace {
+
+struct OCLContext {
+  cl::Context ctx;
+  cl::Device dev;
+  cl::CommandQueue queue;
+  cl::Kernel kernel;
+  bool ready = false;
+  std::mutex lock;
+};
+
+OCLContext global_ocl;
+
+const char *kGeluKernel = R"CLC(
+__kernel void gelu_kernel(__global const float* x,
+                          __global float* y,
+                          int n)
 {
     int i = get_global_id(0);
-    if (i < n) {
-        float xi = x[i];
-        float c = 0.044715f * xi * xi * xi;
-        float inner = 0.79788456f * (xi + c);
-        float tanh_res = tanh(inner);
-        y[i] = 0.5f * xi * (1.0f + tanh_res);
-    }
+    if (i >= n) return;
+
+    float v = x[i];
+    float v3 = v * v * v;
+
+    // коэффициент sqrt(2/pi)
+    const float K = 0.7978845608f;
+
+    float u = K * (v + 0.044715f * v3);
+    float e = exp(2.0f * u);
+
+    float t = (e - 1.0f) / (e + 1.0f);  // tanh
+    y[i] = 0.5f * v * (1.0f + t);
 }
 )CLC";
 
-std::vector<float> GeluOCL(const std::vector<float>& input, int platform_index) {
-    cl_int err;
-    size_t n = input.size();
+void initOnce(int platform_id) {
+  std::lock_guard<std::mutex> guard(global_ocl.lock);
+  if (global_ocl.ready)
+    return;
 
-    cl_uint num_platforms = 0;
-    clGetPlatformIDs(0, nullptr, &num_platforms);
-    if (num_platforms == 0)
-        throw std::runtime_error("No OpenCL platforms found.");
+  std::vector<cl::Platform> plats;
+  cl::Platform::get(&plats);
+  if (plats.empty())
+    throw std::runtime_error("No OpenCL platforms");
 
-    std::vector<cl_platform_id> platforms(num_platforms);
-    clGetPlatformIDs(num_platforms, platforms.data(), nullptr);
+  if (platform_id < 0 || platform_id >= (int)plats.size())
+    platform_id = 0;
 
-    if (platform_index >= (int)num_platforms)
-        throw std::runtime_error("Invalid platform index.");
+  cl::Platform plat = plats[platform_id];
 
-    cl_platform_id platform = platforms[platform_index];
+  std::vector<cl::Device> devs;
+  plat.getDevices(CL_DEVICE_TYPE_GPU, &devs);
+  if (devs.empty())
+    throw std::runtime_error("No GPU devices");
 
-    cl_uint num_devices = 0;
-    clGetDeviceIDs(platform, CL_DEVICE_TYPE_GPU, 0, nullptr, &num_devices);
-    if (num_devices == 0)
-        throw std::runtime_error("No GPU devices found on this platform.");
+  global_ocl.dev = devs[0];
+  global_ocl.ctx = cl::Context({global_ocl.dev});
+  global_ocl.queue = cl::CommandQueue(global_ocl.ctx, global_ocl.dev);
 
-    std::vector<cl_device_id> devices(num_devices);
-    clGetDeviceIDs(platform, CL_DEVICE_TYPE_GPU, num_devices, devices.data(), nullptr);
+  cl::Program prog(global_ocl.ctx, kGeluKernel);
+  try {
+    prog.build({global_ocl.dev});
+  } catch (...) {
+    std::string log = prog.getBuildInfo<CL_PROGRAM_BUILD_LOG>(global_ocl.dev);
+    std::cerr << "Build log:\n" << log << "\n";
+    throw;
+  }
 
-    cl_device_id device = devices[0];
+  global_ocl.kernel = cl::Kernel(prog, "gelu_kernel");
 
-    cl_context context = clCreateContext(nullptr, 1, &device, nullptr, nullptr, &err);
-    if (err != CL_SUCCESS)
-        throw std::runtime_error("Failed to create OpenCL context.");
+  global_ocl.ready = true;
+}
 
-    cl_command_queue_properties props[] = {0};
-    cl_command_queue queue = clCreateCommandQueueWithProperties(context, device, props, &err);
-    if (err != CL_SUCCESS)
-        throw std::runtime_error("Failed to create command queue.");
+} // namespace
 
-    size_t src_len = std::strlen(gelu_kernel_src);
-    cl_program program = clCreateProgramWithSource(context, 1, &gelu_kernel_src, &src_len, &err);
-    if (err != CL_SUCCESS)
-        throw std::runtime_error("Failed to create program.");
+std::vector<float> GeluOCL(const std::vector<float> &input, int platform_id) {
+  if (input.empty())
+    return {};
 
-    err = clBuildProgram(program, 1, &device, nullptr, nullptr, nullptr);
-    if (err != CL_SUCCESS) {
-        size_t log_size = 0;
-        clGetProgramBuildInfo(program, device, CL_PROGRAM_BUILD_LOG, 0, nullptr, &log_size);
-        std::string log(log_size, '\0');
-        clGetProgramBuildInfo(program, device, CL_PROGRAM_BUILD_LOG, log_size, log.data(), nullptr);
-        std::cerr << "OpenCL build log:\n" << log << std::endl;
-        throw std::runtime_error("Failed to build program.");
-    }
+  initOnce(platform_id);
 
-    cl_kernel kernel = clCreateKernel(program, "gelu_kernel", &err);
-    if (err != CL_SUCCESS)
-        throw std::runtime_error("Failed to create kernel.");
+  size_t n = input.size();
+  size_t bytes = n * sizeof(float);
 
-    size_t bytes = n * sizeof(float);
-    cl_mem buf_in  = clCreateBuffer(context, CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR, bytes, (void*)input.data(), &err);
-    cl_mem buf_out = clCreateBuffer(context, CL_MEM_WRITE_ONLY, bytes, nullptr, &err);
+  cl::Buffer buf_in(global_ocl.ctx, CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR,
+                    bytes, (void *)input.data());
+  cl::Buffer buf_out(global_ocl.ctx, CL_MEM_WRITE_ONLY, bytes);
 
-    clSetKernelArg(kernel, 0, sizeof(cl_mem), &buf_in);
-    clSetKernelArg(kernel, 1, sizeof(cl_mem), &buf_out);
-    clSetKernelArg(kernel, 2, sizeof(int), &n);
+  global_ocl.kernel.setArg(0, buf_in);
+  global_ocl.kernel.setArg(1, buf_out);
+  global_ocl.kernel.setArg(2, (int)n);
 
-    size_t local_size  = 256;
-    size_t global_size = ((n + local_size - 1) / local_size) * local_size;
+  global_ocl.queue.enqueueNDRangeKernel(global_ocl.kernel, cl::NullRange,
+                                        cl::NDRange(n), cl::NullRange);
+  global_ocl.queue.finish();
 
-    err = clEnqueueNDRangeKernel(queue, kernel, 1, nullptr, &global_size, &local_size, 0, nullptr, nullptr);
-    if (err != CL_SUCCESS)
-        throw std::runtime_error("Failed to enqueue kernel.");
+  std::vector<float> out(n);
+  global_ocl.queue.enqueueReadBuffer(buf_out, CL_TRUE, 0, bytes, out.data());
 
-    std::vector<float> output(n);
-    clEnqueueReadBuffer(queue, buf_out, CL_TRUE, 0, bytes, output.data(), 0, nullptr, nullptr);
-
-    clReleaseMemObject(buf_in);
-    clReleaseMemObject(buf_out);
-    clReleaseKernel(kernel);
-    clReleaseProgram(program);
-    clReleaseCommandQueue(queue);
-    clReleaseContext(context);
-
-    return output;
+  return out;
 }

@@ -1,4 +1,0 @@
-/home/crazyproger/sandbox/gpu-2025/3822B1PE3/9_gelu_ocl/kazunin_nikita/gelu_ocl.cpp: In function ‘std::vector<float> GeluOCL(const std::vector<float>&, int)’:
-/home/crazyproger/sandbox/gpu-2025/3822B1PE3/9_gelu_ocl/kazunin_nikita/gelu_ocl.cpp:58:30: error: ‘clCreateCommandQueueWithProperties’ was not declared in this scope
-   58 |     cl_command_queue queue = clCreateCommandQueueWithProperties(context, device, props, &err);
-      |                              ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
