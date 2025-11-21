@@ -20,12 +20,12 @@ vector<float> FffCUFFT(const vector<float>& input, int batch) {
 	int n = sz / (2 * batch);
     float norm = 1.0f / static_cast<float>(n);
     cudaMemcpyToSymbol(normalize, &norm, sizeof(float));
-    cudaMemcpyToSymbol(size, &size, sizeof(int));
+    cudaMemcpyToSymbol(size, &sz, sizeof(int));
 
     cufftComplex* complex;
     cufftHandle handler;
-	
-    vector<float> ans(size);
+
+    vector<float> ans(sz);
 
 	cudaMalloc(&complex,  sz * sizeof(float));
 	cudaMemcpy(complex, input.data(),  sz * sizeof(float), cudaMemcpyHostToDevice);
