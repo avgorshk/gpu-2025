@@ -1,5 +1,7 @@
 #include "block_gemm_cuda.h"
 
+#include <cuda_runtime.h>
+
 const int BLOCK_SIZE = 16;
 
 __global__ void block_gemm_kernel(const float* __restrict__ a,
@@ -36,7 +38,7 @@ __global__ void block_gemm_kernel(const float* __restrict__ a,
 std::vector<float> BlockGemmCUDA(const std::vector<float>& a,
                                  const std::vector<float>& b,
                                  int n) {
-                                    
+
     std::vector<float> c(n * n);
     
     float *d_a, *d_b, *d_c;
