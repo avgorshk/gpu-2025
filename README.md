@@ -730,12 +730,12 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE3|sotskov_andrey|0.1993|1|
 |3822B1PE2|ermolaev_vladislav|0.2001|2|
 |3822B1PE3|kazunin_nikita|0.2142|2|
+|3822B1PE1|vershinina_alexandra|0.2497|14|
 |3822B1PE2|muradov_mike|0.2517|7|
 |**REF**|**REF**|**0.3026**|**-**|
 |3822B1PE1|ermilova_darya|0.3264|13|
 |3822B1PE2|korovin_nikita|0.3646|4|
 |3822B1PE4|shuravina_oksana|0.4180|2|
-|3822B1PE1|vershinina_alexandra|BUILD FAILED|-|
 
 ## 7_gemm_cublas (4096 elements)
 |Group|Name|Result|Rank|
@@ -900,7 +900,7 @@ Passed: 2
 ## 3822B1PE1
 |Group|Name|Passed|Score|
 |-----|----|------|-----|
-|3822B1PE1|ermilova_darya|**9/9**|**410**|
+|3822B1PE1|ermilova_darya|**9/9**|**409**|
 |3822B1PE1|gnitienko_kirill|7/9|339|
 |3822B1PE1|kalyakina_anastasia|4/9|169|
 |3822B1PE1|khasanyanov_kirill|**9/9**|**405**|
@@ -917,7 +917,7 @@ Passed: 2
 |3822B1PE1|sadikov_ivan|8/9|409|
 |3822B1PE1|shvedova_vitalina|**9/9**|**469**|
 |3822B1PE1|tyurin_mikhail|5/9|258|
-|3822B1PE1|vershinina_alexandra|7/9|284|
+|3822B1PE1|vershinina_alexandra|8/9|323|
 
 Passed: 11
 
