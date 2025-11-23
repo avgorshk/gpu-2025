@@ -10,9 +10,9 @@ __kernel void gelu_compute(__global const float* input_data,
     if (gid < size) {
         float val = input_data[gid];
         float val_cubed = val * val * val;
-        float sigmoid_arg = -1.59576912f * (val + 0.044715f * val_cubed);
-        float exp_value = exp(sigmoid_arg);
-        output_data[gid] = val / (1.0f + exp_value);
+        float inner = 0.7978845608f * (val + 0.044715f * val_cubed);
+        float tanh_approx = (exp(2.0f * inner) - 1.0f) / (exp(2.0f * inner) + 1.0f);
+        output_data[gid] = 0.5f * val * (1.0f + tanh_approx);
     }
 }
 )";
