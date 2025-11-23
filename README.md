@@ -731,6 +731,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE1|sadikov_ivan|0.1932|8|
 |3822B1PE3|sotskov_andrey|0.1993|1|
 |3822B1PE2|ermolaev_vladislav|0.2001|2|
+|3822B1PE1|tyurin_mikhail|0.2108|16|
 |3822B1PE3|kazunin_nikita|0.2142|2|
 |3822B1PE1|vershinina_alexandra|0.2497|14|
 |3822B1PE2|muradov_mike|0.2517|7|
@@ -904,7 +905,7 @@ Passed: 2
 ## 3822B1PE1
 |Group|Name|Passed|Score|
 |-----|----|------|-----|
-|3822B1PE1|ermilova_darya|**9/9**|**408**|
+|3822B1PE1|ermilova_darya|**9/9**|**407**|
 |3822B1PE1|gnitienko_kirill|7/9|339|
 |3822B1PE1|kalyakina_anastasia|6/9|250|
 |3822B1PE1|khasanyanov_kirill|**9/9**|**404**|
@@ -920,8 +921,8 @@ Passed: 2
 |3822B1PE1|rams_sergei|**9/9**|**507**|
 |3822B1PE1|sadikov_ivan|8/9|408|
 |3822B1PE1|shvedova_vitalina|**9/9**|**469**|
-|3822B1PE1|tyurin_mikhail|5/9|258|
-|3822B1PE1|vershinina_alexandra|**9/9**|**361**|
+|3822B1PE1|tyurin_mikhail|6/9|294|
+|3822B1PE1|vershinina_alexandra|**9/9**|**360**|
 
 Passed: 12
 
