@@ -1,5 +1,6 @@
 #include "gelu_ocl.h"
 #include <CL/opencl.hpp>
+#include <iostream>
 
 struct Data
 {
@@ -7,36 +8,44 @@ struct Data
 	cl::CommandQueue queue;
 	cl::Kernel kernel;
 };
-static Data data;
+Data data;
 
-static const char* kernelCode = R"(__kernel void gelu(__global const float* input, __global float* result, int n)
+static const char* kernelCode = R"(
+__kernel void gelu(__global const float* input, 
+                   __global float* result, 
+                   int n)
 {
   const int index = get_global_id(0);
-  if (index < n) {
+  if (index < n) 
+  {
 	const float x = input[index];
     const float tripleX = x * x * x;
-    result[index] = 0.5f * x * (1.0f  + tanhf(0.7978f * (x + 0.044715f * tripleX)));
+    float expv = exp(2.0f * 0.7978f * (x + 0.044715f * tripleX));
+    const float tanh = (expv - 1.0f) / (expv + 1.0f);
+    result[index] = 0.5f * x * (1.0f  + tanh);
   }
-})";
+}
+)";
 
 void initOpenClSession(int platformNum)
 {
-	using namespace cl;
 	std::vector<cl::Platform> allPlatforms;
 	cl::Platform::get(&allPlatforms);
 	if (!allPlatforms.empty())
 	{
+		if (platformNum != 0)
+		{
+			platformNum = 0;
+		}
 		cl::Platform platform = allPlatforms[platformNum];
-		std::vector<Device> allDevices;
+		std::vector<cl::Device> allDevices;
 		platform.getDevices(CL_DEVICE_TYPE_GPU, &allDevices);
-		cl::Device mainDevice = allDevices.front();
+		data.context = cl::Context(allDevices);
 
-		data.context = cl::Context({ mainDevice });
-
-		data.queue = cl::CommandQueue(data.context, { mainDevice });
+		data.queue = cl::CommandQueue(data.context, allDevices.front());
 
 		cl::Program program(data.context, kernelCode);
-		program.build({ mainDevice });
+		program.build(allDevices);
 
 		data.kernel = cl::Kernel(program, "gelu");
 	}
