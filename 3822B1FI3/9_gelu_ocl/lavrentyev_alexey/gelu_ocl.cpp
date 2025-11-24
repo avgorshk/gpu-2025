@@ -16,7 +16,7 @@ const char* GeluKernel = R"(
     }
     )";
 
-vector<float> GeluOCL(const vector<float>& input) {
+vector<float> GeluOCL(const vector<float>& input, int platform_id) {
 
     size_t size = input.size();
     size_t memory = size * sizeof(float);
@@ -29,8 +29,13 @@ vector<float> GeluOCL(const vector<float>& input) {
     cl_program program;
     cl_kernel kernel;
     cl_mem in, out;
-    
-    clGetPlatformIDs(1, &platform, NULL);
+    cl_uint num_platforms = 0;
+
+    clGetPlatformIDs(0, nullptr, &num_platforms);
+    vector<cl_platform_id> platforms(num_platforms);
+    clGetPlatformIDs(num_platforms, platforms.data(), nullptr);
+    platform = platforms[platform_id];
+
     clGetDeviceIDs(platform, CL_DEVICE_TYPE_GPU, 1, &device, NULL);
 
     context = clCreateContext(NULL, 1, &device, NULL, NULL, NULL);
@@ -48,7 +53,9 @@ vector<float> GeluOCL(const vector<float>& input) {
     
     clSetKernelArg(kernel, 0, sizeof(cl_mem), &in);
     clSetKernelArg(kernel, 1, sizeof(cl_mem), &out);
-    clSetKernelArg(kernel, 2, sizeof(int), &size);
+
+    cl_int n = static_cast<cl_int>(size);
+    clSetKernelArg(kernel, 2, sizeof(cl_int), &n);
 
     size_t grid = (size + block_size - 1) / block_size * block_size;
     size_t block = block_size;
