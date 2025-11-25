@@ -1,0 +1,9 @@
+In file included from /home/crazyproger/sandbox/gpu-2025/3822B1FI2/9_gelu_ocl/yasakova_tanya/gelu_ocl.cpp:2:
+/usr/include/CL/opencl.hpp:437:112: note: ‘#pragma message: opencl.hpp: CL_HPP_TARGET_OPENCL_VERSION is not defined. It will default to 300 (OpenCL 3.0)’
+  437 | # pragma message("opencl.hpp: CL_HPP_TARGET_OPENCL_VERSION is not defined. It will default to 300 (OpenCL 3.0)")
+      |                                                                                                                ^
+/usr/bin/ld: /tmp/cc25O91b.o: in function `main':
+main.cpp:(.text.startup+0x9d): undefined reference to `GeluOCL(std::vector<float, std::allocator<float> > const&, int)'
+/usr/bin/ld: main.cpp:(.text.startup+0x2a4): undefined reference to `GeluOCL(std::vector<float, std::allocator<float> > const&, int)'
+/usr/bin/ld: main.cpp:(.text.startup+0x3f1): undefined reference to `GeluOCL(std::vector<float, std::allocator<float> > const&, int)'
+collect2: error: ld returned 1 exit status
