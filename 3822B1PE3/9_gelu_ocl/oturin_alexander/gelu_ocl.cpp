@@ -6,15 +6,16 @@ const char *source = R"(
 __kernel void geluKernel (__global float *input, 
                       __global float *output,
                       const int count){
-
   int i = get_global_id(0);
   if (i < count) {
       float x = input[i];
       float x_cubed = x * x * x;
       float sqrt_2_pi = 0.7978845608028654f; // sqrt(2 / M_PI);
-      output[i] = 0.5f * x * (1.0f + tanh(sqrt_2_pi * (x + 0.044715f * x_cubed)));
+      float alpha = sqrt_2_pi * (x + 0.044715f * x_cubed);
+      float expn = exp(2.0f * alpha);
+      float tanhp = (expn - 1.0f) / (expn + 1.0f);
+      output[i] = 0.5f * x * (1.0f + tanhp);
   }
-
 })";
 
 std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
