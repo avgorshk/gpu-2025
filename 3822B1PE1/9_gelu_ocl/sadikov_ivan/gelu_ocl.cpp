@@ -33,16 +33,12 @@ void initOpenClSession(int platformNum)
 	cl::Platform::get(&allPlatforms);
 	if (!allPlatforms.empty())
 	{
-		if (platformNum != 0)
-		{
-			platformNum = 0;
-		}
 		cl::Platform platform = allPlatforms[platformNum];
 		std::vector<cl::Device> allDevices;
 		platform.getDevices(CL_DEVICE_TYPE_GPU, &allDevices);
 		data.context = cl::Context(allDevices);
 
-		data.queue = cl::CommandQueue(data.context, allDevices.front());
+		data.queue = cl::CommandQueue(data.context, allDevices[0]);
 
 		cl::Program program(data.context, kernelCode);
 		program.build(allDevices);
