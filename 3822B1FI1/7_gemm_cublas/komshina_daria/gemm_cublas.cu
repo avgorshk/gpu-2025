@@ -40,7 +40,7 @@ static void initIfNeeded(int n)
         cublasDestroy(handle);
     }
 
-    size_t bytes = n * n * sizeof(float);
+    size_t bytes = size_t(n) * size_t(n) * sizeof(float);
 
     cudaMalloc(&dA, bytes);
     cudaMalloc(&dB, bytes);
@@ -54,7 +54,7 @@ static void initIfNeeded(int n)
 
     cublasCreate(&handle);
     cublasSetStream(handle, stream);
-    
+
     allocatedN = n;
 }
 
@@ -67,7 +67,7 @@ std::vector<float> GemmCUBLAS(const std::vector<float>& a,
 
     initIfNeeded(n);
 
-    size_t bytes = n * n * sizeof(float);
+    size_t bytes = size_t(n) * size_t(n) * sizeof(float);
 
     memcpy(hA_pinned, a.data(), bytes);
     memcpy(hB_pinned, b.data(), bytes);
@@ -84,8 +84,8 @@ std::vector<float> GemmCUBLAS(const std::vector<float>& a,
         CUBLAS_OP_T,
         n, n, n,
         &alpha,
-        dA, n,
         dB, n,
+        dA, n,
         &beta,
         dC, n
     );
