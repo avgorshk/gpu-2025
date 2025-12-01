@@ -1,0 +1,1 @@
+OpenCL error at /home/crazyproger/sandbox/gpu-2025/3822B1PE3/9_gelu_ocl/sarafanov_maxim/gelu_ocl.cpp:116 - -54
