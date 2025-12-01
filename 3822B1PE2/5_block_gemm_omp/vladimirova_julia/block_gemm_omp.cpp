@@ -5,21 +5,22 @@
 std::vector<float> BlockGemmOMP(const std::vector<float>& a, const std::vector<float>& b, int n) {
     
     std::vector<float> c(n*n, 0.0);
-    int num_threads = omp_get_max_threads();
+
     int block_size = 2;
-    if (n <= 256) {
-        block_size = (num_threads <= 4) ? 32 : 16;
+
+    if (n <= 512) {
+        block_size = 64; 
     }
-    else if (n <= 1024) {
-        if (num_threads <= 4) block_size = 64;
-        else if (num_threads <= 8) block_size = 48;
-        else block_size = 32;
+    else if (n <= 2048) {
+        block_size = 128;
     }
     else {
-        if (num_threads <= 4) block_size = 128;
-        else if (num_threads <= 8) block_size = 96;
-        else block_size = 64;
+        block_size = 96; 
     }
+
+    block_size = std::min(block_size, n);
+
+    omp_set_num_threads(4);
 
     block_size = std::min(block_size, n);
         
