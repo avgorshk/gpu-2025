@@ -6,7 +6,7 @@
 
 namespace constants
 {
-    constexpr float sqrt_2_over_pi = 0.7978845608028654f;  // √(2/π)
+    constexpr float sqrt_2_over_pi = 0.7978845608028654f;
     constexpr float gelu_coefficient = 0.044715f;
 }
 
