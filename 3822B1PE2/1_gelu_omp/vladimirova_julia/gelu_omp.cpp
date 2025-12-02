@@ -2,7 +2,7 @@
 
 std::vector<float> GeluOMP(const std::vector<float>& input) {
     size_t vector_size = input.size();
-    std::vector<float> output(input);
+    std::vector<float> output(vector_size);
     float ct_1 = sqrt(2.0f/acos(-1.0f));
     float ct_2 = 0.044715f;
 #pragma omp parallel for
