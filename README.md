@@ -894,6 +894,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE1|ermilova_darya|0.3401|11|
 |3822B1PE1|shvedova_vitalina|0.3413|8|
 |**REF**|**REF**|**0.3419**|**-**|
+|3822B1FI2|yasakova_tanya|0.3426|1|
 |3822B1FI1|solovev_alexey|0.3438|2|
 |3822B1FI1|komshina_daria|0.3439|4|
 |3822B1PE1|odintsov_misha|0.3453|12|
@@ -911,7 +912,6 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE3|sarafanov_maxim|RUN FAILED|-|
 |3822B1FI3|koshkin_nikita|BUILD FAILED|-|
 |3822B1PE1|gnitienko_kirill|BUILD FAILED|-|
-|3822B1FI2|yasakova_tanya|BUILD FAILED|-|
 
 # Tasks Done
 ## 3822B1FI1
@@ -930,9 +930,9 @@ Passed: 5
 |Group|Name|Passed|Score|
 |-----|----|------|-----|
 |3822B1FI2|sdobnov_vladimir|0/9|0|
-|3822B1FI2|yasakova_tanya|8/9|512|
+|3822B1FI2|yasakova_tanya|**9/9**|**576**|
 
-Passed: 0
+Passed: 1
 
 ## 3822B1FI3
 |Group|Name|Passed|Score|
@@ -1008,7 +1008,7 @@ Passed: 3
 
 Passed: 4
 
-**Total Passed: 38**
+**Total Passed: 39**
 
 ---
 *Maximum Score: 576 (64 per task)
