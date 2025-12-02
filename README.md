@@ -910,6 +910,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE4|zinoviev_alexander|RUN FAILED|-|
 |3822B1PE3|sarafanov_maxim|RUN FAILED|-|
 |3822B1FI3|koshkin_nikita|BUILD FAILED|-|
+|3822B1PE1|gnitienko_kirill|BUILD FAILED|-|
 |3822B1FI2|yasakova_tanya|BUILD FAILED|-|
 
 # Tasks Done
