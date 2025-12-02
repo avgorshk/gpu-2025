@@ -1,81 +1,71 @@
 #include "gelu_ocl.h"
-#include <CL/opencl.hpp>
+#include <CL/cl.h>
 #include <iostream>
-#include <vector>
-#include <cmath>
-#include <chrono>
-#include <iomanip>
-#include <CL/opencl.hpp>
-#include <string>
 #include <stdexcept>
+#include <string>
 
-namespace {
-    const char* geluKernelSource = R"CLC(
-        __kernel void gelu(
-            __global const float* input,
-            __global float* output,
-            const int count)
-        {
-            int i = get_global_id(0);
-            if (i < count) {
-                float x = input[i];
-                float x_cubed = x * x * x;
-                float approx = 1.0f + exp(-1.59577f * (x + 0.044715f * x_cubed));
-                output[i] = x / approx;
-            }
-        }
-    )CLC";
+static const std::string KERNEL_CODE = R"(
+__kernel void compute_func(__global const float* data_in, __global float* data_out, int total) {
+    const float factor_a = 0.7978845608028654f;
+    const float factor_b = 0.044715f;
+    
+    int position = get_global_id(0);
+    if (position < total) {
+        float value = data_in[position];
+        float cubed = value * value * value;
+        float computation = factor_a * (value + factor_b * cubed);
+        data_out[position] = 0.5f * value * (1.0f + tanh(computation));
+    }
 }
+)";
 
-std::vector<float> GeluOCL(const std::vector<float>& input) {
-    if (input.empty()) {
-        return {};
-    }
+std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
+    std::vector<float> result;
+    if (input.empty()) return result;
 
-    std::vector<cl::Platform> platforms;
-    cl::Platform::get(&platforms);
-    if (platforms.empty()) {
-        throw std::runtime_error("OpenCL: No platforms found.");
-    }
+    cl_uint platform_count;
+    clGetPlatformIDs(0, NULL, &platform_count);
 
-    cl::Platform platform = platforms.front();
+    std::vector<cl_platform_id> platforms_list(platform_count);
+    clGetPlatformIDs(platform_count, platforms_list.data(), NULL);
 
-    std::vector<cl::Device> devices;
-    platform.getDevices(CL_DEVICE_TYPE_ALL, &devices);
-    if (devices.empty()) {
-        throw std::runtime_error("OpenCL: No devices found.");
-    }
+    cl_platform_id selected_platform = platforms_list[platform];
+    cl_device_id target_device;
+    clGetDeviceIDs(selected_platform, CL_DEVICE_TYPE_GPU, 1, &target_device, NULL);
 
-    cl::Device device = devices.front();
-    cl::Context context(device);
-    cl::CommandQueue queue(context, device);
+    cl_context context = clCreateContext(NULL, 1, &target_device, NULL, NULL, NULL);
+    cl_command_queue command_queue = clCreateCommandQueue(context, target_device, 0, NULL);
 
-    cl::Program::Sources sources;
-    sources.push_back({ geluKernelSource, strlen(geluKernelSource) });
+    const char* kernel_source = KERNEL_CODE.c_str();
+    size_t source_length = KERNEL_CODE.size();
+    cl_program program = clCreateProgramWithSource(context, 1, &kernel_source, &source_length, NULL);
+    clBuildProgram(program, 1, &target_device, NULL, NULL, NULL);
 
-    cl::Program program(context, sources);
-    if (program.build({ device }) != CL_SUCCESS) {
-        std::string build_log = program.getBuildInfo<CL_PROGRAM_BUILD_LOG>(device);
-        throw std::runtime_error("OpenCL build failed:\n" + build_log);
-    }
+    cl_kernel kernel_func = clCreateKernel(program, "compute_func", NULL);
 
-    cl::Kernel kernel(program, "gelu");
+    size_t element_count = input.size();
+    cl_mem input_memory = clCreateBuffer(context, CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR,
+        element_count * sizeof(float), (void*)input.data(), NULL);
+    cl_mem output_memory = clCreateBuffer(context, CL_MEM_WRITE_ONLY,
+        element_count * sizeof(float), NULL, NULL);
 
-    size_t size = input.size();
-    size_t bytes = size * sizeof(float);
-    cl::Buffer bufferIn(context, CL_MEM_READ_ONLY, bytes);
-    cl::Buffer bufferOut(context, CL_MEM_WRITE_ONLY, bytes);
+    clSetKernelArg(kernel_func, 0, sizeof(cl_mem), &input_memory);
+    clSetKernelArg(kernel_func, 1, sizeof(cl_mem), &output_memory);
+    clSetKernelArg(kernel_func, 2, sizeof(int), &element_count);
 
-    queue.enqueueWriteBuffer(bufferIn, CL_TRUE, 0, bytes, input.data());
+    size_t work_size = element_count;
+    clEnqueueNDRangeKernel(command_queue, kernel_func, 1, NULL, &work_size, NULL, 0, NULL, NULL);
 
-    kernel.setArg(0, bufferIn);
-    kernel.setArg(1, bufferOut);
-    kernel.setArg(2, static_cast<int>(size));
+    result.resize(element_count);
+    clEnqueueReadBuffer(command_queue, output_memory, CL_TRUE, 0,
+        element_count * sizeof(float), result.data(), 0, NULL, NULL);
 
-    queue.enqueueNDRangeKernel(kernel, cl::NullRange, cl::NDRange(size), cl::NullRange);
-
-    std::vector<float> result(size);
-    queue.enqueueReadBuffer(bufferOut, CL_TRUE, 0, bytes, result.data());
+    clReleaseMemObject(output_memory);
+    clReleaseMemObject(input_memory);
+    clReleaseKernel(kernel_func);
+    clReleaseProgram(program);
+    clReleaseCommandQueue(command_queue);
+    clReleaseContext(context);
 
     return result;
 }
