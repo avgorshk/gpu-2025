@@ -1,101 +1,52 @@
 #include "gemm_cublas.h"
 
-#include <cuda_runtime.h>
 #include <cublas_v2.h>
-#include <stdexcept>
-#include <mutex>
-
-static float* dA = nullptr;
-static float* dB = nullptr;
-static float* dC = nullptr;
-
-static float* hA_pinned = nullptr;
-static float* hB_pinned = nullptr;
-static float* hC_pinned = nullptr;
-
-static int allocatedN = 0;
-
-static cudaStream_t stream = nullptr;
-static cublasHandle_t handle = nullptr;
-
-static std::mutex initMutex;
-
-static void initIfNeeded(int n)
-{
-    std::lock_guard<std::mutex> lock(initMutex);
-
-    if (allocatedN == n)
-        return;
-
-    if (allocatedN != 0) {
-        cudaFree(dA);
-        cudaFree(dB);
-        cudaFree(dC);
-
-        cudaFreeHost(hA_pinned);
-        cudaFreeHost(hB_pinned);
-        cudaFreeHost(hC_pinned);
-
-        cudaStreamDestroy(stream);
-        cublasDestroy(handle);
-    }
-
-    size_t bytes = size_t(n) * size_t(n) * sizeof(float);
-
-    cudaMalloc(&dA, bytes);
-    cudaMalloc(&dB, bytes);
-    cudaMalloc(&dC, bytes);
-
-    cudaMallocHost(&hA_pinned, bytes);
-    cudaMallocHost(&hB_pinned, bytes);
-    cudaMallocHost(&hC_pinned, bytes);
-
-    cudaStreamCreate(&stream);
-
-    cublasCreate(&handle);
-    cublasSetStream(handle, stream);
-
-    allocatedN = n;
-}
+#include <cuda_runtime.h>
+#include <vector>
 
 std::vector<float> GemmCUBLAS(const std::vector<float>& a,
                               const std::vector<float>& b,
                               int n)
 {
-    if ((int)a.size() != n * n || (int)b.size() != n * n)
-        throw std::runtime_error("Matrix size mismatch");
+    const int N = n;
+    const size_t bytes = size_t(N) * N * sizeof(float);
 
-    initIfNeeded(n);
+    std::vector<float> c(N * N);
 
-    size_t bytes = size_t(n) * size_t(n) * sizeof(float);
+    float* d_A;
+    float* d_B;
+    float* d_C;
 
-    memcpy(hA_pinned, a.data(), bytes);
-    memcpy(hB_pinned, b.data(), bytes);
+    cudaMalloc(&d_A, bytes);
+    cudaMalloc(&d_B, bytes);
+    cudaMalloc(&d_C, bytes);
 
-    cudaMemcpyAsync(dA, hA_pinned, bytes, cudaMemcpyHostToDevice, stream);
-    cudaMemcpyAsync(dB, hB_pinned, bytes, cudaMemcpyHostToDevice, stream);
+    cudaMemcpy(d_A, a.data(), bytes, cudaMemcpyHostToDevice);
+    cudaMemcpy(d_B, b.data(), bytes, cudaMemcpyHostToDevice);
+
+    cublasHandle_t handle;
+    cublasCreate(&handle);
 
     const float alpha = 1.0f;
     const float beta  = 0.0f;
 
     cublasSgemm(
         handle,
-        CUBLAS_OP_T,
-        CUBLAS_OP_T,
-        n, n, n,
+        CUBLAS_OP_N, CUBLAS_OP_N,
+        N, N, N,
         &alpha,
-        dB, n,
-        dA, n,
+        d_B, N,
+        d_A, N,
         &beta,
-        dC, n
+        d_C, N
     );
 
-    cudaMemcpyAsync(hC_pinned, dC, bytes, cudaMemcpyDeviceToHost, stream);
+    cudaMemcpy(c.data(), d_C, bytes, cudaMemcpyDeviceToHost);
 
-    cudaStreamSynchronize(stream);
-
-    std::vector<float> c(n * n);
-    memcpy(c.data(), hC_pinned, bytes);
+    cublasDestroy(handle);
+    cudaFree(d_A);
+    cudaFree(d_B);
+    cudaFree(d_C);
 
     return c;
 }
