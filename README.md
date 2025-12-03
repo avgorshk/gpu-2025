@@ -495,11 +495,11 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE2|kondratev_yaroslav|0.6881|4|
 |3822B1PE1|ermilova_darya|0.6957|14|
 |3822B1PE1|nikolaev_roman|0.6993|13|
+|3822B1PE2|vladimirova_julia|0.7179|10|
 |3822B1FI3|solovyev_danila|0.7275|3|
 |3822B1PE1|sadikov_ivan|0.7339|6|
 |3822B1PE3|sarafanov_maxim|0.7546|3|
 |3822B1PE1|odintsov_misha|0.7605|7|
-|3822B1PE2|vladimirova_julia|TEST FAILED|-|
 |3822B1FI2|sdobnov_vladimir|BUILD FAILED|-|
 
 ## 2_gelu_cuda (134217728 elements)
@@ -535,8 +535,8 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1FI3|solovyev_danila|0.2248|3|
 |3822B1PE2|mukhina_margarita|0.2250|5|
 |3822B1FI3|koshkin_nikita|0.2257|5|
-|3822B1PE1|rams_sergei|0.2259|3|
 |3822B1PE2|korovin_nikita|0.2259|3|
+|3822B1PE1|rams_sergei|0.2259|3|
 |3822B1PE1|sadikov_ivan|0.2262|6|
 |3822B1PE3|sotskov_andrey|0.2269|1|
 |3822B1FI3|kudryashova_irina|0.2274|1|
@@ -983,7 +983,7 @@ Passed: 15
 |3822B1PE2|muradov_mike|**9/9**|**493**|
 |3822B1PE2|sorokin_andrey|**9/9**|**490**|
 |3822B1PE2|titov_semyon|**9/9**|**533**|
-|3822B1PE2|vladimirova_julia|1/9|55|
+|3822B1PE2|vladimirova_julia|2/9|101|
 
 Passed: 9
 
