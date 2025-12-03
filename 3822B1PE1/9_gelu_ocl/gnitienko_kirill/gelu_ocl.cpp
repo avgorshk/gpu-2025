@@ -1,6 +1,6 @@
 #define CL_HPP_TARGET_OPENCL_VERSION 300
 #define CL_HPP_ENABLE_EXCEPTIONS
-#include <CL/cl.hpp>
+#include <CL/opencl.hpp>
 #include <vector>
 #include <stdexcept>
 
@@ -68,4 +68,5 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
     queue.enqueueReadBuffer(output_buffer, CL_TRUE, 0, n * sizeof(float), output.data());
 
     return output;
+
 }
