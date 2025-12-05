@@ -1,0 +1,5 @@
+/usr/bin/ld: /tmp/cc3GR81Z.o: in function `main':
+main.cpp:(.text.startup+0x132): undefined reference to `NaiveGemmOMP(std::vector<float, std::allocator<float> > const&, std::vector<float, std::allocator<float> > const&, int)'
+/usr/bin/ld: main.cpp:(.text.startup+0x294): undefined reference to `NaiveGemmOMP(std::vector<float, std::allocator<float> > const&, std::vector<float, std::allocator<float> > const&, int)'
+/usr/bin/ld: main.cpp:(.text.startup+0x355): undefined reference to `NaiveGemmOMP(std::vector<float, std::allocator<float> > const&, std::vector<float, std::allocator<float> > const&, int)'
+collect2: error: ld returned 1 exit status
