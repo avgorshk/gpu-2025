@@ -579,6 +579,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE1|tyurin_mikhail|0.0308|8|
 |3822B1PE1|ermilova_darya|0.0312|14|
 |3822B1PE1|konstantinov_ilya|0.0325|7|
+|3822B1FI2|shkurinskaya_elena|0.0794|2|
 |3822B1PE1|nikolaev_roman|0.0907|12|
 |3822B1PE3|sotskov_andrey|0.0940|1|
 |3822B1PE2|sorokin_andrey|0.1073|6|
@@ -620,7 +621,6 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE1|odintsov_misha|0.8459|13|
 |3822B1PE4|ghanga_junior|BUILD FAILED|-|
 |3822B1FI2|mezhuev_maksim|BUILD FAILED|-|
-|3822B1FI2|shkurinskaya_elena|BUILD FAILED|-|
 
 ## 4_naive_gemm_cuda (4096 elements)
 |Group|Name|Result|Rank|
@@ -970,10 +970,10 @@ Passed: 5
 |-----|----|------|-----|
 |3822B1FI2|mezhuev_maksim|1/9|63|
 |3822B1FI2|sdobnov_vladimir|0/9|0|
-|3822B1FI2|shkurinskaya_elena|8/9|498|
-|3822B1FI2|yasakova_tanya|**9/9**|**571**|
+|3822B1FI2|shkurinskaya_elena|**9/9**|**561**|
+|3822B1FI2|yasakova_tanya|**9/9**|**570**|
 
-Passed: 1
+Passed: 2
 
 ## 3822B1FI3
 |Group|Name|Passed|Score|
@@ -1051,7 +1051,7 @@ Passed: 3
 
 Passed: 5
 
-**Total Passed: 42**
+**Total Passed: 43**
 
 ---
 *Maximum Score: 576 (64 per task)
