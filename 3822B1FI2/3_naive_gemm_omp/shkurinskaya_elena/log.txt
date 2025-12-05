@@ -1,0 +1,51 @@
+/home/crazyproger/sandbox/gpu-2025/3822B1FI2/3_naive_gemm_omp/shkurinskaya_elena/naive_gemm_omp.cpp: In function ‘std::vector<float> NaiveGemmOMP(const std::vector<float>&, const std::vector<float>&, int)’:
+/home/crazyproger/sandbox/gpu-2025/3822B1FI2/3_naive_gemm_omp/shkurinskaya_elena/naive_gemm_omp.cpp:9:9: error: ‘size_t’ does not name a type
+    9 |   const size_t N = static_cast<size_t>(n);
+      |         ^~~~~~
+/home/crazyproger/sandbox/gpu-2025/3822B1FI2/3_naive_gemm_omp/shkurinskaya_elena/naive_gemm_omp.cpp:6:1: note: ‘size_t’ is defined in header ‘<cstddef>’; did you forget to ‘#include <cstddef>’?
+    5 | #include "naive_gemm_omp.h"
+  +++ |+#include <cstddef>
+    6 | 
+/home/crazyproger/sandbox/gpu-2025/3822B1FI2/3_naive_gemm_omp/shkurinskaya_elena/naive_gemm_omp.cpp:10:9: error: ‘size_t’ does not name a type
+   10 |   const size_t NN = N * N;
+      |         ^~~~~~
+/home/crazyproger/sandbox/gpu-2025/3822B1FI2/3_naive_gemm_omp/shkurinskaya_elena/naive_gemm_omp.cpp:10:9: note: ‘size_t’ is defined in header ‘<cstddef>’; did you forget to ‘#include <cstddef>’?
+/home/crazyproger/sandbox/gpu-2025/3822B1FI2/3_naive_gemm_omp/shkurinskaya_elena/naive_gemm_omp.cpp:12:24: error: ‘NN’ was not declared in this scope
+   12 |   std::vector<float> c(NN, 0.0f);
+      |                        ^~
+/home/crazyproger/sandbox/gpu-2025/3822B1FI2/3_naive_gemm_omp/shkurinskaya_elena/naive_gemm_omp.cpp:19:52: error: ‘N’ was not declared in this scope
+   19 |   for (long long i = 0; i < static_cast<long long>(N); ++i) {
+      |                                                    ^
+/home/crazyproger/sandbox/gpu-2025/3822B1FI2/3_naive_gemm_omp/shkurinskaya_elena/naive_gemm_omp.cpp:22:10: error: ‘size_t’ was not declared in this scope; did you mean ‘std::size_t’?
+   22 |     for (size_t k = 0; k < N; ++k) {
+      |          ^~~~~~
+      |          std::size_t
+In file included from /usr/include/c++/11/bits/stl_algobase.h:59,
+                 from /usr/include/c++/11/vector:60,
+                 from /home/crazyproger/sandbox/gpu-2025/3822B1FI2/3_naive_gemm_omp/shkurinskaya_elena/naive_gemm_omp.cpp:3:
+/usr/include/x86_64-linux-gnu/c++/11/bits/c++config.h:280:33: note: ‘std::size_t’ declared here
+  280 |   typedef __SIZE_TYPE__         size_t;
+      |                                 ^~~~~~
+/home/crazyproger/sandbox/gpu-2025/3822B1FI2/3_naive_gemm_omp/shkurinskaya_elena/naive_gemm_omp.cpp:22:24: error: ‘k’ was not declared in this scope
+   22 |     for (size_t k = 0; k < N; ++k) {
+      |                        ^
+/home/crazyproger/sandbox/gpu-2025/3822B1FI2/3_naive_gemm_omp/shkurinskaya_elena/naive_gemm_omp.cpp:26:13: error: expected ‘;’ before ‘j’
+   26 |       size_t j = 0;
+      |             ^~
+      |             ;
+/home/crazyproger/sandbox/gpu-2025/3822B1FI2/3_naive_gemm_omp/shkurinskaya_elena/naive_gemm_omp.cpp:27:13: error: expected ‘;’ before ‘limit’
+   27 |       size_t limit = N & ~static_cast<size_t>(3);
+      |             ^~~~~~
+      |             ;
+/home/crazyproger/sandbox/gpu-2025/3822B1FI2/3_naive_gemm_omp/shkurinskaya_elena/naive_gemm_omp.cpp:29:14: error: ‘j’ was not declared in this scope
+   29 |       for (; j < limit; j += 4) {
+      |              ^
+/home/crazyproger/sandbox/gpu-2025/3822B1FI2/3_naive_gemm_omp/shkurinskaya_elena/naive_gemm_omp.cpp:29:18: error: ‘limit’ was not declared in this scope
+   29 |       for (; j < limit; j += 4) {
+      |                  ^~~~~
+/home/crazyproger/sandbox/gpu-2025/3822B1FI2/3_naive_gemm_omp/shkurinskaya_elena/naive_gemm_omp.cpp:36:14: error: ‘j’ was not declared in this scope
+   36 |       for (; j < N; ++j) {
+      |              ^
+/home/crazyproger/sandbox/gpu-2025/3822B1FI2/3_naive_gemm_omp/shkurinskaya_elena/naive_gemm_omp.cpp:19:3: error: invalid controlling predicate
+   19 |   for (long long i = 0; i < static_cast<long long>(N); ++i) {
+      |   ^~~
