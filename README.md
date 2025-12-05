@@ -799,6 +799,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE2|titov_semyon|0.0503|1|
 |3822B1PE1|sadikov_ivan|0.0515|5|
 |3822B1PE4|shuravina_oksana|0.0517|2|
+|3822B1PE1|sidorina_polina|0.0518|17|
 |3822B1FI3|lavrentyev_alexey|0.0518|3|
 |3822B1PE3|sotskov_andrey|0.0524|1|
 |3822B1FI1|ionova_ekaterina|0.0527|4|
@@ -830,7 +831,6 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE2|filatieva_elizaveta|0.7555|8|
 |3822B1PE1|nikolaev_roman|0.7786|8|
 |3822B1PE1|morozov_egor|TEST FAILED|-|
-|3822B1PE1|sidorina_polina|TEST FAILED|-|
 |3822B1PE4|ghanga_junior|BUILD FAILED|-|
 |3822B1FI3|kholin_kirill|TEST FAILED|-|
 
@@ -975,27 +975,27 @@ Passed: 3
 ## 3822B1PE1
 |Group|Name|Passed|Score|
 |-----|----|------|-----|
-|3822B1PE1|ermilova_darya|**9/9**|**401**|
+|3822B1PE1|ermilova_darya|**9/9**|**400**|
 |3822B1PE1|gnitienko_kirill|**9/9**|**414**|
-|3822B1PE1|kalyakina_anastasia|8/9|323|
-|3822B1PE1|khasanyanov_kirill|**9/9**|**399**|
+|3822B1PE1|kalyakina_anastasia|8/9|322|
+|3822B1PE1|khasanyanov_kirill|**9/9**|**398**|
 |3822B1PE1|konstantinov_ilya|**9/9**|**458**|
 |3822B1PE1|korablev_vladlen|**9/9**|**463**|
-|3822B1PE1|krylov_mikhail|**9/9**|**484**|
+|3822B1PE1|krylov_mikhail|**9/9**|**483**|
 |3822B1PE1|milovankin_maxim|**9/9**|**468**|
 |3822B1PE1|moiseev_artem|**9/9**|**506**|
 |3822B1PE1|morozov_egor|5/9|221|
-|3822B1PE1|nikolaev_roman|**9/9**|**413**|
-|3822B1PE1|odintsov_misha|**9/9**|**364**|
+|3822B1PE1|nikolaev_roman|**9/9**|**412**|
+|3822B1PE1|odintsov_misha|**9/9**|**363**|
 |3822B1PE1|polikanov_vitaliy|2/9|88|
 |3822B1PE1|rams_sergei|**9/9**|**503**|
 |3822B1PE1|sadikov_ivan|**9/9**|**440**|
 |3822B1PE1|shvedova_vitalina|**9/9**|**463**|
-|3822B1PE1|sidorina_polina|8/9|301|
+|3822B1PE1|sidorina_polina|**9/9**|**340**|
 |3822B1PE1|tyurin_mikhail|**9/9**|**431**|
-|3822B1PE1|vershinina_alexandra|**9/9**|**346**|
+|3822B1PE1|vershinina_alexandra|**9/9**|**345**|
 
-Passed: 15
+Passed: 16
 
 ## 3822B1PE2
 |Group|Name|Passed|Score|
@@ -1035,7 +1035,7 @@ Passed: 3
 
 Passed: 5
 
-**Total Passed: 41**
+**Total Passed: 42**
 
 ---
 *Maximum Score: 576 (64 per task)
