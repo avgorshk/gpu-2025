@@ -2,40 +2,46 @@
 #include <cuda_runtime.h>
 #include <cmath>
 
-__global__ void gelu_kernel(const float* __restrict__ in, float* __restrict__ out, int n) {
+__global__ void GeluKernel(const float* __restrict__ input,
+                           float* __restrict__ output,
+                           int size)
+{
     int i = blockIdx.x * blockDim.x + threadIdx.x;
-    if (i < n) {
-        float x = in[i];
-        // Fast GELU: x * 0.5 * (1 + erf(x / sqrt(2)))
-        const float k = 0.70710678f; // 1/sqrt(2)
-        out[i] = 0.5f * x * (1.0f + erff(x * k));
+    if (i < size) {
+        float x = input[i];
+        float x3 = x * x * x;
+
+        float y = 0.79788456f * (x + 0.044715f * x3); 
+        float exp_val = expf(y);
+        output[i] = x * exp_val / (exp_val + 1.0f);
     }
 }
 
 std::vector<float> GeluCUDA(const std::vector<float>& input) {
-    int n = input.size();
-    if (n == 0) return {};
+    int size = input.size();
+    std::vector<float> output(size);
 
-    float *d_in = nullptr;
-    float *d_out = nullptr;
+    if (size == 0)
+        return output;
 
-    cudaMalloc(&d_in, sizeof(float) * n);
-    cudaMalloc(&d_out, sizeof(float) * n);
+    float *d_input = nullptr;
+    float *d_output = nullptr;
 
-    cudaMemcpyAsync(d_in, input.data(), sizeof(float) * n, cudaMemcpyHostToDevice);
+    cudaMalloc(&d_input, size * sizeof(float));
+    cudaMalloc(&d_output, size * sizeof(float));
 
-    int block = 256;
-    int grid = (n + block - 1) / block;
+    cudaMemcpyAsync(d_input, input.data(), size * sizeof(float), cudaMemcpyHostToDevice);
 
-    gelu_kernel<<<grid, block>>>(d_in, d_out, n);
+    int block_size = 256;
+    int grid_size = (size + block_size - 1) / block_size;
+    GeluKernel<<<grid_size, block_size>>>(d_input, d_output, size);
 
-    std::vector<float> result(n);
-    cudaMemcpyAsync(result.data(), d_out, sizeof(float) * n, cudaMemcpyDeviceToHost);
+    cudaMemcpyAsync(output.data(), d_output, size * sizeof(float), cudaMemcpyDeviceToHost);
 
     cudaDeviceSynchronize();
 
-    cudaFree(d_in);
-    cudaFree(d_out);
+    cudaFree(d_input);
+    cudaFree(d_output);
 
-    return result;
+    return output;
 }
