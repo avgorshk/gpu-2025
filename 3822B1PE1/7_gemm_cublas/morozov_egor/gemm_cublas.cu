@@ -25,6 +25,8 @@
 std::vector<float> GemmCUBLAS(const std::vector<float> &a,
                               const std::vector<float> &b,
                               int n) {
+    cublasHandle_t handle;
+    cublasCreate(&handle);
     size_t size = n * n * sizeof(float);
 
     float *d_A;
@@ -61,6 +63,6 @@ std::vector<float> GemmCUBLAS(const std::vector<float> &a,
     CUDA_CHECK(cudaFree(d_A));
     CUDA_CHECK(cudaFree(d_B));
     CUDA_CHECK(cudaFree(d_C));
-
+    cublasDestroy(handle);
     return result;
 }
