@@ -1,0 +1,5 @@
+/home/crazyproger/sandbox/gpu-2025/3822B1PE1/7_gemm_cublas/morozov_egor/gemm_cublas.cu(43): error: "handle" has already been declared in the current scope
+      cublasHandle_t handle;
+                     ^
+
+1 error detected in the compilation of "/home/crazyproger/sandbox/gpu-2025/3822B1PE1/7_gemm_cublas/morozov_egor/gemm_cublas.cu".
