@@ -1,20 +1,52 @@
-In file included from /usr/include/CL/cl.h:20,
-                 from /home/crazyproger/sandbox/gpu-2025/3822B1FI3/9_gelu_ocl/koshkin_nikita/gelu_ocl.h:5,
-                 from /home/crazyproger/sandbox/gpu-2025/3822B1FI3/9_gelu_ocl/koshkin_nikita/gelu_ocl.cpp:1:
-/usr/include/CL/cl_version.h:22:104: note: ‘#pragma message: cl_version.h: CL_TARGET_OPENCL_VERSION is not defined. Defaulting to 300 (OpenCL 3.0)’
-   22 | #pragma message("cl_version.h: CL_TARGET_OPENCL_VERSION is not defined. Defaulting to 300 (OpenCL 3.0)")
-      |                                                                                                        ^
-/home/crazyproger/sandbox/gpu-2025/3822B1FI3/9_gelu_ocl/koshkin_nikita/gelu_ocl.cpp: In function ‘std::vector<float> GeluOCL(const std::vector<float>&)’:
-/home/crazyproger/sandbox/gpu-2025/3822B1FI3/9_gelu_ocl/koshkin_nikita/gelu_ocl.cpp:33:33: warning: ‘_cl_command_queue* clCreateCommandQueue(cl_context, cl_device_id, cl_command_queue_properties, cl_int*)’ is deprecated [-Wdeprecated-declarations]
-   33 |     queue = clCreateCommandQueue(context, device, 0, NULL);
-      |             ~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~
-In file included from /home/crazyproger/sandbox/gpu-2025/3822B1FI3/9_gelu_ocl/koshkin_nikita/gelu_ocl.h:5,
+/home/crazyproger/sandbox/gpu-2025/3822B1FI3/9_gelu_ocl/koshkin_nikita/gelu_ocl.cpp: In function ‘std::vector<float> GeluOCL(const std::vector<float>&, int)’:
+/home/crazyproger/sandbox/gpu-2025/3822B1FI3/9_gelu_ocl/koshkin_nikita/gelu_ocl.cpp:33:28: error: ‘runtime_error’ is not a member of ‘std’
+   33 |                 throw std::runtime_error("No OpenCL platforms");
+      |                            ^~~~~~~~~~~~~
+/home/crazyproger/sandbox/gpu-2025/3822B1FI3/9_gelu_ocl/koshkin_nikita/gelu_ocl.cpp:36:20: error: ‘runtime_error’ is not a member of ‘std’
+   36 |         throw std::runtime_error("platform_index out of range");
+      |                    ^~~~~~~~~~~~~
+/home/crazyproger/sandbox/gpu-2025/3822B1FI3/9_gelu_ocl/koshkin_nikita/gelu_ocl.cpp:48:28: error: ‘runtime_error’ is not a member of ‘std’
+   48 |                 throw std::runtime_error("clCreateContext failed");
+      |                            ^~~~~~~~~~~~~
+/home/crazyproger/sandbox/gpu-2025/3822B1FI3/9_gelu_ocl/koshkin_nikita/gelu_ocl.cpp:51:33: warning: ‘_cl_command_queue* clCreateCommandQueue(cl_context, cl_device_id, cl_command_queue_properties, cl_int*)’ is deprecated [-Wdeprecated-declarations]
+   51 |     queue = clCreateCommandQueue(context, device, 0, &st);
+      |             ~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~
+In file included from /home/crazyproger/sandbox/gpu-2025/3822B1FI3/9_gelu_ocl/koshkin_nikita/gelu_ocl.h:6,
                  from /home/crazyproger/sandbox/gpu-2025/3822B1FI3/9_gelu_ocl/koshkin_nikita/gelu_ocl.cpp:1:
 /usr/include/CL/cl.h:1906:1: note: declared here
  1906 | clCreateCommandQueue(cl_context                     context,
       | ^~~~~~~~~~~~~~~~~~~~
-/usr/bin/ld: /tmp/cc7vNTiq.o: in function `main':
-main.cpp:(.text.startup+0x9d): undefined reference to `GeluOCL(std::vector<float, std::allocator<float> > const&, int)'
-/usr/bin/ld: main.cpp:(.text.startup+0x2a4): undefined reference to `GeluOCL(std::vector<float, std::allocator<float> > const&, int)'
-/usr/bin/ld: main.cpp:(.text.startup+0x3f1): undefined reference to `GeluOCL(std::vector<float, std::allocator<float> > const&, int)'
-collect2: error: ld returned 1 exit status
+/home/crazyproger/sandbox/gpu-2025/3822B1FI3/9_gelu_ocl/koshkin_nikita/gelu_ocl.cpp:53:28: error: ‘runtime_error’ is not a member of ‘std’
+   53 |                 throw std::runtime_error("clCreateCommandQueue failed");
+      |                            ^~~~~~~~~~~~~
+/home/crazyproger/sandbox/gpu-2025/3822B1FI3/9_gelu_ocl/koshkin_nikita/gelu_ocl.cpp:58:28: error: ‘runtime_error’ is not a member of ‘std’
+   58 |                 throw std::runtime_error("clCreateProgramWithSource failed");
+      |                            ^~~~~~~~~~~~~
+/home/crazyproger/sandbox/gpu-2025/3822B1FI3/9_gelu_ocl/koshkin_nikita/gelu_ocl.cpp:65:14: error: ‘string’ is not a member of ‘std’
+   65 |         std::string log(loglen, '\0');
+      |              ^~~~~~
+/home/crazyproger/sandbox/gpu-2025/3822B1FI3/9_gelu_ocl/koshkin_nikita/gelu_ocl.cpp:2:1: note: ‘std::string’ is defined in header ‘<string>’; did you forget to ‘#include <string>’?
+    1 | #include "gelu_ocl.h"
+  +++ |+#include <string>
+    2 | 
+/home/crazyproger/sandbox/gpu-2025/3822B1FI3/9_gelu_ocl/koshkin_nikita/gelu_ocl.cpp:67:94: error: ‘log’ was not declared in this scope; did you mean ‘long’?
+   67 |                         clGetProgramBuildInfo(program, device, CL_PROGRAM_BUILD_LOG, loglen, log.data(), nullptr);
+      |                                                                                              ^~~
+      |                                                                                              long
+/home/crazyproger/sandbox/gpu-2025/3822B1FI3/9_gelu_ocl/koshkin_nikita/gelu_ocl.cpp:69:20: error: ‘runtime_error’ is not a member of ‘std’
+   69 |         throw std::runtime_error(std::string("clBuildProgram failed: ") + log);
+      |                    ^~~~~~~~~~~~~
+/home/crazyproger/sandbox/gpu-2025/3822B1FI3/9_gelu_ocl/koshkin_nikita/gelu_ocl.cpp:69:39: error: ‘string’ is not a member of ‘std’
+   69 |         throw std::runtime_error(std::string("clBuildProgram failed: ") + log);
+      |                                       ^~~~~~
+/home/crazyproger/sandbox/gpu-2025/3822B1FI3/9_gelu_ocl/koshkin_nikita/gelu_ocl.cpp:69:39: note: ‘std::string’ is defined in header ‘<string>’; did you forget to ‘#include <string>’?
+/home/crazyproger/sandbox/gpu-2025/3822B1FI3/9_gelu_ocl/koshkin_nikita/gelu_ocl.cpp:69:75: error: ‘log’ was not declared in this scope; did you mean ‘long’?
+   69 |         throw std::runtime_error(std::string("clBuildProgram failed: ") + log);
+      |                                                                           ^~~
+      |                                                                           long
+/home/crazyproger/sandbox/gpu-2025/3822B1FI3/9_gelu_ocl/koshkin_nikita/gelu_ocl.cpp:73:28: error: ‘runtime_error’ is not a member of ‘std’
+   73 |                 throw std::runtime_error("clCreateKernel failed");
+      |                            ^~~~~~~~~~~~~
+/home/crazyproger/sandbox/gpu-2025/3822B1FI3/9_gelu_ocl/koshkin_nikita/gelu_ocl.cpp:79:28: error: ‘runtime_error’ is not a member of ‘std’
+   79 |                 throw std::runtime_error("clCreateBuffer failed");
+      |                            ^~~~~~~~~~~~~
