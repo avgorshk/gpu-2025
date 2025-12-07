@@ -919,6 +919,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE2|korovin_nikita|0.2294|5|
 |3822B1FI1|ionova_ekaterina|0.2464|5|
 |3822B1PE3|oturin_alexander|0.2614|3|
+|3822B1PE1|morozov_egor|0.2646|18|
 |3822B1FI3|kirill_kholin|0.2672|2|
 |3822B1PE4|ghanga_junior|0.2706|6|
 |3822B1FI3|lavrentyev_alexey|0.2706|3|
@@ -1001,25 +1002,25 @@ Passed: 3
 |Group|Name|Passed|Score|
 |-----|----|------|-----|
 |3822B1PE1|belov_artem|**9/9**|**382**|
-|3822B1PE1|ermilova_darya|**9/9**|**394**|
-|3822B1PE1|gnitienko_kirill|**9/9**|**406**|
+|3822B1PE1|ermilova_darya|**9/9**|**393**|
+|3822B1PE1|gnitienko_kirill|**9/9**|**405**|
 |3822B1PE1|kalyakina_anastasia|8/9|316|
-|3822B1PE1|khasanyanov_kirill|**9/9**|**389**|
-|3822B1PE1|konstantinov_ilya|**9/9**|**450**|
-|3822B1PE1|korablev_vladlen|**9/9**|**455**|
-|3822B1PE1|krylov_mikhail|**9/9**|**478**|
-|3822B1PE1|milovankin_maxim|**9/9**|**461**|
-|3822B1PE1|moiseev_artem|**9/9**|**499**|
-|3822B1PE1|morozov_egor|7/9|279|
-|3822B1PE1|nikolaev_roman|**9/9**|**406**|
-|3822B1PE1|odintsov_misha|**9/9**|**354**|
+|3822B1PE1|khasanyanov_kirill|**9/9**|**388**|
+|3822B1PE1|konstantinov_ilya|**9/9**|**449**|
+|3822B1PE1|korablev_vladlen|**9/9**|**454**|
+|3822B1PE1|krylov_mikhail|**9/9**|**477**|
+|3822B1PE1|milovankin_maxim|**9/9**|**460**|
+|3822B1PE1|moiseev_artem|**9/9**|**498**|
+|3822B1PE1|morozov_egor|8/9|325|
+|3822B1PE1|nikolaev_roman|**9/9**|**405**|
+|3822B1PE1|odintsov_misha|**9/9**|**353**|
 |3822B1PE1|polikanov_vitaliy|2/9|86|
-|3822B1PE1|rams_sergei|**9/9**|**497**|
-|3822B1PE1|sadikov_ivan|**9/9**|**432**|
-|3822B1PE1|shvedova_vitalina|**9/9**|**456**|
-|3822B1PE1|sidorina_polina|**9/9**|**331**|
-|3822B1PE1|tyurin_mikhail|**9/9**|**425**|
-|3822B1PE1|vershinina_alexandra|**9/9**|**336**|
+|3822B1PE1|rams_sergei|**9/9**|**496**|
+|3822B1PE1|sadikov_ivan|**9/9**|**431**|
+|3822B1PE1|shvedova_vitalina|**9/9**|**455**|
+|3822B1PE1|sidorina_polina|**9/9**|**330**|
+|3822B1PE1|tyurin_mikhail|**9/9**|**424**|
+|3822B1PE1|vershinina_alexandra|**9/9**|**335**|
 
 Passed: 17
 
