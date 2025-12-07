@@ -26,7 +26,8 @@ std::vector<float> GemmCUBLAS(const std::vector<float> &a,
                               const std::vector<float> &b,
                               int n) {
     cublasHandle_t handle;
-    cublasCreate(&handle);
+    CUBLAS_CHECK(cublasCreate(&handle));
+
     size_t size = n * n * sizeof(float);
 
     float *d_A;
@@ -39,9 +40,6 @@ std::vector<float> GemmCUBLAS(const std::vector<float> &a,
 
     CUDA_CHECK(cudaMemcpy(d_A, a.data(), size, cudaMemcpyHostToDevice));
     CUDA_CHECK(cudaMemcpy(d_B, b.data(), size, cudaMemcpyHostToDevice));
-
-    cublasHandle_t handle;
-    CUBLAS_CHECK(cublasCreate(&handle));
 
     const float alpha = 1.0f;
     const float beta = 0.0f;
@@ -59,10 +57,10 @@ std::vector<float> GemmCUBLAS(const std::vector<float> &a,
     std::vector<float> result(n * n);
     CUDA_CHECK(cudaMemcpy(result.data(), d_C, size, cudaMemcpyDeviceToHost));
 
-    CUBLAS_CHECK(cublasDestroy(handle));
     CUDA_CHECK(cudaFree(d_A));
     CUDA_CHECK(cudaFree(d_B));
     CUDA_CHECK(cudaFree(d_C));
-    cublasDestroy(handle);
+    CUBLAS_CHECK(cublasDestroy(handle));
+
     return result;
 }
