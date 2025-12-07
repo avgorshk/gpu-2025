@@ -655,6 +655,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE2|ermolaev_vladislav|0.1841|2|
 |3822B1PE1|kalyakina_anastasia|0.1853|14|
 |3822B1PE1|vershinina_alexandra|0.1856|16|
+|3822B1PE1|belov_artem|0.1934|19|
 |3822B1PE4|shuravina_oksana|0.1955|2|
 |3822B1FI1|komshina_daria|0.2030|4|
 |3822B1PE3|kazunin_nikita|0.2165|2|
@@ -691,6 +692,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1FI3|kholin_kirill|0.0294|1|
 |3822B1PE4|ghanga_junior|0.0295|6|
 |3822B1PE1|ermilova_darya|0.0297|15|
+|3822B1PE1|belov_artem|0.0299|19|
 |3822B1PE2|kondratev_yaroslav|0.0302|5|
 |3822B1PE4|shuravina_oksana|0.0374|2|
 |3822B1PE1|milovankin_maxim|0.0404|8|
@@ -765,6 +767,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE2|kondratev_yaroslav|0.1504|5|
 |3822B1PE2|filatiev_vladislav|0.1505|9|
 |3822B1PE1|kalyakina_anastasia|0.1522|15|
+|3822B1PE1|belov_artem|0.1529|19|
 |3822B1PE1|konstantinov_ilya|0.1544|4|
 |3822B1PE4|ghanga_junior|0.1563|6|
 |3822B1PE1|khasanyanov_kirill|0.1601|12|
@@ -803,6 +806,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE2|korovin_nikita|0.0445|5|
 |3822B1PE1|moiseev_artem|0.0446|1|
 |3822B1FI1|solovev_alexey|0.0447|1|
+|3822B1PE1|belov_artem|0.0448|18|
 |**FAST**|**FAST**|**0.0453**|**-**|
 |3822B1PE1|korablev_vladlen|0.0455|7|
 |3822B1PE1|shvedova_vitalina|0.0461|9|
@@ -852,6 +856,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 ## 8_fft_cufft (131072 elements)
 |Group|Name|Result|Rank|
 |-----|----|------|----|
+|3822B1PE1|belov_artem|0.0903|19|
 |**FAST**|**FAST**|**0.1075**|**-**|
 |3822B1PE1|rams_sergei|0.1094|4|
 |3822B1PE1|moiseev_artem|0.1100|1|
@@ -909,6 +914,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |-----|----|------|----|
 |**FAST**|**FAST**|**0.1188**|**-**|
 |3822B1FI2|shkurinskaya_elena|0.1981|2|
+|3822B1PE1|belov_artem|0.2037|17|
 |3822B1PE4|karaseva_ekaterina|0.2239|3|
 |3822B1PE2|korovin_nikita|0.2294|5|
 |3822B1FI1|ionova_ekaterina|0.2464|5|
@@ -994,28 +1000,28 @@ Passed: 3
 ## 3822B1PE1
 |Group|Name|Passed|Score|
 |-----|----|------|-----|
-|3822B1PE1|belov_artem|3/9|125|
-|3822B1PE1|ermilova_darya|**9/9**|**398**|
-|3822B1PE1|gnitienko_kirill|**9/9**|**411**|
-|3822B1PE1|kalyakina_anastasia|8/9|319|
-|3822B1PE1|khasanyanov_kirill|**9/9**|**395**|
-|3822B1PE1|konstantinov_ilya|**9/9**|**455**|
-|3822B1PE1|korablev_vladlen|**9/9**|**461**|
-|3822B1PE1|krylov_mikhail|**9/9**|**482**|
-|3822B1PE1|milovankin_maxim|**9/9**|**466**|
-|3822B1PE1|moiseev_artem|**9/9**|**504**|
-|3822B1PE1|morozov_egor|7/9|282|
-|3822B1PE1|nikolaev_roman|**9/9**|**410**|
-|3822B1PE1|odintsov_misha|**9/9**|**359**|
+|3822B1PE1|belov_artem|**9/9**|**382**|
+|3822B1PE1|ermilova_darya|**9/9**|**394**|
+|3822B1PE1|gnitienko_kirill|**9/9**|**406**|
+|3822B1PE1|kalyakina_anastasia|8/9|316|
+|3822B1PE1|khasanyanov_kirill|**9/9**|**389**|
+|3822B1PE1|konstantinov_ilya|**9/9**|**450**|
+|3822B1PE1|korablev_vladlen|**9/9**|**455**|
+|3822B1PE1|krylov_mikhail|**9/9**|**478**|
+|3822B1PE1|milovankin_maxim|**9/9**|**461**|
+|3822B1PE1|moiseev_artem|**9/9**|**499**|
+|3822B1PE1|morozov_egor|7/9|279|
+|3822B1PE1|nikolaev_roman|**9/9**|**406**|
+|3822B1PE1|odintsov_misha|**9/9**|**354**|
 |3822B1PE1|polikanov_vitaliy|2/9|86|
-|3822B1PE1|rams_sergei|**9/9**|**502**|
-|3822B1PE1|sadikov_ivan|**9/9**|**437**|
-|3822B1PE1|shvedova_vitalina|**9/9**|**460**|
-|3822B1PE1|sidorina_polina|**9/9**|**336**|
-|3822B1PE1|tyurin_mikhail|**9/9**|**429**|
-|3822B1PE1|vershinina_alexandra|**9/9**|**341**|
+|3822B1PE1|rams_sergei|**9/9**|**497**|
+|3822B1PE1|sadikov_ivan|**9/9**|**432**|
+|3822B1PE1|shvedova_vitalina|**9/9**|**456**|
+|3822B1PE1|sidorina_polina|**9/9**|**331**|
+|3822B1PE1|tyurin_mikhail|**9/9**|**425**|
+|3822B1PE1|vershinina_alexandra|**9/9**|**336**|
 
-Passed: 16
+Passed: 17
 
 ## 3822B1PE2
 |Group|Name|Passed|Score|
@@ -1055,7 +1061,7 @@ Passed: 3
 
 Passed: 5
 
-**Total Passed: 43**
+**Total Passed: 44**
 
 ---
 *Maximum Score: 576 (64 per task)
