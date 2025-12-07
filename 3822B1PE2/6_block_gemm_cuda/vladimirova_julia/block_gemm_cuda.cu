@@ -81,7 +81,9 @@ std::vector<float> BlockGemmCUDA(const std::vector<float>& a, const std::vector<
     cudaMemcpy(d_a, a.data(), d_sz, cudaMemcpyHostToDevice);
     cudaMemcpy(d_b, b.data(), d_sz, cudaMemcpyHostToDevice);
     
-    dim3 blockDim(TILE_SIZE, TILE_SIZE);
+        
+    int threads_per_side = TILE_SIZE / SUB_TILE;
+    dim3 blockDim(threads_per_side, threads_per_side);
     dim3 gridDim((n + TILE_SIZE - 1) / TILE_SIZE, 
                  (n + TILE_SIZE - 1) / TILE_SIZE);
 
