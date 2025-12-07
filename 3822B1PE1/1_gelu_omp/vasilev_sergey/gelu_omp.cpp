@@ -1,39 +1,34 @@
 #include "gelu_omp.h"
 
-#include <vector>
 #include <cmath>
 #include <cstddef>
-
-#ifdef _OPENMP
+#include <vector>
 #include <omp.h>
-#endif
 
-std::vector<float> GeluOMP(const std::vector<float>& input) {
+std::vector<float> GeluOMP(const std::vector<float> &input)
+{
     const std::size_t n = input.size();
-    if (n == 0) {
-        return {};
-    }
-
     std::vector<float> output(n);
 
-    constexpr float kAlpha     = 0.044715f;
-    constexpr float kTwoOverPi = 0.63661977236758134308f;
-    constexpr float kTwo       = 2.0f;
-    constexpr float kOne       = 1.0f;
-    constexpr float kHalf      = 0.5f;
+    if (n == 0)
+    {
+        return output;
+    }
 
-    #pragma omp parallel for simd schedule(static)
-    for (long long i = 0; i < static_cast<long long>(n); ++i) {
-        float x  = input[i];
-        float x2 = x * x;
-        float x3 = x2 * x;
+    constexpr float kSqrt2OverPiScaled = 1.595769122f;
+    constexpr float kC = 0.044715f;
 
-        float inner = kTwoOverPi * (x + kAlpha * x3);
+    const float *in = input.data();
+    float *out = output.data();
 
-        float e = std::exp(-kTwo * inner);
-        float t = (kOne - e) / (kOne + e);
-
-        output[i] = kHalf * x * (kOne + t);
+#pragma omp parallel for simd schedule(static)
+    for (std::size_t i = 0; i < n; ++i)
+    {
+        const float x = in[i];
+        const float x_cubed = x * x * x;
+        const float z = kSqrt2OverPiScaled * (x + kC * x_cubed);
+        const float s = 1.0f / (1.0f + std::exp(-z));
+        out[i] = x * s;
     }
 
     return output;
