@@ -10,7 +10,7 @@ std::vector<float> NaiveGemmOMP(const std::vector<float>& a,
     for (int i = 0; i < n; ++i) {
         for (int j = 0; j < n; ++j) {
             for (int k = 0; k < n; ++k) {
-                result[i * n + k] += a[i * n + j] * b[k * n + k];
+                result[i * n + j] += a[i * n + k] * b[k * n + j];
             }
         }
     }
