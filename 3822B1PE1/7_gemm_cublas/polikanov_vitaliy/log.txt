@@ -1,0 +1,9 @@
+/home/crazyproger/sandbox/gpu-2025/3822B1PE1/7_gemm_cublas/polikanov_vitaliy/gemm_cublas.cu(20): error: "a" has already been declared in the current scope
+      float a = 1.0f;
+            ^
+
+/home/crazyproger/sandbox/gpu-2025/3822B1PE1/7_gemm_cublas/polikanov_vitaliy/gemm_cublas.cu(21): error: "b" has already been declared in the current scope
+      float b = 0.0f;
+            ^
+
+2 errors detected in the compilation of "/home/crazyproger/sandbox/gpu-2025/3822B1PE1/7_gemm_cublas/polikanov_vitaliy/gemm_cublas.cu".
