@@ -452,6 +452,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1FI1|ionova_ekaterina|0.2465|6|
 |3822B1FI1|Ionova_ekaterina|0.2479|4|
 |3822B1PE3|oturin_alexander|0.2526|2|
+|3822B1PE1|vasilev_sergey|0.2554|21|
 |3822B1PE1|rams_sergei|0.2559|5|
 |3822B1FI1|elvin_veliev|0.2598|3|
 |3822B1FI1|shulpin_ilya|0.2636|2|
@@ -1008,26 +1009,27 @@ Passed: 3
 ## 3822B1PE1
 |Group|Name|Passed|Score|
 |-----|----|------|-----|
-|3822B1PE1|belov_artem|**9/9**|**380**|
-|3822B1PE1|ermilova_darya|**9/9**|**392**|
-|3822B1PE1|gnitienko_kirill|**9/9**|**404**|
-|3822B1PE1|kalyakina_anastasia|8/9|315|
-|3822B1PE1|khasanyanov_kirill|**9/9**|**386**|
-|3822B1PE1|konstantinov_ilya|**9/9**|**448**|
-|3822B1PE1|korablev_vladlen|**9/9**|**452**|
+|3822B1PE1|belov_artem|**9/9**|**379**|
+|3822B1PE1|ermilova_darya|**9/9**|**391**|
+|3822B1PE1|gnitienko_kirill|**9/9**|**403**|
+|3822B1PE1|kalyakina_anastasia|8/9|314|
+|3822B1PE1|khasanyanov_kirill|**9/9**|**385**|
+|3822B1PE1|konstantinov_ilya|**9/9**|**447**|
+|3822B1PE1|korablev_vladlen|**9/9**|**451**|
 |3822B1PE1|krylov_mikhail|**9/9**|**477**|
-|3822B1PE1|milovankin_maxim|**9/9**|**458**|
-|3822B1PE1|moiseev_artem|**9/9**|**496**|
-|3822B1PE1|morozov_egor|8/9|322|
-|3822B1PE1|nikolaev_roman|**9/9**|**404**|
-|3822B1PE1|odintsov_misha|**9/9**|**350**|
-|3822B1PE1|polikanov_vitaliy|5/9|193|
-|3822B1PE1|rams_sergei|**9/9**|**494**|
-|3822B1PE1|sadikov_ivan|**9/9**|**430**|
-|3822B1PE1|shvedova_vitalina|**9/9**|**454**|
-|3822B1PE1|sidorina_polina|**9/9**|**328**|
-|3822B1PE1|tyurin_mikhail|**9/9**|**423**|
-|3822B1PE1|vershinina_alexandra|**9/9**|**334**|
+|3822B1PE1|milovankin_maxim|**9/9**|**457**|
+|3822B1PE1|moiseev_artem|**9/9**|**495**|
+|3822B1PE1|morozov_egor|8/9|321|
+|3822B1PE1|nikolaev_roman|**9/9**|**403**|
+|3822B1PE1|odintsov_misha|**9/9**|**349**|
+|3822B1PE1|polikanov_vitaliy|5/9|192|
+|3822B1PE1|rams_sergei|**9/9**|**493**|
+|3822B1PE1|sadikov_ivan|**9/9**|**429**|
+|3822B1PE1|shvedova_vitalina|**9/9**|**453**|
+|3822B1PE1|sidorina_polina|**9/9**|**327**|
+|3822B1PE1|tyurin_mikhail|**9/9**|**422**|
+|3822B1PE1|vasilev_sergey|1/9|43|
+|3822B1PE1|vershinina_alexandra|**9/9**|**333**|
 
 Passed: 17
 
