@@ -15,7 +15,7 @@ std::vector<float> FffCUFFT(const std::vector<float>& input, int batch) {
     int n = i_size / (2 * batch);
     int comp_size = n * batch;
     int d_size = i_size * sizeof(float);
-    int f = 1.0 / n;
+    float f = 1.0 / n;
     std::vector<float> output(i_size);
 
 
