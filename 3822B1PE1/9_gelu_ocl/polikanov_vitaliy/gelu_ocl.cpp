@@ -19,7 +19,7 @@ __kernel void gelu_transform(__global const float* data_in,
 }
 )";
 
-std::vector<float> ComputeGeluOpenCL(const std::vector<float>& input_data,
+std::vector<float> GeluOCL(const std::vector<float>& input_data,
                                      int selected_platform = 0) {
     size_t data_size = input_data.size();
     std::vector<float> output_data(data_size);
