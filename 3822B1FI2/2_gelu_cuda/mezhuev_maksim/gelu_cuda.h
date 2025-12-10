@@ -1,8 +1,8 @@
-#ifndef GELU_CUDA_IMPLEMENTATION_H
-#define GELU_CUDA_IMPLEMENTATION_H
+#ifndef GELU_CUDA_H
+#define GELU_CUDA_H
 
 #include <vector>
 
-std::vector<float> runGeluOnGPU(const std::vector<float>& source);
+std::vector<float> GeluCUDA(const std::vector<float>& input);
 
 #endif

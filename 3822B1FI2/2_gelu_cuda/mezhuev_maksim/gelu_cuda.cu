@@ -11,78 +11,72 @@ __device__ float calculateHyperbolicTangent(float v) {
     return (exponent - 1.0f) / (exponent + 1.0f);
 }
 
-__global__ void executeGeluCalculation(const float* source_data, 
-                                       float* destination_data, 
+__global__ void executeGeluCalculation(const float* source_data,
+                                       float* destination_data,
                                        int element_count) {
     int linear_index = threadIdx.x + blockIdx.x * blockDim.x;
-    
     if (linear_index >= element_count) return;
-    
-    float current_value = source_data[linear_index];
-    float cubed_value = current_value * current_value * current_value;
-    
-    float intermediate = ROOT_TWO_OVER_PI * 
-                        (current_value + CUBIC_COEFFICIENT * cubed_value);
-    
-    float tanh_result = calculateHyperbolicTangent(intermediate);
-    
-    destination_data[linear_index] = ONE_HALF * current_value * 
-                                    (1.0f + tanh_result);
+
+    float x = source_data[linear_index];
+    float x3 = x * x * x;
+
+    float t = ROOT_TWO_OVER_PI * (x + CUBIC_COEFFICIENT * x3);
+    float th = calculateHyperbolicTangent(t);
+
+    destination_data[linear_index] = ONE_HALF * x * (1.0f + th);
 }
 
-std::vector<float> runGeluOnGPU(const std::vector<float>& source) {
-    int total_elements = static_cast<int>(source.size());
+std::vector<float> GeluCUDA(const std::vector<float>& input) {
+    int total_elements = static_cast<int>(input.size());
     std::vector<float> destination(total_elements);
-    
     if (total_elements == 0) return destination;
-    
+
     static float* device_source_buffer = nullptr;
     static float* device_destination_buffer = nullptr;
     static int current_capacity = 0;
-    
+
     cudaError_t error_status;
-    
+
     if (device_source_buffer == nullptr || current_capacity < total_elements) {
         if (device_source_buffer) cudaFree(device_source_buffer);
         if (device_destination_buffer) cudaFree(device_destination_buffer);
-        
-        error_status = cudaMalloc(&device_source_buffer, 
-                                 total_elements * sizeof(float));
+
+        error_status = cudaMalloc(&device_source_buffer,
+                                  total_elements * sizeof(float));
         if (error_status != cudaSuccess) return destination;
-        
-        error_status = cudaMalloc(&device_destination_buffer, 
-                                 total_elements * sizeof(float));
+
+        error_status = cudaMalloc(&device_destination_buffer,
+                                  total_elements * sizeof(float));
         if (error_status != cudaSuccess) {
             cudaFree(device_source_buffer);
             device_source_buffer = nullptr;
             return destination;
         }
-        
+
         current_capacity = total_elements;
     }
-    
+
     cudaStream_t async_stream;
     cudaStreamCreate(&async_stream);
-    
-    cudaMemcpyAsync(device_source_buffer, source.data(), 
-                   total_elements * sizeof(float), 
-                   cudaMemcpyHostToDevice, async_stream);
-    
-    int thread_block_size = 256;
-    int grid_block_count = (total_elements + thread_block_size - 1) / 
-                          thread_block_size;
-    
-    executeGeluCalculation<<<grid_block_count, thread_block_size, 
-                            0, async_stream>>>
-        (device_source_buffer, device_destination_buffer, total_elements);
-    
-    cudaMemcpyAsync(destination.data(), device_destination_buffer,
-                   total_elements * sizeof(float),
-                   cudaMemcpyDeviceToHost, async_stream);
-    
-    cudaStreamSynchronize(async_stream);
 
+    cudaMemcpyAsync(device_source_buffer, input.data(),
+                    total_elements * sizeof(float),
+                    cudaMemcpyHostToDevice, async_stream);
+
+    int thread_block_size = 256;
+    int grid_block_count =
+        (total_elements + thread_block_size - 1) / thread_block_size;
+
+    executeGeluCalculation<<<grid_block_count, thread_block_size, 0,
+                             async_stream>>>(
+        device_source_buffer, device_destination_buffer, total_elements);
+
+    cudaMemcpyAsync(destination.data(), device_destination_buffer,
+                    total_elements * sizeof(float),
+                    cudaMemcpyDeviceToHost, async_stream);
+
+    cudaStreamSynchronize(async_stream);
     cudaStreamDestroy(async_stream);
-    
+
     return destination;
 }
