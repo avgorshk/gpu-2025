@@ -1,47 +1,62 @@
 #include "gelu_cuda.h"
 #include <cuda_runtime.h>
 #include <cmath>
+#include <cstdio>
+#include <cstdlib>
+#include <vector>
 
-__global__ void GeluKernel(const float* __restrict__ input,
-                           float* __restrict__ output,
-                           int size)
-{
-    int i = blockIdx.x * blockDim.x + threadIdx.x;
-    if (i < size) {
-        float x = input[i];
-        float x3 = x * x * x;
+#define CUDA_SAFE(x) do {                                          \
+    cudaError_t e = (x);                                           \
+    if (e != cudaSuccess) {                                        \
+        fprintf(stderr, "CUDA failure at %s:%d: %s\n",             \
+                __FILE__, __LINE__, cudaGetErrorString(e));        \
+        exit(EXIT_FAILURE);                                        \
+    }                                                              \
+} while (0)
 
-        float y = 0.79788456f * (x + 0.044715f * x3); 
-        float exp_val = expf(y);
-        output[i] = x * exp_val / (exp_val + 1.0f);
+__device__ float approx_gelu(float v) {
+    const float poly_k = 0.044715f;
+    const float inv_sqrt_pi2 = sqrtf(2.0f / 3.14159265358979323846f);
+
+    float v3 = v * v * v;
+    float arg = inv_sqrt_pi2 * (v + poly_k * v3);
+
+    float sig = 1.0f / (1.0f + expf(-2.0f * arg));
+    return v * sig;
+}
+
+__global__ void kernel_gelu(const float* src, float* dst, size_t count) {
+    size_t tid = blockIdx.x * blockDim.x + threadIdx.x;
+    if (tid < count) {
+        dst[tid] = approx_gelu(src[tid]);
     }
 }
 
-std::vector<float> GeluCUDA(const std::vector<float>& input) {
-    int size = input.size();
-    std::vector<float> output(size);
+std::vector<float> computeGeluGPU(const std::vector<float>& data) {
+    size_t count = data.size();
+    if (count == 0) return {};
 
-    if (size == 0)
-        return output;
+    size_t mem = count * sizeof(float);
+    float* d_src = nullptr;
+    float* d_dst = nullptr;
 
-    float *d_input = nullptr;
-    float *d_output = nullptr;
+    CUDA_SAFE(cudaMalloc(&d_src, mem));
+    CUDA_SAFE(cudaMalloc(&d_dst, mem));
 
-    cudaMalloc(&d_input, size * sizeof(float));
-    cudaMalloc(&d_output, size * sizeof(float));
+    CUDA_SAFE(cudaMemcpy(d_src, data.data(), mem, cudaMemcpyHostToDevice));
 
-    cudaMemcpyAsync(d_input, input.data(), size * sizeof(float), cudaMemcpyHostToDevice);
+    const int blockSize = 256;
+    const int gridSize = (count + blockSize - 1) / blockSize;
 
-    int block_size = 256;
-    int grid_size = (size + block_size - 1) / block_size;
-    GeluKernel<<<grid_size, block_size>>>(d_input, d_output, size);
+    kernel_gelu<<<gridSize, blockSize>>>(d_src, d_dst, count);
+    CUDA_SAFE(cudaGetLastError());
+    CUDA_SAFE(cudaDeviceSynchronize());
 
-    cudaMemcpyAsync(output.data(), d_output, size * sizeof(float), cudaMemcpyDeviceToHost);
+    std::vector<float> result(count);
+    CUDA_SAFE(cudaMemcpy(result.data(), d_dst, mem, cudaMemcpyDeviceToHost));
 
-    cudaDeviceSynchronize();
+    CUDA_SAFE(cudaFree(d_src));
+    CUDA_SAFE(cudaFree(d_dst));
 
-    cudaFree(d_input);
-    cudaFree(d_output);
-
-    return output;
+    return result;
 }
