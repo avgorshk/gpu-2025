@@ -2,7 +2,9 @@
 #define __GELU_OCL_H
 
 #include <vector>
-#define CL_TARGET_OPENCL_VERSION 200
+#include <cmath>
+#include <cstring>
+#include <string>
 #include <CL/cl.h>
 
 std::vector<float> GeluOCL(const std::vector<float>& input, int platform);

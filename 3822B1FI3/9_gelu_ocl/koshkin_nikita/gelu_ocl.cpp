@@ -13,91 +13,76 @@ const char* GeluKernel = R"(
     )";
 
 
-std::vector<float> GeluOCL(const std::vector<float>& input, int platform_index) {
-
-    const size_t size = input.size(), memory = size * sizeof(float);
-    std::vector<float> result(size);
-
+struct GeluOCLState {
     cl_platform_id platform;
     cl_device_id device;
     cl_context context;
     cl_command_queue queue;
     cl_program program;
-    cl_kernel kernel;
-    cl_mem in, out;
-    cl_int st;
-    
-    cl_uint nplat = 0;
-    clGetPlatformIDs(0, nullptr, &nplat);
-    if (nplat == 0) {
-		throw std::runtime_error("No OpenCL platforms");
-	}
-    if (platform_index < 0 || (cl_uint)platform_index >= nplat){
-        throw std::runtime_error("platform_index out of range");
-	}
-    std::vector<cl_platform_id> plats(nplat);
-    clGetPlatformIDs(nplat, plats.data(), nullptr);
-    platform = plats[(size_t)platform_index];
-	
-    if (clGetDeviceIDs(platform, CL_DEVICE_TYPE_GPU, 1, &device, nullptr) != CL_SUCCESS) {
-        clGetDeviceIDs(platform, CL_DEVICE_TYPE_ALL, 1, &device, nullptr);
-    }
+    cl_kernel kernel_handle;
+};
 
-    context = clCreateContext(NULL, 1, &device, NULL, NULL, &st);
-    if (st != CL_SUCCESS) {
-		throw std::runtime_error("clCreateContext failed");
-	}
-	
-    queue = clCreateCommandQueue(context, device, 0, &st);
-    if (st != CL_SUCCESS) {
-		throw std::runtime_error("clCreateCommandQueue failed");
-	}
+GeluOCLState* GeluOCL_Init(int platform_index) {
+    GeluOCLState* s = new GeluOCLState();
 
-    program = clCreateProgramWithSource(context, 1, &GeluKernel, NULL, &st);
-    if (st != CL_SUCCESS) {
-		throw std::runtime_error("clCreateProgramWithSource failed");
-	}
-    const char* args = "-cl-fast-relaxed-math";
-    st = clBuildProgram(program, 1, &device, args, NULL, NULL);
-    if (st != CL_SUCCESS) {
-        size_t loglen = 0;
-        clGetProgramBuildInfo(program, device, CL_PROGRAM_BUILD_LOG, 0, nullptr, &loglen);
-        std::string log(loglen, '\0');
-        if (loglen) {
-			clGetProgramBuildInfo(program, device, CL_PROGRAM_BUILD_LOG, loglen, log.data(), nullptr);
-		}
-        throw std::runtime_error(std::string("clBuildProgram failed: ") + log);
-    }
-    kernel = clCreateKernel(program, "GeluKernel", &st);
-    if (st != CL_SUCCESS) {
-		throw std::runtime_error("clCreateKernel failed");
-	}
+    cl_uint numPlatforms = 0;
+    clGetPlatformIDs(0, nullptr, &numPlatforms);
+    std::vector<cl_platform_id> plats(numPlatforms);
+    clGetPlatformIDs(numPlatforms, plats.data(), nullptr);
+    s->platform = plats[platform_index];
 
-    in  = clCreateBuffer(context, CL_MEM_READ_ONLY,  memory, NULL, &st);
-    out = clCreateBuffer(context, CL_MEM_WRITE_ONLY, memory, NULL, &st);
-    if (st != CL_SUCCESS) {
-		throw std::runtime_error("clCreateBuffer failed");
-	}
+    cl_uint numDevices = 0;
+    clGetDeviceIDs(s->platform, CL_DEVICE_TYPE_GPU, 0, nullptr, &numDevices);
+    std::vector<cl_device_id> devs(numDevices);
+    clGetDeviceIDs(s->platform, CL_DEVICE_TYPE_GPU, numDevices, devs.data(), nullptr);
+    s->device = devs[0];
 
-    clEnqueueWriteBuffer(queue, in, CL_TRUE, 0, memory, input.data(), 0, NULL, NULL);
+    s->context = clCreateContext(nullptr, 1, &s->device, nullptr, nullptr, nullptr);
+    s->queue = clCreateCommandQueue(s->context, s->device, 0, nullptr);
 
-    cl_uint n = (cl_uint)size;
-    clSetKernelArg(kernel, 0, sizeof(cl_mem),  &in);
-    clSetKernelArg(kernel, 1, sizeof(cl_mem),  &out);
-    clSetKernelArg(kernel, 2, sizeof(cl_uint), &n);
+    const char* src = kernel;
+    size_t srcSize = std::strlen(src);
+    s->program = clCreateProgramWithSource(s->context, 1, &src, &srcSize, nullptr);
+    clBuildProgram(s->program, 1, &s->device, nullptr, nullptr, nullptr);
+    s->kernel_handle = clCreateKernel(s->program, "gelu_kernel", nullptr);
 
-    const size_t block = BLOCK_SIZE;
-    const size_t grid  = ((size + block - 1) / block) * block;
+    return s;
+}
 
-    clEnqueueNDRangeKernel(queue, kernel, 1, NULL, &grid, &block, 0, NULL, NULL);
-    clEnqueueReadBuffer(queue, out, CL_TRUE, 0, memory, result.data(), 0, NULL, NULL);
+void GeluOCL_Shutdown(GeluOCLState* s) {
+    if (!s) { return; }
+    clReleaseKernel(s->kernel_handle);
+    clReleaseProgram(s->program);
+    clReleaseCommandQueue(s->queue);
+    clReleaseContext(s->context);
+    delete s;
+}
 
-    clReleaseMemObject(in);
-    clReleaseMemObject(out);
-    clReleaseKernel(kernel);
-    clReleaseProgram(program);
-    clReleaseCommandQueue(queue);
-    clReleaseContext(context);
+std::vector<float> GeluOCL_Run(GeluOCLState* s, const std::vector<float>& input) {
+    size_t n = input.size();
+    std::vector<float> output(n);
+    size_t bytes = n * sizeof(float);
 
-    return result;
+    cl_mem inBuf = clCreateBuffer(s->context, CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR, bytes, (void*)input.data(), nullptr);
+    cl_mem outBuf = clCreateBuffer(s->context, CL_MEM_WRITE_ONLY, bytes, nullptr, nullptr);
+
+    int ni = static_cast<int>(n);
+    clSetKernelArg(s->kernel_handle, 0, sizeof(cl_mem), &inBuf);
+    clSetKernelArg(s->kernel_handle, 1, sizeof(cl_mem), &outBuf);
+    clSetKernelArg(s->kernel_handle, 2, sizeof(int), &ni);
+
+    const size_t local = 256;
+    size_t global = ((n + local - 1) / local) * local;
+    clEnqueueNDRangeKernel(s->queue, s->kernel_handle, 1, nullptr, &global, &local, 0, nullptr, nullptr);
+    clEnqueueReadBuffer(s->queue, outBuf, CL_TRUE, 0, bytes, output.data(), 0, nullptr, nullptr);
+
+    clReleaseMemObject(inBuf);
+    clReleaseMemObject(outBuf);
+
+    return output;
+}
+
+std::vector<float> GeluOCL(const std::vector<float>& input, int platform = 0) {
+    static GeluOCLState* state = GeluOCL_Init(platform);
+    return GeluOCL_Run(state, input);
 }
