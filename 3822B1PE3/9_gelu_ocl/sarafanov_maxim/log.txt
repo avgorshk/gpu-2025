@@ -3,8 +3,16 @@ In file included from /usr/include/CL/cl.h:20,
 /usr/include/CL/cl_version.h:22:104: note: ‘#pragma message: cl_version.h: CL_TARGET_OPENCL_VERSION is not defined. Defaulting to 300 (OpenCL 3.0)’
    22 | #pragma message("cl_version.h: CL_TARGET_OPENCL_VERSION is not defined. Defaulting to 300 (OpenCL 3.0)")
       |                                                                                                        ^
-/home/crazyproger/sandbox/gpu-2025/3822B1PE3/9_gelu_ocl/sarafanov_maxim/gelu_ocl.cpp: In function ‘void InitOpenCL(int)’:
-/home/crazyproger/sandbox/gpu-2025/3822B1PE3/9_gelu_ocl/sarafanov_maxim/gelu_ocl.cpp:44:26: error: ‘CL_DEVICE_GPU’ was not declared in this scope; did you mean ‘CL_DEVICE_TYPE’?
-   44 |     clGetDeviceIDs(plat, CL_DEVICE_GPU, 0, nullptr, &num_devices);
-      |                          ^~~~~~~~~~~~~
-      |                          CL_DEVICE_TYPE
+/home/crazyproger/sandbox/gpu-2025/3822B1PE3/9_gelu_ocl/sarafanov_maxim/gelu_ocl.cpp: In function ‘std::vector<float> runGeluOpenCL(const std::vector<float>&, int)’:
+/home/crazyproger/sandbox/gpu-2025/3822B1PE3/9_gelu_ocl/sarafanov_maxim/gelu_ocl.cpp:52:50: warning: ‘_cl_command_queue* clCreateCommandQueue(cl_context, cl_device_id, cl_command_queue_properties, cl_int*)’ is deprecated [-Wdeprecated-declarations]
+   52 |     cl_command_queue queue = clCreateCommandQueue(ctx, device, 0, &status);
+      |                              ~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~
+In file included from /home/crazyproger/sandbox/gpu-2025/3822B1PE3/9_gelu_ocl/sarafanov_maxim/gelu_ocl.cpp:2:
+/usr/include/CL/cl.h:1906:1: note: declared here
+ 1906 | clCreateCommandQueue(cl_context                     context,
+      | ^~~~~~~~~~~~~~~~~~~~
+/usr/bin/ld: /tmp/ccINbwnM.o: in function `main':
+main.cpp:(.text.startup+0x9d): undefined reference to `GeluOCL(std::vector<float, std::allocator<float> > const&, int)'
+/usr/bin/ld: main.cpp:(.text.startup+0x2a4): undefined reference to `GeluOCL(std::vector<float, std::allocator<float> > const&, int)'
+/usr/bin/ld: main.cpp:(.text.startup+0x3f1): undefined reference to `GeluOCL(std::vector<float, std::allocator<float> > const&, int)'
+collect2: error: ld returned 1 exit status
