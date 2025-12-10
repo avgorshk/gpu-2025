@@ -17,9 +17,9 @@ std::vector<float> GemmCUBLAS(const std::vector<float>& a,
     cudaMalloc(&res_matrix, memory);
     cudaMemcpy(matrix1, a.data(), memory, cudaMemcpyHostToDevice);
     cudaMemcpy(matrix2, b.data(), memory, cudaMemcpyHostToDevice);
-    float a = 1.0f;
-    float b = 0.0f;
-    cublasSgemm(handle, CUBLAS_OP_N, CUBLAS_OP_N, n, n, n, &a, matrix2, n, matrix1, n, &b, res_matrix, n);
+    float a_coef = 1.0f;
+    float b_coef = 0.0f;
+    cublasSgemm(handle, CUBLAS_OP_N, CUBLAS_OP_N, n, n, n, &a_coef, matrix2, n, matrix1, n, &b_coef, res_matrix, n);
     std::vector<float> matmul_res(n * n);
     cudaMemcpy(matmul_res.data(), res_matrix, memory, cudaMemcpyDeviceToHost);
     cudaFree(matrix1);
