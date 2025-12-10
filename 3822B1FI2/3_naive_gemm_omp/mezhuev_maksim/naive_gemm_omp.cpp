@@ -2,24 +2,21 @@
 #include <omp.h>
 #include <vector>
 
-std::vector<float> MatrixMultiplyOMP(
-    const std::vector<float>& mat_a,
-    const std::vector<float>& mat_b,
-    int matrix_size) {
-    
-    std::vector<float> mat_c(matrix_size * matrix_size, 0.0f);
+std::vector<float> NaiveGemmOMP(const std::vector<float>& a,
+                                const std::vector<float>& b,
+                                int n) {
+    std::vector<float> c(n * n, 0.0f);
 
     #pragma omp parallel for schedule(static)
-    for (int row = 0; row < matrix_size; ++row) {
-        for (int col = 0; col < matrix_size; ++col) {
-            float dot_product = 0.0f;
-            for (int k = 0; k < matrix_size; ++k) {
-                dot_product += mat_a[row * matrix_size + k] * 
-                               mat_b[k * matrix_size + col];
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < n; ++j) {
+            float sum = 0.0f;
+            for (int k = 0; k < n; ++k) {
+                sum += a[i * n + k] * b[k * n + j];
             }
-            mat_c[row * matrix_size + col] = dot_product;
+            c[i * n + j] = sum;
         }
     }
 
-    return mat_c;
+    return c;
 }

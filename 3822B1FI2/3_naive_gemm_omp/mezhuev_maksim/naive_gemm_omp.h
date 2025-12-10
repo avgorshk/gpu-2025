@@ -1,11 +1,10 @@
-#ifndef NAIVE_GEMM_OMP_H
-#define NAIVE_GEMM_OMP_H
+#ifndef __NAIVE_GEMM_OMP_H
+#define __NAIVE_GEMM_OMP_H
 
 #include <vector>
 
-std::vector<float> MatrixMultiplyOMP(
-    const std::vector<float>& mat_a,
-    const std::vector<float>& mat_b,
-    int matrix_size);
+std::vector<float> NaiveGemmOMP(const std::vector<float>& a,
+                                const std::vector<float>& b,
+                                int n);
 
-#endif // NAIVE_GEMM_OMP_H
+#endif // __NAIVE_GEMM_OMP_H
