@@ -1,11 +1,10 @@
-#ifndef CUDA_MATRIX_MULTIPLY_H
-#define CUDA_MATRIX_MULTIPLY_H
+#ifndef __NAIVE_GEMM_CUDA_H
+#define __NAIVE_GEMM_CUDA_H
 
 #include <vector>
 
-std::vector<float> CudaMatrixMultiply(
-    const std::vector<float>& matrix_A,
-    const std::vector<float>& matrix_B,
-    int matrix_dim);
+std::vector<float> NaiveGemmCUDA(const std::vector<float>& a,
+                                 const std::vector<float>& b,
+                                 int n);
 
-#endif // CUDA_MATRIX_MULTIPLY_H
+#endif // __NAIVE_GEMM_CUDA_H
