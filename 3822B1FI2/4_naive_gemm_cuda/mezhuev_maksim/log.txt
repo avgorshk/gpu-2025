@@ -1,5 +1,0 @@
-/usr/bin/ld: /tmp/tmpxft_00000879_00000000-12_main.o: in function `main':
-main.cpp:(.text.startup+0x132): undefined reference to `NaiveGemmCUDA(std::vector<float, std::allocator<float> > const&, std::vector<float, std::allocator<float> > const&, int)'
-/usr/bin/ld: main.cpp:(.text.startup+0x296): undefined reference to `NaiveGemmCUDA(std::vector<float, std::allocator<float> > const&, std::vector<float, std::allocator<float> > const&, int)'
-/usr/bin/ld: main.cpp:(.text.startup+0x367): undefined reference to `NaiveGemmCUDA(std::vector<float, std::allocator<float> > const&, std::vector<float, std::allocator<float> > const&, int)'
-collect2: error: ld returned 1 exit status
