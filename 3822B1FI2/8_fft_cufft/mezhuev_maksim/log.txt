@@ -1,0 +1,5 @@
+/usr/bin/ld: /tmp/tmpxft_00000940_00000000-12_main.o: in function `main':
+main.cpp:(.text.startup+0x8c): undefined reference to `FffCUFFT(std::vector<float, std::allocator<float> > const&, int)'
+/usr/bin/ld: main.cpp:(.text.startup+0x21a): undefined reference to `FffCUFFT(std::vector<float, std::allocator<float> > const&, int)'
+/usr/bin/ld: main.cpp:(.text.startup+0x2cc): undefined reference to `FffCUFFT(std::vector<float, std::allocator<float> > const&, int)'
+collect2: error: ld returned 1 exit status
