@@ -1,5 +1,4 @@
 #include "gelu_ocl.h"
-
 #define BLOCK_SIZE 256
 
 const char* GeluKernel = R"(
@@ -40,7 +39,7 @@ GeluOCLState* GeluOCL_Init(int platform_index) {
     s->context = clCreateContext(nullptr, 1, &s->device, nullptr, nullptr, nullptr);
     s->queue = clCreateCommandQueue(s->context, s->device, 0, nullptr);
 
-    const char* src = kernel;
+    const char* src = GeluKernel;
     size_t srcSize = std::strlen(src);
     s->program = clCreateProgramWithSource(s->context, 1, &src, &srcSize, nullptr);
     clBuildProgram(s->program, 1, &s->device, nullptr, nullptr, nullptr);
