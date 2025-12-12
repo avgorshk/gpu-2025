@@ -687,6 +687,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE1|moiseev_artem|0.2539|2|
 |3822B1PE4|zinoviev_alexander|0.2612|3|
 |3822B1FI1|solovev_alexey|0.2613|1|
+|3822B1PE1|korneeva_ekaterina|0.2698|23|
 |3822B1PE1|korablev_vladlen|0.2780|3|
 |3822B1PE1|rams_sergei|0.3064|1|
 |3822B1PE1|gnitienko_kirill|0.3485|9|
@@ -712,6 +713,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE1|ermilova_darya|0.0297|15|
 |3822B1PE1|belov_artem|0.0299|19|
 |3822B1PE2|kondratev_yaroslav|0.0302|5|
+|3822B1PE1|korneeva_ekaterina|0.0303|23|
 |3822B1PE4|shuravina_oksana|0.0374|2|
 |3822B1PE1|milovankin_maxim|0.0404|8|
 |3822B1PE4|zinoviev_alexander|0.0411|3|
@@ -815,6 +817,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE1|vershinina_alexandra|0.2497|14|
 |3822B1PE2|muradov_mike|0.2517|7|
 |**REF**|**REF**|**0.3026**|**-**|
+|3822B1PE1|korneeva_ekaterina|0.3232|23|
 |3822B1PE1|ermilova_darya|0.3264|13|
 |3822B1PE1|kapustin_ivan|0.3287|22|
 |3822B1PE1|vasilev_sergey|0.3372|21|
@@ -880,6 +883,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE2|filatiev_vladislav|0.5419|9|
 |3822B1PE2|filatieva_elizaveta|0.7555|8|
 |3822B1PE1|nikolaev_roman|0.7786|8|
+|3822B1PE1|korneeva_ekaterina|TEST FAILED|-|
 |3822B1PE4|ghanga_junior|BUILD FAILED|-|
 |3822B1FI3|kholin_kirill|TEST FAILED|-|
 
@@ -887,6 +891,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |Group|Name|Result|Rank|
 |-----|----|------|----|
 |3822B1PE1|belov_artem|0.0903|19|
+|3822B1PE1|korneeva_ekaterina|0.0909|23|
 |**FAST**|**FAST**|**0.1075**|**-**|
 |3822B1PE1|kapustin_ivan|0.1084|22|
 |3822B1PE1|rams_sergei|0.1094|4|
@@ -1000,6 +1005,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE1|konstantinov_ilya|0.3629|4|
 |3822B1PE2|sorokin_andrey|0.3648|3|
 |3822B1PE1|vershinina_alexandra|0.6035|9|
+|3822B1PE1|korneeva_ekaterina|TOO SLOW|-|
 |3822B1FI3|koshkin_nikita|BUILD FAILED|-|
 
 # Tasks Done
@@ -1042,29 +1048,29 @@ Passed: 3
 |Group|Name|Passed|Score|
 |-----|----|------|-----|
 |3822B1PE1|belov_artem|**9/9**|**376**|
-|3822B1PE1|ermilova_darya|**9/9**|**381**|
-|3822B1PE1|gnitienko_kirill|**9/9**|**388**|
-|3822B1PE1|kalyakina_anastasia|8/9|304|
-|3822B1PE1|kapustin_ivan|**9/9**|**298**|
-|3822B1PE1|khasanyanov_kirill|**9/9**|**373**|
-|3822B1PE1|konstantinov_ilya|**9/9**|**433**|
-|3822B1PE1|korablev_vladlen|**9/9**|**439**|
-|3822B1PE1|korneeva_ekaterina|3/9|89|
-|3822B1PE1|krylov_mikhail|**9/9**|**467**|
-|3822B1PE1|milovankin_maxim|**9/9**|**449**|
-|3822B1PE1|moiseev_artem|**9/9**|**484**|
-|3822B1PE1|morozov_egor|**9/9**|**334**|
-|3822B1PE1|nikolaev_roman|**9/9**|**386**|
-|3822B1PE1|odintsov_misha|**9/9**|**325**|
-|3822B1PE1|polikanov_vitaliy|**9/9**|**313**|
-|3822B1PE1|rams_sergei|**9/9**|**484**|
-|3822B1PE1|sadikov_ivan|**9/9**|**417**|
-|3822B1PE1|shvedova_vitalina|**9/9**|**440**|
-|3822B1PE1|sidorina_polina|**9/9**|**314**|
-|3822B1PE1|tyurin_mikhail|**9/9**|**413**|
-|3822B1PE1|vasilev_sergey|**9/9**|**293**|
+|3822B1PE1|ermilova_darya|**9/9**|**379**|
+|3822B1PE1|gnitienko_kirill|**9/9**|**385**|
+|3822B1PE1|kalyakina_anastasia|8/9|302|
+|3822B1PE1|kapustin_ivan|**9/9**|**295**|
+|3822B1PE1|khasanyanov_kirill|**9/9**|**370**|
+|3822B1PE1|konstantinov_ilya|**9/9**|**431**|
+|3822B1PE1|korablev_vladlen|**9/9**|**436**|
+|3822B1PE1|korneeva_ekaterina|7/9|219|
+|3822B1PE1|krylov_mikhail|**9/9**|**465**|
+|3822B1PE1|milovankin_maxim|**9/9**|**447**|
+|3822B1PE1|moiseev_artem|**9/9**|**482**|
+|3822B1PE1|morozov_egor|**9/9**|**331**|
+|3822B1PE1|nikolaev_roman|**9/9**|**384**|
+|3822B1PE1|odintsov_misha|**9/9**|**322**|
+|3822B1PE1|polikanov_vitaliy|**9/9**|**311**|
+|3822B1PE1|rams_sergei|**9/9**|**481**|
+|3822B1PE1|sadikov_ivan|**9/9**|**415**|
+|3822B1PE1|shvedova_vitalina|**9/9**|**438**|
+|3822B1PE1|sidorina_polina|**9/9**|**312**|
+|3822B1PE1|tyurin_mikhail|**9/9**|**411**|
+|3822B1PE1|vasilev_sergey|**9/9**|**290**|
 |3822B1PE1|vedernikova_kseniya|3/9|90|
-|3822B1PE1|vershinina_alexandra|**9/9**|**316**|
+|3822B1PE1|vershinina_alexandra|**9/9**|**314**|
 
 Passed: 21
 
