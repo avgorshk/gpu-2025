@@ -1,16 +1,23 @@
 #include "gelu_ocl.h"
-#define BLOCK_SIZE 256
 
-const char* GeluKernel = R"(
-    __kernel void GeluKernel(__global const float* in, __global float* out, const int size) {
-        int idx = get_global_id(0);
-        if (idx < size) {
-            float x = in[idx];
-            out[idx] = 0.5f * x * (1.0f + tanh(0.797884f * (x + 0.044715f * (x * x * x))));
-        }
+static const char* kernel = R"CLC(
+__kernel void gelu_kernel(__global const float* in,
+                          __global float* out,
+                          const int n)
+{
+    int i = get_global_id(0);
+    if (i < n) {
+        const float x = in[i];
+        const float c = 0.044715f;
+        const float sqrt_2_over_pi = 0.7978845608028654f;
+
+        float x3 = x * x * x;
+        float z = sqrt_2_over_pi * (x + c * x3);
+        float s = 1.0f / (1.0f + exp(-2.0f * z));
+        out[i] = x * s;
     }
-    )";
-
+}
+)CLC";
 
 struct GeluOCLState {
     cl_platform_id platform;
@@ -39,7 +46,7 @@ GeluOCLState* GeluOCL_Init(int platform_index) {
     s->context = clCreateContext(nullptr, 1, &s->device, nullptr, nullptr, nullptr);
     s->queue = clCreateCommandQueue(s->context, s->device, 0, nullptr);
 
-    const char* src = GeluKernel;
+    const char* src = kernel;
     size_t srcSize = std::strlen(src);
     s->program = clCreateProgramWithSource(s->context, 1, &src, &srcSize, nullptr);
     clBuildProgram(s->program, 1, &s->device, nullptr, nullptr, nullptr);
