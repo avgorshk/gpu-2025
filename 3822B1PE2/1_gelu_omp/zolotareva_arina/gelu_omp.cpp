@@ -4,21 +4,19 @@
 #include <omp.h>
 
 std::vector<float> GeluOMP(const std::vector<float>& input) {
-    const size_t n = input.size();
-    std::vector<float> output(n);
+    std::vector<float> output(input.size());
 
     constexpr float kAlpha = 0.044715f;
-    constexpr float kSqrt2toPi = 0.7978845608028654f; // sqrt(2 / pi)
+    constexpr float kSqrt2toPi = 0.7978845608028654f;
 
     #pragma omp parallel for schedule(static)
-    for (size_t i = 0; i < n; ++i) {
+    for (size_t i = 0; i < input.size(); ++i) {
         float x = input[i];
         float x2 = x * x;
         float x3 = x2 * x;
 
         float t = kSqrt2toPi * (x + kAlpha * x3);
 
-        // tanh approximation via exp
         float exp_term = expf(-2.0f * t);
         float tanh_approx = 2.0f / (1.0f + exp_term) - 1.0f;
 
