@@ -1,100 +1,52 @@
 #include "gemm_cublas.h"
 #include <cuda_runtime.h>
 #include <cublas_v2.h>
-#include <vector>
-#include <cassert>
-#include <stdexcept>
 
 std::vector<float> GemmCUBLAS(const std::vector<float>& a,
                               const std::vector<float>& b,
                               int n) {
+    std::vector<float> c(n * n);
     
-    assert(a.size() == static_cast<size_t>(n * n));
-    assert(b.size() == static_cast<size_t>(n * n));
-    
+    static float* d_a = nullptr;
+    static float* d_b = nullptr;
+    static float* d_c = nullptr;
+    static int allocated_size = 0;
     static cublasHandle_t handle = nullptr;
-    static bool initialized = false;
-    if (!initialized) {
+    
+    int size = n * n * sizeof(float);
+    
+    if (handle == nullptr) {
         cublasCreate(&handle);
-        initialized = true;
     }
     
-    std::vector<float> c(n * n, 0.0f);
-    
-    float *d_a = nullptr, *d_b = nullptr, *d_c = nullptr;
-    size_t matrixSize = n * n * sizeof(float);
-    
-    cudaError_t cudaStatus;
-    cudaStatus = cudaMalloc(&d_a, matrixSize);
-    if (cudaStatus != cudaSuccess) throw std::runtime_error("cudaMalloc failed for d_a");
-    
-    cudaStatus = cudaMalloc(&d_b, matrixSize);
-    if (cudaStatus != cudaSuccess) {
-        cudaFree(d_a);
-        throw std::runtime_error("cudaMalloc failed for d_b");
+    if (allocated_size < size) {
+        if (d_a) cudaFree(d_a);
+        if (d_b) cudaFree(d_b);
+        if (d_c) cudaFree(d_c);
+        
+        cudaMalloc(&d_a, size);
+        cudaMalloc(&d_b, size);
+        cudaMalloc(&d_c, size);
+        allocated_size = size;
     }
     
-    cudaStatus = cudaMalloc(&d_c, matrixSize);
-    if (cudaStatus != cudaSuccess) {
-        cudaFree(d_a);
-        cudaFree(d_b);
-        throw std::runtime_error("cudaMalloc failed for d_c");
-    }
-
-    cudaStatus = cudaMemcpy(d_a, a.data(), matrixSize, cudaMemcpyHostToDevice);
-    if (cudaStatus != cudaSuccess) {
-        cudaFree(d_a);
-        cudaFree(d_b);
-        cudaFree(d_c);
-        throw std::runtime_error("cudaMemcpy failed for d_a");
-    }
+    cudaMemcpy(d_a, a.data(), size, cudaMemcpyHostToDevice);
+    cudaMemcpy(d_b, b.data(), size, cudaMemcpyHostToDevice);
     
-    cudaStatus = cudaMemcpy(d_b, b.data(), matrixSize, cudaMemcpyHostToDevice);
-    if (cudaStatus != cudaSuccess) {
-        cudaFree(d_a);
-        cudaFree(d_b);
-        cudaFree(d_c);
-        throw std::runtime_error("cudaMemcpy failed for d_b");
-    }
+    float alpha = 1.0f;
+    float beta = 0.0f;
     
-    const float alpha = 1.0f;
-    const float beta = 0.0f;
-
-    cublasStatus_t cublasStatus = cublasSgemm(handle,
-                                              CUBLAS_OP_T,
-                                              CUBLAS_OP_T,
-                                              n, n, n,
-                                              &alpha,
-                                              d_b, n,
-                                              d_a, n,
-                                              &beta,
-                                              d_c, n);
+    // C = A * B (row-major) equals C^T = B^T * A^T (column-major)
+    cublasSgemm(handle,
+                CUBLAS_OP_N, CUBLAS_OP_N,
+                n, n, n,
+                &alpha,
+                d_b, n,
+                d_a, n,
+                &beta,
+                d_c, n);
     
-    if (cublasStatus != CUBLAS_STATUS_SUCCESS) {
-        cudaFree(d_a);
-        cudaFree(d_b);
-        cudaFree(d_c);
-        throw std::runtime_error("cublasSgemm failed");
-    }
+    cudaMemcpy(c.data(), d_c, size, cudaMemcpyDeviceToHost);
     
-    cudaStatus = cudaMemcpy(c.data(), d_c, matrixSize, cudaMemcpyDeviceToHost);
-    if (cudaStatus != cudaSuccess) {
-        cudaFree(d_a);
-        cudaFree(d_b);
-        cudaFree(d_c);
-        throw std::runtime_error("cudaMemcpy failed for result");
-    }
-
-    cudaFree(d_a);
-    cudaFree(d_b);
-    cudaFree(d_c);
-
-    std::vector<float> result(n * n);
-    for (int i = 0; i < n; ++i) {
-        for (int j = 0; j < n; ++j) {
-            result[i * n + j] = c[j * n + i];
-        }
-    }
-    
-    return result;
+    return c;
 }
