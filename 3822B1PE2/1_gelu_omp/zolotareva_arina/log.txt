@@ -1,0 +1,39 @@
+/home/crazyproger/sandbox/gpu-2025/3822B1PE2/1_gelu_omp/zolotareva_arina/gelu_omp.cpp: In function ‘std::vector<float> GeluOMP(const std::vector<float>&)’:
+/home/crazyproger/sandbox/gpu-2025/3822B1PE2/1_gelu_omp/zolotareva_arina/gelu_omp.cpp:4:11: error: ‘size_t’ does not name a type
+    4 |     const size_t n = input.size();
+      |           ^~~~~~
+/home/crazyproger/sandbox/gpu-2025/3822B1PE2/1_gelu_omp/zolotareva_arina/gelu_omp.cpp:2:1: note: ‘size_t’ is defined in header ‘<cstddef>’; did you forget to ‘#include <cstddef>’?
+    1 | #include "gelu_omp.h"
+  +++ |+#include <cstddef>
+    2 | 
+/home/crazyproger/sandbox/gpu-2025/3822B1PE2/1_gelu_omp/zolotareva_arina/gelu_omp.cpp:5:31: error: ‘n’ was not declared in this scope
+    5 |     std::vector<float> output(n);
+      |                               ^
+/home/crazyproger/sandbox/gpu-2025/3822B1PE2/1_gelu_omp/zolotareva_arina/gelu_omp.cpp:11:10: error: ‘size_t’ was not declared in this scope; did you mean ‘std::size_t’?
+   11 |     for (size_t i = 0; i < n; ++i) {
+      |          ^~~~~~
+      |          std::size_t
+In file included from /usr/include/c++/11/bits/stl_algobase.h:59,
+                 from /usr/include/c++/11/vector:60,
+                 from /home/crazyproger/sandbox/gpu-2025/3822B1PE2/1_gelu_omp/zolotareva_arina/gelu_omp.h:4,
+                 from /home/crazyproger/sandbox/gpu-2025/3822B1PE2/1_gelu_omp/zolotareva_arina/gelu_omp.cpp:1:
+/usr/include/x86_64-linux-gnu/c++/11/bits/c++config.h:280:33: note: ‘std::size_t’ declared here
+  280 |   typedef __SIZE_TYPE__         size_t;
+      |                                 ^~~~~~
+/home/crazyproger/sandbox/gpu-2025/3822B1PE2/1_gelu_omp/zolotareva_arina/gelu_omp.cpp:11:16: error: expected ‘;’ before ‘i’
+   11 |     for (size_t i = 0; i < n; ++i) {
+      |                ^~
+      |                ;
+/home/crazyproger/sandbox/gpu-2025/3822B1PE2/1_gelu_omp/zolotareva_arina/gelu_omp.cpp:11:17: error: ‘i’ was not declared in this scope
+   11 |     for (size_t i = 0; i < n; ++i) {
+      |                 ^
+/home/crazyproger/sandbox/gpu-2025/3822B1PE2/1_gelu_omp/zolotareva_arina/gelu_omp.cpp:11:29: error: expected ‘)’ before ‘;’ token
+   11 |     for (size_t i = 0; i < n; ++i) {
+      |         ~                   ^
+      |                             )
+/home/crazyproger/sandbox/gpu-2025/3822B1PE2/1_gelu_omp/zolotareva_arina/gelu_omp.cpp:11:5: error: expected iteration declaration or initialization
+   11 |     for (size_t i = 0; i < n; ++i) {
+      |     ^~~
+/home/crazyproger/sandbox/gpu-2025/3822B1PE2/1_gelu_omp/zolotareva_arina/gelu_omp.cpp:11:33: error: ‘i’ was not declared in this scope
+   11 |     for (size_t i = 0; i < n; ++i) {
+      |                                 ^
