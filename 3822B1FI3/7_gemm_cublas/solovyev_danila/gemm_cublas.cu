@@ -30,14 +30,14 @@ std::vector<float> GemmCUBLAS(const std::vector<float>& a,
     const float beta = 0.0f;
 
     cublasSgemm(handle,
-                CUBLAS_OP_T,
-                CUBLAS_OP_T,
-                n, n, n,
-                &alpha,
-                dB, n,
-                dA, n,
-                &beta,
-                dC, n);
+            CUBLAS_OP_N,
+            CUBLAS_OP_N,
+            n, n, n,
+            &alpha,
+            dB, n,
+            dA, n, 
+            &beta,
+            dC, n);
 
     std::vector<float> result(n * n);
     cudaMemcpy(result.data(), dC, bytes, cudaMemcpyDeviceToHost);
