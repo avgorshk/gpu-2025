@@ -1,7 +1,0 @@
-/home/crazyproger/sandbox/gpu-2025/3822B1FI2/1_gelu_omp/sdobnov_vladimir/gelu_omp.cpp: In function ‘std::vector<float> GeluOMP(const std::vector<float>&)’:
-/home/crazyproger/sandbox/gpu-2025/3822B1FI2/1_gelu_omp/sdobnov_vladimir/gelu_omp.cpp:16:47: error: ‘input’ in ‘aligned’ clause is neither a pointer nor an array nor a reference to pointer or array
-   16 | #pragma omp for simd schedule(static) aligned(input, output: 32)
-      |                                               ^~~~~
-/home/crazyproger/sandbox/gpu-2025/3822B1FI2/1_gelu_omp/sdobnov_vladimir/gelu_omp.cpp:16:54: error: ‘output’ in ‘aligned’ clause is neither a pointer nor an array nor a reference to pointer or array
-   16 | #pragma omp for simd schedule(static) aligned(input, output: 32)
-      |                                                      ^~~~~~
