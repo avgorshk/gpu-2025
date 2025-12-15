@@ -1,51 +1,63 @@
 #include "gelu_cuda.h"
 #include <cuda_runtime.h>
 #include <cmath>
+#include <cstdio>
+#include <cstdlib>
+#include <vector>
 
-__device__ float gelu_elementwise(float x) {
-    const float t = 0.7978845608028654f * x + 0.035677f * x * x * x; // предвычислено 
-    return 0.5f * x * (1.0f + t * (27.0f + t*t) / (27.0f + 9.0f * t*t));
+#define CUDA_CHECK(call) do {                                 \
+    cudaError_t err = (call);                                 \
+    if (err != cudaSuccess) {                                 \
+        fprintf(stderr, "CUDA error %s:%d: %s\n",             \
+                __FILE__, __LINE__, cudaGetErrorString(err)); \
+        exit(EXIT_FAILURE);                                   \
+    }                                                         \
+} while (0)
+
+__device__ float gelu_exp(float x) {
+    const float c = 0.044715f;
+    const float sqrt_2_over_pi = sqrtf(2.0f / 3.14159265358979323846f);
+    float x3 = x * x * x;
+    float z = sqrt_2_over_pi * (x + c * x3);
+    // GELU = x * sigmoid(2*z) = x / (1 + exp(-2*z))
+    float s = 1.0f / (1.0f + expf(-2.0f * z));
+    return x * s;
 }
 
-__global__ void gelu_kernel(const float* input, float* output, int n) {
-    int idx = blockIdx.x * blockDim.x + threadIdx.x;
-    int stride = blockDim.x * gridDim.x * 4;  // Каждый поток обрабатывает 4 элемента
-    
-    // Обрабатываем по 4 элемента на поток
-    for (int i = idx * 4; i < n; i += stride) {
-        // Обрабатываем 4 элемента последовательно
-        if (i < n) output[i] = gelu_elementwise(input[i]);
-        if (i + 1 < n) output[i + 1] = gelu_elementwise(input[i + 1]);
-        if (i + 2 < n) output[i + 2] = gelu_elementwise(input[i + 2]);
-        if (i + 3 < n) output[i + 3] = gelu_elementwise(input[i + 3]);
+__global__ void gelu_kernel(const float* input, float* output, size_t n) {
+    size_t idx = blockIdx.x * blockDim.x + threadIdx.x;
+    if (idx < n) {
+        output[idx] = gelu_exp(input[idx]);
     }
 }
 
 std::vector<float> GeluCUDA(const std::vector<float>& input) {
-    const size_t n = input.size();
-    std::vector<float> result(n);
-    
-    // Выделяем память на GPU
-    float *d_input, *d_output;
-    cudaMalloc(&d_input, n * sizeof(float));
-    cudaMalloc(&d_output, n * sizeof(float));
-    
-    // Копируем данные на GPU
-    cudaMemcpy(d_input, input.data(), n * sizeof(float), cudaMemcpyHostToDevice);
-    
-    // Конфигурация запуска ядра
-    const int blockSize = 256;
-    const int gridSize = (n + blockSize - 1) / blockSize;
-    
-    // Запускаем ядро
-    gelu_kernel<<<gridSize, blockSize>>>(d_input, d_output, n);
-    
-    // Копируем результат обратно на CPU
-    cudaMemcpy(result.data(), d_output, n * sizeof(float), cudaMemcpyDeviceToHost);
-    
-    // Освобождаем память GPU
-    cudaFree(d_input);
-    cudaFree(d_output);
-    
-    return result;
+    size_t n = input.size();
+    if (n == 0) {
+        return {};
+    }
+
+    size_t bytes = n * sizeof(float);
+    float* d_input = nullptr;
+    float* d_output = nullptr;
+
+    CUDA_CHECK(cudaMalloc(&d_input, bytes));
+    CUDA_CHECK(cudaMalloc(&d_output, bytes));
+
+    CUDA_CHECK(cudaMemcpy(d_input, input.data(), bytes, cudaMemcpyHostToDevice));
+
+    int threads_per_block = 256;
+    int blocks = (n + threads_per_block - 1) / threads_per_block;
+
+    gelu_kernel<<<blocks, threads_per_block>>>(d_input, d_output, n);
+    CUDA_CHECK(cudaGetLastError());
+    CUDA_CHECK(cudaDeviceSynchronize());
+
+    std::vector<float> output(n);
+    CUDA_CHECK(cudaMemcpy(output.data(), d_output, bytes, cudaMemcpyDeviceToHost));
+
+    CUDA_CHECK(cudaFree(d_input));
+    CUDA_CHECK(cudaFree(d_output));
+
+    return output;
 }
