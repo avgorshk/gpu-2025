@@ -847,6 +847,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1FI1|elvin_veliev|0.0465|3|
 |3822B1PE1|konstantinov_ilya|0.0468|3|
 |3822B1PE1|gnitienko_kirill|0.0480|10|
+|3822B1FI3|solovyev_danila|0.0480|5|
 |3822B1FI2|shkurinskaya_elena|0.0486|2|
 |3822B1PE2|ermolaev_vladislav|0.0499|2|
 |3822B1PE2|titov_semyon|0.0503|1|
@@ -890,7 +891,6 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE1|korneeva_ekaterina|TEST FAILED|-|
 |3822B1PE4|ghanga_junior|BUILD FAILED|-|
 |3822B1FI3|kholin_kirill|TEST FAILED|-|
-|3822B1FI3|solovyev_danila|TEST FAILED|-|
 
 ## 8_fft_cufft (131072 elements)
 |Group|Name|Result|Rank|
@@ -1043,13 +1043,13 @@ Passed: 2
 |Group|Name|Passed|Score|
 |-----|----|------|-----|
 |3822B1FI3|kholin_kirill|3/9|190|
-|3822B1FI3|kirill_kholin|**9/9**|**554**|
-|3822B1FI3|koshkin_nikita|8/9|464|
-|3822B1FI3|kudryashova_irina|**9/9**|**546**|
-|3822B1FI3|lavrentyev_alexey|**9/9**|**534**|
-|3822B1FI3|solovyev_danila|8/9|462|
+|3822B1FI3|kirill_kholin|**9/9**|**553**|
+|3822B1FI3|koshkin_nikita|8/9|463|
+|3822B1FI3|kudryashova_irina|**9/9**|**545**|
+|3822B1FI3|lavrentyev_alexey|**9/9**|**533**|
+|3822B1FI3|solovyev_danila|**9/9**|**522**|
 
-Passed: 3
+Passed: 4
 
 ## 3822B1PE1
 |Group|Name|Passed|Score|
@@ -1119,7 +1119,7 @@ Passed: 4
 
 Passed: 5
 
-**Total Passed: 50**
+**Total Passed: 51**
 
 ---
 *Maximum Score: 576 (64 per task)
