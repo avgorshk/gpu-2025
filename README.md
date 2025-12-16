@@ -723,6 +723,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE1|belov_artem|0.0299|19|
 |3822B1PE2|kondratev_yaroslav|0.0302|5|
 |3822B1PE1|korneeva_ekaterina|0.0303|23|
+|3822B1PE2|zolotareva_arina|0.0360|11|
 |3822B1PE4|shuravina_oksana|0.0374|2|
 |3822B1PE1|milovankin_maxim|0.0404|8|
 |3822B1PE4|zinoviev_alexander|0.0411|3|
@@ -1102,17 +1103,17 @@ Passed: 22
 ## 3822B1PE2
 |Group|Name|Passed|Score|
 |-----|----|------|-----|
-|3822B1PE2|ermolaev_vladislav|**9/9**|**525**|
-|3822B1PE2|filatiev_vladislav|**9/9**|**462**|
-|3822B1PE2|filatieva_elizaveta|**9/9**|**463**|
+|3822B1PE2|ermolaev_vladislav|**9/9**|**524**|
+|3822B1PE2|filatiev_vladislav|**9/9**|**461**|
+|3822B1PE2|filatieva_elizaveta|**9/9**|**462**|
 |3822B1PE2|kondratev_yaroslav|**9/9**|**497**|
-|3822B1PE2|korovin_nikita|**9/9**|**517**|
+|3822B1PE2|korovin_nikita|**9/9**|**516**|
 |3822B1PE2|mukhina_margarita|**9/9**|**507**|
 |3822B1PE2|muradov_mike|**9/9**|**486**|
-|3822B1PE2|sorokin_andrey|**9/9**|**484**|
-|3822B1PE2|titov_semyon|**9/9**|**527**|
-|3822B1PE2|vladimirova_julia|**9/9**|**453**|
-|3822B1PE2|zolotareva_arina|3/9|161|
+|3822B1PE2|sorokin_andrey|**9/9**|**483**|
+|3822B1PE2|titov_semyon|**9/9**|**526**|
+|3822B1PE2|vladimirova_julia|**9/9**|**452**|
+|3822B1PE2|zolotareva_arina|4/9|212|
 
 Passed: 10
 
