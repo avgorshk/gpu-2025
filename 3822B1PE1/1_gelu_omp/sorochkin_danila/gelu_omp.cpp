@@ -7,7 +7,7 @@ std::vector<float> GeluOMP(const std::vector<float>& input) {
 
     constexpr float SQRT_2_OVER_PI = 0.7978845608f;
     constexpr float GELU_COEFF = 0.044715f;
-    constexpr float MUL = 2.0f * SQRT_2_OVER_PI; // ≈ 1.5957691216f
+    constexpr float MUL = 2.0f * SQRT_2_OVER_PI;
 
 #pragma omp parallel for schedule(static)
     for (int i = 0; i < input.size(); ++i) {
