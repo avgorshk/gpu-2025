@@ -929,6 +929,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE1|krylov_mikhail|0.1109|2|
 |3822B1PE1|shvedova_vitalina|0.1117|9|
 |3822B1PE3|sarafanov_maxim|0.1163|4|
+|3822B1PE1|sorochkin_danila|0.1219|25|
 |3822B1PE1|milovankin_maxim|0.1222|5|
 |3822B1PE1|khasanyanov_kirill|0.1226|12|
 |3822B1PE4|karaseva_ekaterina|0.1226|5|
@@ -1082,29 +1083,29 @@ Passed: 5
 |-----|----|------|-----|
 |3822B1PE1|belov_artem|**9/9**|**372**|
 |3822B1PE1|ermilova_darya|**9/9**|**373**|
-|3822B1PE1|gnitienko_kirill|**9/9**|**377**|
-|3822B1PE1|kalyakina_anastasia|8/9|296|
+|3822B1PE1|gnitienko_kirill|**9/9**|**376**|
+|3822B1PE1|kalyakina_anastasia|8/9|295|
 |3822B1PE1|kapustin_ivan|**9/9**|**288**|
-|3822B1PE1|khasanyanov_kirill|**9/9**|**362**|
-|3822B1PE1|konstantinov_ilya|**9/9**|**425**|
-|3822B1PE1|korablev_vladlen|**9/9**|**427**|
+|3822B1PE1|khasanyanov_kirill|**9/9**|**361**|
+|3822B1PE1|konstantinov_ilya|**9/9**|**424**|
+|3822B1PE1|korablev_vladlen|**9/9**|**426**|
 |3822B1PE1|korneeva_ekaterina|**9/9**|**279**|
 |3822B1PE1|krylov_mikhail|**9/9**|**459**|
-|3822B1PE1|milovankin_maxim|**9/9**|**439**|
+|3822B1PE1|milovankin_maxim|**9/9**|**438**|
 |3822B1PE1|moiseev_artem|**9/9**|**474**|
-|3822B1PE1|morozov_egor|**9/9**|**321**|
-|3822B1PE1|nikolaev_roman|**9/9**|**376**|
-|3822B1PE1|odintsov_misha|**9/9**|**310**|
-|3822B1PE1|polikanov_vitaliy|**9/9**|**305**|
+|3822B1PE1|morozov_egor|**9/9**|**320**|
+|3822B1PE1|nikolaev_roman|**9/9**|**375**|
+|3822B1PE1|odintsov_misha|**9/9**|**309**|
+|3822B1PE1|polikanov_vitaliy|**9/9**|**304**|
 |3822B1PE1|rams_sergei|**9/9**|**473**|
-|3822B1PE1|sadikov_ivan|**9/9**|**407**|
+|3822B1PE1|sadikov_ivan|**9/9**|**406**|
 |3822B1PE1|shvedova_vitalina|**9/9**|**432**|
-|3822B1PE1|sidorina_polina|**9/9**|**303**|
-|3822B1PE1|sorochkin_danila|7/9|202|
+|3822B1PE1|sidorina_polina|**9/9**|**302**|
+|3822B1PE1|sorochkin_danila|8/9|232|
 |3822B1PE1|tyurin_mikhail|**9/9**|**404**|
-|3822B1PE1|vasilev_sergey|**9/9**|**280**|
+|3822B1PE1|vasilev_sergey|**9/9**|**279**|
 |3822B1PE1|vedernikova_kseniya|8/9|242|
-|3822B1PE1|vershinina_alexandra|**9/9**|**304**|
+|3822B1PE1|vershinina_alexandra|**9/9**|**303**|
 
 Passed: 22
 
