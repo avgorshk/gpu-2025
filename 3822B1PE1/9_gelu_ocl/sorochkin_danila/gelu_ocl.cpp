@@ -1,6 +1,8 @@
-﻿#include "gelu_ocl.h"
-#include <CL/cl.hpp>
+﻿#define CL_USE_DEPRECATED_OPENCL_1_2_APIS
+#include "gelu_ocl.h"
+#include <CL/cl.h>
 #include <vector>
+#include <cstring>
 
 std::vector<float> GeluOCL(const std::vector<float>& input, int platform_id) {
     if (input.empty()) {
@@ -8,71 +10,140 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform_id) {
     }
 
     size_t n = input.size();
+    cl_int err;
 
-    std::vector<cl::Platform> platforms;
-    if (cl::Platform::get(&platforms) != CL_SUCCESS) {
+    cl_uint num_platforms = 0;
+    err = clGetPlatformIDs(0, NULL, &num_platforms);
+    if (err != CL_SUCCESS || num_platforms == 0) {
         return std::vector<float>(n, 0.0f);
     }
 
-    if (platform_id < 0 || static_cast<size_t>(platform_id) >= platforms.size()) {
+    std::vector<cl_platform_id> platforms(num_platforms);
+    err = clGetPlatformIDs(num_platforms, platforms.data(), NULL);
+    if (err != CL_SUCCESS) {
         return std::vector<float>(n, 0.0f);
     }
 
-    cl::Platform platform = platforms[platform_id];
-    std::vector<cl::Device> devices;
-    if (platform.getDevices(CL_DEVICE_TYPE_GPU, &devices) != CL_SUCCESS || devices.empty()) {
+    if (platform_id < 0 || static_cast<cl_uint>(platform_id) >= num_platforms) {
+        return std::vector<float>(n, 0.0f);
+    }
+    cl_platform_id platform = platforms[platform_id];
+
+    cl_uint num_devices = 0;
+    err = clGetDeviceIDs(platform, CL_DEVICE_TYPE_GPU, 0, NULL, &num_devices);
+    if (err != CL_SUCCESS || num_devices == 0) {
         return std::vector<float>(n, 0.0f);
     }
 
-    cl::Device device = devices[0];
-    cl::Context context(device);
-    cl::CommandQueue queue(context, device);
+    std::vector<cl_device_id> devices(num_devices);
+    err = clGetDeviceIDs(platform, CL_DEVICE_TYPE_GPU, num_devices, devices.data(), NULL);
+    if (err != CL_SUCCESS || devices.empty()) {
+        return std::vector<float>(n, 0.0f);
+    }
+    cl_device_id device = devices[0];
 
-    const char* kernel_source = R"(
-        __kernel void gelu_ocl(__global const float* input,
-                               __global float* output,
-                               const uint n) {
-            const uint idx = get_global_id(0);
-            if (idx >= n) return;
-
-            const float x = input[idx];
-            const float x3 = x * x * x;
-            const float SQRT_2_OVER_PI = 0.7978845608f;
-            const float GELU_COEFF = 0.044715f;
-            const float MUL = 2.0f * SQRT_2_OVER_PI;
-
-            const float z = MUL * (x + GELU_COEFF * x3);
-            output[idx] = x / (1.0f + native_exp(-z));
-        }
-    )";
-
-    cl::Program program(context, kernel_source);
-    if (program.build({ device }) != CL_SUCCESS) {
+    cl_context context = clCreateContext(NULL, 1, &device, NULL, NULL, &err);
+    if (err != CL_SUCCESS) {
         return std::vector<float>(n, 0.0f);
     }
 
-    cl::Buffer input_buf(context, CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR,
-        n * sizeof(float), const_cast<float*>(input.data()));
-    cl::Buffer output_buf(context, CL_MEM_WRITE_ONLY, n * sizeof(float));
-
-    cl::Kernel kernel(program, "gelu_ocl");
-    kernel.setArg(0, input_buf);
-    kernel.setArg(1, output_buf);
-    kernel.setArg(2, static_cast<cl_uint>(n));
-
-    cl::NDRange global_size((n + 255) / 256 * 256);
-    cl::NDRange local_size(256);
-
-    if (queue.enqueueNDRangeKernel(kernel, cl::NullRange, global_size, local_size) != CL_SUCCESS) {
+    cl_command_queue queue = clCreateCommandQueue(context, device, 0, &err);
+    if (err != CL_SUCCESS) {
+        clReleaseContext(context);
         return std::vector<float>(n, 0.0f);
     }
 
-    queue.finish();
+    const char* kernel_source =
+        "__kernel void gelu_ocl(__global const float* input,\n"
+        "                       __global float* output,\n"
+        "                       const uint n) {\n"
+        "    const uint idx = get_global_id(0);\n"
+        "    if (idx >= n) return;\n"
+        "    const float x = input[idx];\n"
+        "    const float x3 = x * x * x;\n"
+        "    const float SQRT_2_OVER_PI = 0.7978845608f;\n"
+        "    const float GELU_COEFF = 0.044715f;\n"
+        "    const float MUL = 2.0f * SQRT_2_OVER_PI;\n"
+        "    const float z = MUL * (x + GELU_COEFF * x3);\n"
+        "    output[idx] = x / (1.0f + native_exp(-z));\n"
+        "}";
+
+    cl_program program = clCreateProgramWithSource(context, 1, &kernel_source, NULL, &err);
+    if (err != CL_SUCCESS) {
+        clReleaseCommandQueue(queue);
+        clReleaseContext(context);
+        return std::vector<float>(n, 0.0f);
+    }
+
+    err = clBuildProgram(program, 1, &device, NULL, NULL, NULL);
+    if (err != CL_SUCCESS) {
+        clReleaseProgram(program);
+        clReleaseCommandQueue(queue);
+        clReleaseContext(context);
+        return std::vector<float>(n, 0.0f);
+    }
+
+    cl_kernel kernel = clCreateKernel(program, "gelu_ocl", &err);
+    if (err != CL_SUCCESS) {
+        clReleaseProgram(program);
+        clReleaseCommandQueue(queue);
+        clReleaseContext(context);
+        return std::vector<float>(n, 0.0f);
+    }
+
+    size_t bytes = n * sizeof(float);
+    cl_mem input_buf = clCreateBuffer(context, CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR,
+        bytes, const_cast<float*>(input.data()), &err);
+    if (err != CL_SUCCESS) {
+        clReleaseKernel(kernel);
+        clReleaseProgram(program);
+        clReleaseCommandQueue(queue);
+        clReleaseContext(context);
+        return std::vector<float>(n, 0.0f);
+    }
+
+    cl_mem output_buf = clCreateBuffer(context, CL_MEM_WRITE_ONLY, bytes, NULL, &err);
+    if (err != CL_SUCCESS) {
+        clReleaseMemObject(input_buf);
+        clReleaseKernel(kernel);
+        clReleaseProgram(program);
+        clReleaseCommandQueue(queue);
+        clReleaseContext(context);
+        return std::vector<float>(n, 0.0f);
+    }
+
+    cl_uint n_uint = static_cast<cl_uint>(n);
+    clSetKernelArg(kernel, 0, sizeof(cl_mem), &input_buf);
+    clSetKernelArg(kernel, 1, sizeof(cl_mem), &output_buf);
+    clSetKernelArg(kernel, 2, sizeof(cl_uint), &n_uint);
+
+    size_t global_size = ((n + 255) / 256) * 256;
+    size_t local_size = 256;
+    err = clEnqueueNDRangeKernel(queue, kernel, 1, NULL, &global_size, &local_size, 0, NULL, NULL);
+    if (err != CL_SUCCESS) {
+        clReleaseMemObject(output_buf);
+        clReleaseMemObject(input_buf);
+        clReleaseKernel(kernel);
+        clReleaseProgram(program);
+        clReleaseCommandQueue(queue);
+        clReleaseContext(context);
+        return std::vector<float>(n, 0.0f);
+    }
+
+    clFinish(queue);
 
     std::vector<float> output(n);
-    if (queue.enqueueReadBuffer(output_buf, CL_TRUE, 0, n * sizeof(float), output.data()) != CL_SUCCESS) {
-        return std::vector<float>(n, 0.0f);
+    err = clEnqueueReadBuffer(queue, output_buf, CL_TRUE, 0, bytes, output.data(), 0, NULL, NULL);
+    if (err != CL_SUCCESS) {
+        output.assign(n, 0.0f);
     }
+
+    clReleaseMemObject(output_buf);
+    clReleaseMemObject(input_buf);
+    clReleaseKernel(kernel);
+    clReleaseProgram(program);
+    clReleaseCommandQueue(queue);
+    clReleaseContext(context);
 
     return output;
 }
