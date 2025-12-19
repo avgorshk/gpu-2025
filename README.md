@@ -1028,6 +1028,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |**REF**|**REF**|**0.3419**|**-**|
 |3822B1FI2|yasakova_tanya|0.3426|1|
 |3822B1PE1|polikanov_vitaliy|0.3429|20|
+|3822B1PE1|kalyakina_anastasia|0.3438|24|
 |3822B1FI1|solovev_alexey|0.3438|2|
 |3822B1FI1|komshina_daria|0.3439|4|
 |3822B1PE1|odintsov_misha|0.3453|12|
@@ -1085,31 +1086,31 @@ Passed: 5
 |-----|----|------|-----|
 |3822B1PE1|belov_artem|**9/9**|**372**|
 |3822B1PE1|ermilova_darya|**9/9**|**372**|
-|3822B1PE1|gnitienko_kirill|**9/9**|**375**|
-|3822B1PE1|kalyakina_anastasia|8/9|295|
+|3822B1PE1|gnitienko_kirill|**9/9**|**374**|
+|3822B1PE1|kalyakina_anastasia|**9/9**|**320**|
 |3822B1PE1|kapustin_ivan|**9/9**|**288**|
 |3822B1PE1|khasanyanov_kirill|**9/9**|**361**|
-|3822B1PE1|konstantinov_ilya|**9/9**|**423**|
+|3822B1PE1|konstantinov_ilya|**9/9**|**422**|
 |3822B1PE1|korablev_vladlen|**9/9**|**426**|
 |3822B1PE1|korneeva_ekaterina|**9/9**|**279**|
 |3822B1PE1|krylov_mikhail|**9/9**|**459**|
 |3822B1PE1|milovankin_maxim|**9/9**|**438**|
 |3822B1PE1|moiseev_artem|**9/9**|**474**|
 |3822B1PE1|morozov_egor|**9/9**|**320**|
-|3822B1PE1|nikolaev_roman|**9/9**|**374**|
-|3822B1PE1|odintsov_misha|**9/9**|**308**|
+|3822B1PE1|nikolaev_roman|**9/9**|**373**|
+|3822B1PE1|odintsov_misha|**9/9**|**307**|
 |3822B1PE1|polikanov_vitaliy|**9/9**|**303**|
 |3822B1PE1|rams_sergei|**9/9**|**473**|
-|3822B1PE1|sadikov_ivan|**9/9**|**405**|
+|3822B1PE1|sadikov_ivan|**9/9**|**404**|
 |3822B1PE1|shvedova_vitalina|**9/9**|**431**|
 |3822B1PE1|sidorina_polina|**9/9**|**301**|
 |3822B1PE1|sorochkin_danila|**9/9**|**263**|
-|3822B1PE1|tyurin_mikhail|**9/9**|**403**|
+|3822B1PE1|tyurin_mikhail|**9/9**|**402**|
 |3822B1PE1|vasilev_sergey|**9/9**|**279**|
 |3822B1PE1|vedernikova_kseniya|8/9|242|
-|3822B1PE1|vershinina_alexandra|**9/9**|**302**|
+|3822B1PE1|vershinina_alexandra|**9/9**|**301**|
 
-Passed: 23
+Passed: 24
 
 ## 3822B1PE2
 |Group|Name|Passed|Score|
@@ -1150,7 +1151,7 @@ Passed: 4
 
 Passed: 5
 
-**Total Passed: 56**
+**Total Passed: 57**
 
 ---
 *Maximum Score: 576 (64 per task)
