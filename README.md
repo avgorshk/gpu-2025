@@ -1015,6 +1015,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE3|kazunin_nikita|0.3168|1|
 |3822B1PE1|milovankin_maxim|0.3182|3|
 |3822B1FI3|koshkin_nikita|0.3215|5|
+|3822B1PE1|sorochkin_danila|0.3303|23|
 |3822B1FI2|markin_ivan|0.3350|4|
 |3822B1PE2|filatiev_vladislav|0.3362|9|
 |3822B1PE2|muradov_mike|0.3372|8|
@@ -1041,7 +1042,6 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE2|sorokin_andrey|0.3648|3|
 |3822B1PE1|vershinina_alexandra|0.6035|9|
 |3822B1PE1|vedernikova_kseniya|RUN FAILED|-|
-|3822B1PE1|sorochkin_danila|BUILD FAILED|-|
 
 # Tasks Done
 ## 3822B1FI1
@@ -1083,32 +1083,32 @@ Passed: 5
 |Group|Name|Passed|Score|
 |-----|----|------|-----|
 |3822B1PE1|belov_artem|**9/9**|**372**|
-|3822B1PE1|ermilova_darya|**9/9**|**373**|
-|3822B1PE1|gnitienko_kirill|**9/9**|**376**|
+|3822B1PE1|ermilova_darya|**9/9**|**372**|
+|3822B1PE1|gnitienko_kirill|**9/9**|**375**|
 |3822B1PE1|kalyakina_anastasia|8/9|295|
 |3822B1PE1|kapustin_ivan|**9/9**|**288**|
 |3822B1PE1|khasanyanov_kirill|**9/9**|**361**|
-|3822B1PE1|konstantinov_ilya|**9/9**|**424**|
+|3822B1PE1|konstantinov_ilya|**9/9**|**423**|
 |3822B1PE1|korablev_vladlen|**9/9**|**426**|
 |3822B1PE1|korneeva_ekaterina|**9/9**|**279**|
 |3822B1PE1|krylov_mikhail|**9/9**|**459**|
 |3822B1PE1|milovankin_maxim|**9/9**|**438**|
 |3822B1PE1|moiseev_artem|**9/9**|**474**|
 |3822B1PE1|morozov_egor|**9/9**|**320**|
-|3822B1PE1|nikolaev_roman|**9/9**|**375**|
-|3822B1PE1|odintsov_misha|**9/9**|**309**|
-|3822B1PE1|polikanov_vitaliy|**9/9**|**304**|
+|3822B1PE1|nikolaev_roman|**9/9**|**374**|
+|3822B1PE1|odintsov_misha|**9/9**|**308**|
+|3822B1PE1|polikanov_vitaliy|**9/9**|**303**|
 |3822B1PE1|rams_sergei|**9/9**|**473**|
-|3822B1PE1|sadikov_ivan|**9/9**|**406**|
-|3822B1PE1|shvedova_vitalina|**9/9**|**432**|
-|3822B1PE1|sidorina_polina|**9/9**|**302**|
-|3822B1PE1|sorochkin_danila|8/9|232|
-|3822B1PE1|tyurin_mikhail|**9/9**|**404**|
+|3822B1PE1|sadikov_ivan|**9/9**|**405**|
+|3822B1PE1|shvedova_vitalina|**9/9**|**431**|
+|3822B1PE1|sidorina_polina|**9/9**|**301**|
+|3822B1PE1|sorochkin_danila|**9/9**|**263**|
+|3822B1PE1|tyurin_mikhail|**9/9**|**403**|
 |3822B1PE1|vasilev_sergey|**9/9**|**279**|
 |3822B1PE1|vedernikova_kseniya|8/9|242|
-|3822B1PE1|vershinina_alexandra|**9/9**|**303**|
+|3822B1PE1|vershinina_alexandra|**9/9**|**302**|
 
-Passed: 22
+Passed: 23
 
 ## 3822B1PE2
 |Group|Name|Passed|Score|
@@ -1149,7 +1149,7 @@ Passed: 4
 
 Passed: 5
 
-**Total Passed: 55**
+**Total Passed: 56**
 
 ---
 *Maximum Score: 576 (64 per task)
