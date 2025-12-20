@@ -10,15 +10,23 @@ const char* kernel_str = R"(
         if (idx >= n) return;
         float x = input[idx];
         float x3 = x*x*x;
-        const float sqrt2pi = sqrt(2.0f / M_PI);
+        const float sqrt2pi = 0.7978845608028654f;
         output[idx] = 0.5f * x * (1.0f + tanh(sqrt2pi * (x + 0.044715f * x3)));
     })";
 
 std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
     size_t n = input.size();
 
+    cl_uint num_platforms = 0;
+    clGetPlatformIDs(0, nullptr, &num_platforms);
+    std::vector<cl_platform_id> platforms(num_platforms);
+    clGetPlatformIDs(num_platforms, platforms.data(), nullptr);
     cl_platform_id platform_id;
-    clGetPlatformIDs(1, &platform_id, nullptr);
+    if (platform < 0 || static_cast<cl_uint>(platform) >= num_platforms) {
+        platform_id = platforms[0];
+    } else {
+        platform_id = platforms[platform];
+    }
 
     cl_device_id device;
     clGetDeviceIDs(platform_id, CL_DEVICE_TYPE_GPU, 1, &device, nullptr);
