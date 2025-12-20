@@ -1,0 +1,58 @@
+﻿#include "naive_gemm_cuda.h"
+#include <cuda_runtime.h>
+
+constexpr int BLOCK_SIZE = 16;
+
+__global__ void naive_gemm_kernel(const float* __restrict__ a,
+    const float* __restrict__ b,
+    float* __restrict__ c,
+    int n) {
+
+    int row = blockIdx.y * blockDim.y + threadIdx.y;
+    int col = blockIdx.x * blockDim.x + threadIdx.x;
+
+    if (row >= n || col >= n) return;
+
+    float sum = 0.0f;
+
+
+#pragma unroll 8 
+    for (int k = 0; k < n; ++k) {
+        sum += a[row * n + k] * b[k * n + col];
+    }
+
+    c[row * n + col] = sum;
+}
+
+std::vector<float> NaiveGemmCUDA(const std::vector<float>& a,
+    const std::vector<float>& b,
+    int n) {
+    if (n == 0) return {};
+
+    size_t bytes = n * n * sizeof(float);
+    float* d_a = nullptr, * d_b = nullptr, * d_c = nullptr;
+
+    cudaMalloc(&d_a, bytes);
+    cudaMalloc(&d_b, bytes);
+    cudaMalloc(&d_c, bytes);
+
+    cudaMemcpy(d_a, a.data(), bytes, cudaMemcpyHostToDevice);
+    cudaMemcpy(d_b, b.data(), bytes, cudaMemcpyHostToDevice);
+
+    dim3 block(BLOCK_SIZE, BLOCK_SIZE);
+    dim3 grid((n + BLOCK_SIZE - 1) / BLOCK_SIZE,
+        (n + BLOCK_SIZE - 1) / BLOCK_SIZE);
+
+    naive_gemm_kernel << <grid, block >> > (d_a, d_b, d_c, n);
+
+    cudaDeviceSynchronize();
+
+    std::vector<float> c(n * n);
+    cudaMemcpy(c.data(), d_c, bytes, cudaMemcpyDeviceToHost);
+
+    cudaFree(d_a);
+    cudaFree(d_b);
+    cudaFree(d_c);
+
+    return c;
+}

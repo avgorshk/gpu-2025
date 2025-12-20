@@ -3,24 +3,32 @@
 #include <vector>
 #include <omp.h>
 
+constexpr float SQRT_2_OVER_PI = 0.7978845608028654f;
+constexpr float COEF = 0.044715f;
+constexpr float HALF = 0.5f;
+
 std::vector<float> GeluOMP(const std::vector<float>& input) {
-    const size_t size = input.size();
+    size_t size = input.size();
     std::vector<float> output(size);
 
-    constexpr float a = 0.7978845608028654f;  // sqrt(2/π)
-    constexpr float b = 0.044715f;
-    constexpr float half = 0.5f;
+    const float* input_data = input.data();
+    float* output_data = output.data();
 
-#pragma omp parallel
+    int num_threads = omp_get_max_threads();
+
+#pragma omp parallel num_threads(num_threads)
     {
-#pragma omp for simd schedule(static) aligned(input, output: 32)
+#pragma omp for simd schedule(static)
         for (size_t i = 0; i < size; ++i) {
-            float x = input[i];
-            float x3 = x * x * x;
-            float z = a * (x + b * x3);
-            float sigmoid = 1.0f / (1.0f + std::exp(-1.702f * z)); // Аппроксимация tanh
+            float x = input_data[i];
 
-            output[i] = half * x * (1.0f + sigmoid);
+            float x_cubed = x * x * x;
+            float inner = SQRT_2_OVER_PI * (x + COEF * x_cubed);
+
+            float exp_val = std::exp(2.0f * inner);
+            float tanh_approx = 1.0f - 2.0f / (exp_val + 1.0f);
+
+            output_data[i] = HALF * x * (1.0f + tanh_approx);
         }
     }
 

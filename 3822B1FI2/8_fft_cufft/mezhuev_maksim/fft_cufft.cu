@@ -2,26 +2,41 @@
 #include <cuda_runtime.h>
 #include <cufft.h>
 
-__global__ void normalizeKernel(cufftComplex* data, int total, int n) {
+__global__ void normalizeKernel(cufftComplex* data, int total, float inv_n) {
     int idx = blockIdx.x * blockDim.x + threadIdx.x;
     if (idx < total) {
-        data[idx].x /= n;
-        data[idx].y /= n;
+        data[idx].x *= inv_n;
+        data[idx].y *= inv_n;
     }
 }
 
-std::vector<float> FftCUFFT(const std::vector<float>& input, int batch) {
-    std::vector<float> output(input.size());
-    if (input.empty() || batch <= 0) return output;
+std::vector<float> FffCUFFT(const std::vector<float>& input, int batch) {
+    std::vector<float> output(input.size(), 0.0f);
+    if (batch <= 0 || input.empty()) return output;
+    if ((input.size() & 1u) != 0u) return output;
 
-    int total_complex = input.size() / 2;
+    int total_complex = static_cast<int>(input.size() / 2);
+    if (total_complex % batch != 0) return output;
+
     int n = total_complex / batch;
     if (n <= 0) return output;
 
     cufftComplex* d_data = nullptr;
-    size_t bytes = input.size() * sizeof(float);
-    cudaMalloc(&d_data, bytes);
-    cudaMemcpy(d_data, input.data(), bytes, cudaMemcpyHostToDevice);
+    size_t bytes = static_cast<size_t>(total_complex) * sizeof(cufftComplex);
+
+    if (cudaMalloc(&d_data, bytes) != cudaSuccess) return output;
+
+    cudaStream_t stream;
+    if (cudaStreamCreate(&stream) != cudaSuccess) {
+        cudaFree(d_data);
+        return output;
+    }
+
+    if (cudaMemcpyAsync(d_data, input.data(), bytes, cudaMemcpyHostToDevice, stream) != cudaSuccess) {
+        cudaStreamDestroy(stream);
+        cudaFree(d_data);
+        return output;
+    }
 
     cufftHandle plan;
     int rank = 1;
@@ -29,21 +44,53 @@ std::vector<float> FftCUFFT(const std::vector<float>& input, int batch) {
     int inembed[1] = { n };
     int onembed[1] = { n };
 
-    cufftPlanMany(&plan, rank, dims,
-                  inembed, 1, n,
-                  onembed, 1, n,
-                  CUFFT_C2C, batch);
+    if (cufftPlanMany(&plan, rank, dims,
+                     inembed, 1, n,
+                     onembed, 1, n,
+                     CUFFT_C2C, batch) != CUFFT_SUCCESS) {
+        cudaStreamDestroy(stream);
+        cudaFree(d_data);
+        return output;
+    }
 
-    cufftExecC2C(plan, d_data, d_data, CUFFT_FORWARD);
-    cufftExecC2C(plan, d_data, d_data, CUFFT_INVERSE);
+    if (cufftSetStream(plan, stream) != CUFFT_SUCCESS) {
+        cufftDestroy(plan);
+        cudaStreamDestroy(stream);
+        cudaFree(d_data);
+        return output;
+    }
+
+    if (cufftExecC2C(plan, d_data, d_data, CUFFT_FORWARD) != CUFFT_SUCCESS ||
+        cufftExecC2C(plan, d_data, d_data, CUFFT_INVERSE) != CUFFT_SUCCESS) {
+        cufftDestroy(plan);
+        cudaStreamDestroy(stream);
+        cudaFree(d_data);
+        return output;
+    }
 
     int threads = 256;
     int blocks = (total_complex + threads - 1) / threads;
-    normalizeKernel<<<blocks, threads>>>(d_data, total_complex, n);
+    float inv_n = 1.0f / static_cast<float>(n);
+    normalizeKernel<<<blocks, threads, 0, stream>>>(d_data, total_complex, inv_n);
 
-    cudaMemcpy(output.data(), d_data, bytes, cudaMemcpyDeviceToHost);
+    if (cudaGetLastError() != cudaSuccess) {
+        cufftDestroy(plan);
+        cudaStreamDestroy(stream);
+        cudaFree(d_data);
+        return output;
+    }
+
+    if (cudaMemcpyAsync(output.data(), d_data, bytes, cudaMemcpyDeviceToHost, stream) != cudaSuccess) {
+        cufftDestroy(plan);
+        cudaStreamDestroy(stream);
+        cudaFree(d_data);
+        return std::vector<float>(input.size(), 0.0f);
+    }
+
+    cudaStreamSynchronize(stream);
 
     cufftDestroy(plan);
+    cudaStreamDestroy(stream);
     cudaFree(d_data);
 
     return output;
