@@ -68,6 +68,7 @@ std::vector<float> BlockGemmCUDA(const std::vector<float>& a,
     dim3 numBlocks((n + BLOCK_SIZE - 1) / BLOCK_SIZE, (n + BLOCK_SIZE - 1) / BLOCK_SIZE);
 
     blockGemmKernel<<<numBlocks, threadsPerBlock>>>(d_a, d_b, d_c, n);
+    cudaDeviceSynchronize();
 
     cudaMemcpy(c.data(), d_c, size, cudaMemcpyDeviceToHost);
 
