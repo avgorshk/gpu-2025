@@ -3,7 +3,6 @@
 #include <cuda_runtime.h>
 #include <device_launch_parameters.h>
 
-
 __global__ void NaiveGemmKernel(
     const float *a,
     const float *b,
@@ -36,7 +35,11 @@ std::vector<float> NaiveGemmCUDA(
 
     size_t size = n * n;
     size_t data_size = size * sizeof(float);
-    std::vector<float> c(size);
+    dim3 block(32, 32);
+    dim3 grid(
+        (n + block.x - 1) / block.x,
+        (n + block.y - 1) / block.y
+    );
 
     float *d_a = nullptr;
     cudaMalloc(&d_a, data_size);
@@ -47,12 +50,8 @@ std::vector<float> NaiveGemmCUDA(
 
     cudaMemcpy(d_a, a.data(), data_size, cudaMemcpyHostToDevice);
     cudaMemcpy(d_b, b.data(), data_size, cudaMemcpyHostToDevice);
-    dim3 block(32, 32);
-    dim3 grid(
-        (n + block.x - 1) / block.x,
-        (n + block.y - 1) / block.y
-    );
     NaiveGemmKernel<<<grid, block>>>(d_a, d_b, d_c, n);
+    std::vector<float> c(size);
     cudaDeviceSynchronize();
     cudaMemcpy(c.data(), d_c, data_size, cudaMemcpyDeviceToHost);
 
