@@ -4,7 +4,6 @@
 #include <algorithm>
 #include <cmath>
 
-constexpr int BLOCK_DIM = 32;
 __device__ __forceinline__ void computeBlockProduct(float* sA, float* sB, 
                                                       int tx, int ty, int bs, float& acc) {
     #pragma unroll 4
@@ -52,10 +51,16 @@ std::vector<float> BlockGemmCUDA(const std::vector<float>& a,
     
     cudaMemcpy(d_A, a.data(), size, cudaMemcpyHostToDevice);
     cudaMemcpy(d_B, b.data(), size, cudaMemcpyHostToDevice);
+
+    cudaDeviceProp prop;
+    cudaGetDeviceProperties(&prop, 0);
+    int bs_mem = sqrtf(prop.sharedMemPerBlock / (2.0f * sizeof(float)));
+    int bs_th= sqrtf(prop.maxThreadsPerBlock);
     
-    int bs = BLOCK_DIM;
-    while (n % bs != 0 && bs > 1) {
-        bs /= 2;
+    int max_bs = std::min(bs_mem, bs_th);
+    int bs = 1;
+    while (bs * 2 <= max_bs && n % (bs * 2) == 0) {
+        bs <<= 1;
     }
 
     dim3 threads(bs, bs);
