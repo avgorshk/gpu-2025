@@ -17,11 +17,9 @@ std::vector<float> FffCUFFT(const std::vector<float> &input, int batch) {
 
     size_t size = input.size();
     size_t data_size = size * sizeof(float);
-    auto signal_length = static_cast<int>(size / (2 * batch));
-    std::vector<float> output(size);
-
     size_t block_size = 256;
     size_t num_blocks = (size + block_size - 1) / block_size;
+    auto signal_length = static_cast<int>(size / (2 * batch));
 
     float *d_data = nullptr;
     cudaMalloc(&d_data, data_size);
@@ -31,7 +29,8 @@ std::vector<float> FffCUFFT(const std::vector<float> &input, int batch) {
     cufftPlan1d(&plan, signal_length, CUFFT_C2C, batch);
     cufftExecC2C(plan, (cufftComplex *) d_data, (cufftComplex *) d_data, CUFFT_FORWARD);
     cufftExecC2C(plan, (cufftComplex *) d_data, (cufftComplex *) d_data, CUFFT_INVERSE);
-    NormalizeKernel<<<num_blocks, block_size>>>(d_data, size, signal_length);
+    NormalizeKernel<<<num_blocks, block_size>>>(d_data, size, static_cast<float>(signal_length));
+    std::vector<float> output(size);
     cudaDeviceSynchronize();
     cudaMemcpy(output.data(), d_data, data_size, cudaMemcpyDeviceToHost);
 

@@ -14,7 +14,6 @@ std::vector<float> GemmCUBLAS(
 
     size_t size = n * n;
     size_t data_size = size * sizeof(float);
-    std::vector<float> c(size);
 
     cublasHandle_t handle;
     cublasCreate(&handle);
@@ -39,6 +38,7 @@ std::vector<float> GemmCUBLAS(
         &beta,
         d_c, n
     );
+    std::vector<float> c(size);
     cudaMemcpy(c.data(), d_c, data_size, cudaMemcpyDeviceToHost);
 
     cudaFree(d_a);
