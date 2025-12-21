@@ -460,6 +460,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1FI1|somov_ivan|0.2612|7|
 |3822B1FI1|shulpin_ilya|0.2636|2|
 |3822B1FI3|kholin_kirill|0.2718|2|
+|3822B1PE3|malyshev_anton|0.2723|7|
 |3822B1FI3|kirill_kholin|0.2733|4|
 |3822B1FI2|mezhuev_maksim|0.2735|2|
 |3822B1FI1|komshina_daria|0.2744|5|
@@ -1213,12 +1214,13 @@ Passed: 13
 ## 3822B1PE3
 |Group|Name|Passed|Score|
 |-----|----|------|-----|
-|3822B1PE3|chernykh_andrey|**9/9**|**528**|
-|3822B1PE3|kazunin_nikita|**9/9**|**535**|
+|3822B1PE3|chernykh_andrey|**9/9**|**527**|
+|3822B1PE3|kazunin_nikita|**9/9**|**534**|
+|3822B1PE3|malyshev_anton|1/9|56|
 |3822B1PE3|mironov_ilya|**9/9**|**507**|
 |3822B1PE3|oturin_alexander|**9/9**|**549**|
-|3822B1PE3|sarafanov_maxim|**9/9**|**525**|
-|3822B1PE3|sotskov_andrey|**9/9**|**542**|
+|3822B1PE3|sarafanov_maxim|**9/9**|**524**|
+|3822B1PE3|sotskov_andrey|**9/9**|**541**|
 
 Passed: 6
 
