@@ -708,6 +708,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE2|ermolaev_vladislav|0.1841|2|
 |3822B1PE1|kalyakina_anastasia|0.1853|14|
 |3822B1PE1|vershinina_alexandra|0.1856|16|
+|3822B1PE3|malyshev_anton|0.1866|7|
 |3822B1FI2|mezhuev_maksim|0.1876|4|
 |3822B1PE2|kalinin_dmitry|0.1910|15|
 |3822B1PE1|polikanov_vitaliy|0.1930|20|
@@ -1216,12 +1217,12 @@ Passed: 13
 ## 3822B1PE3
 |Group|Name|Passed|Score|
 |-----|----|------|-----|
-|3822B1PE3|chernykh_andrey|**9/9**|**527**|
-|3822B1PE3|kazunin_nikita|**9/9**|**534**|
-|3822B1PE3|malyshev_anton|3/9|163|
-|3822B1PE3|mironov_ilya|**9/9**|**506**|
+|3822B1PE3|chernykh_andrey|**9/9**|**526**|
+|3822B1PE3|kazunin_nikita|**9/9**|**533**|
+|3822B1PE3|malyshev_anton|4/9|219|
+|3822B1PE3|mironov_ilya|**9/9**|**505**|
 |3822B1PE3|oturin_alexander|**9/9**|**548**|
-|3822B1PE3|sarafanov_maxim|**9/9**|**524**|
+|3822B1PE3|sarafanov_maxim|**9/9**|**523**|
 |3822B1PE3|sotskov_andrey|**9/9**|**540**|
 
 Passed: 6
