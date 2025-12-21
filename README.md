@@ -921,6 +921,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1FI1|ionova_ekaterina|0.0527|4|
 |3822B1PE4|karaseva_ekaterina|0.0528|4|
 |3822B1FI3|kirill_kholin|0.0529|2|
+|3822B1PE2|kavtorev_dmitry|0.0529|13|
 |3822B1PE1|kalyakina_anastasia|0.0530|16|
 |3822B1PE2|sorokin_andrey|0.0531|4|
 |3822B1FI3|koshkin_nikita|0.0531|4|
@@ -953,7 +954,6 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE2|filatieva_elizaveta|0.7555|8|
 |3822B1PE1|nikolaev_roman|0.7786|8|
 |3822B1PE2|varfolomeev_gregory|TEST FAILED|-|
-|3822B1PE2|kavtorev_dmitry|TEST FAILED|-|
 |3822B1PE2|kalinin_dmitry|TEST FAILED|-|
 |3822B1FI3|kholin_kirill|TEST FAILED|-|
 |3822B1PE4|ghanga_junior|BUILD FAILED|-|
@@ -1174,22 +1174,22 @@ Passed: 25
 |Group|Name|Passed|Score|
 |-----|----|------|-----|
 |3822B1PE2|ermolaev_vladislav|**9/9**|**503**|
-|3822B1PE2|filatiev_vladislav|**9/9**|**440**|
-|3822B1PE2|filatieva_elizaveta|**9/9**|**438**|
-|3822B1PE2|gusev_nikita|8/9|368|
+|3822B1PE2|filatiev_vladislav|**9/9**|**439**|
+|3822B1PE2|filatieva_elizaveta|**9/9**|**437**|
+|3822B1PE2|gusev_nikita|8/9|367|
 |3822B1PE2|kalinin_dmitry|8/9|368|
-|3822B1PE2|kavtorev_dmitry|8/9|370|
-|3822B1PE2|kondratev_yaroslav|**9/9**|**475**|
+|3822B1PE2|kavtorev_dmitry|**9/9**|**418**|
+|3822B1PE2|kondratev_yaroslav|**9/9**|**474**|
 |3822B1PE2|korovin_nikita|**9/9**|**498**|
-|3822B1PE2|mukhina_margarita|**9/9**|**485**|
-|3822B1PE2|muradov_mike|**9/9**|**466**|
-|3822B1PE2|sorokin_andrey|**9/9**|**458**|
+|3822B1PE2|mukhina_margarita|**9/9**|**484**|
+|3822B1PE2|muradov_mike|**9/9**|**465**|
+|3822B1PE2|sorokin_andrey|**9/9**|**457**|
 |3822B1PE2|titov_semyon|**9/9**|**504**|
 |3822B1PE2|varfolomeev_gregory|6/9|272|
-|3822B1PE2|vladimirova_julia|**9/9**|**429**|
+|3822B1PE2|vladimirova_julia|**9/9**|**428**|
 |3822B1PE2|zolotareva_arina|8/9|416|
 
-Passed: 10
+Passed: 11
 
 ## 3822B1PE3
 |Group|Name|Passed|Score|
@@ -1213,7 +1213,7 @@ Passed: 4
 
 Passed: 5
 
-**Total Passed: 58**
+**Total Passed: 59**
 
 ---
 *Maximum Score: 576 (64 per task)
