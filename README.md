@@ -1004,6 +1004,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE2|korovin_nikita|0.1231|3|
 |3822B1PE4|podovinnikov_artyom|0.1235|1|
 |3822B1FI3|lavrentyev_alexey|0.1235|4|
+|3822B1PE3|malyshev_anton|0.1239|7|
 |3822B1FI3|koshkin_nikita|0.1240|3|
 |3822B1PE2|zolotareva_arina|0.1243|14|
 |3822B1FI1|ionova_ekaterina|0.1245|4|
@@ -1221,12 +1222,12 @@ Passed: 13
 |Group|Name|Passed|Score|
 |-----|----|------|-----|
 |3822B1PE3|chernykh_andrey|**9/9**|**526**|
-|3822B1PE3|kazunin_nikita|**9/9**|**532**|
-|3822B1PE3|malyshev_anton|6/9|328|
-|3822B1PE3|mironov_ilya|**9/9**|**504**|
-|3822B1PE3|oturin_alexander|**9/9**|**547**|
+|3822B1PE3|kazunin_nikita|**9/9**|**531**|
+|3822B1PE3|malyshev_anton|7/9|384|
+|3822B1PE3|mironov_ilya|**9/9**|**503**|
+|3822B1PE3|oturin_alexander|**9/9**|**546**|
 |3822B1PE3|sarafanov_maxim|**9/9**|**523**|
-|3822B1PE3|sotskov_andrey|**9/9**|**538**|
+|3822B1PE3|sotskov_andrey|**9/9**|**537**|
 
 Passed: 6
 
