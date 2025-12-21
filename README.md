@@ -968,6 +968,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE4|podovinnikov_artyom|0.1235|1|
 |3822B1FI3|lavrentyev_alexey|0.1235|4|
 |3822B1FI3|koshkin_nikita|0.1240|3|
+|3822B1PE2|zolotareva_arina|0.1243|14|
 |3822B1FI1|ionova_ekaterina|0.1245|4|
 |3822B1PE3|oturin_alexander|0.1248|2|
 |3822B1PE1|gnitienko_kirill|0.1249|16|
@@ -1153,20 +1154,20 @@ Passed: 25
 ## 3822B1PE2
 |Group|Name|Passed|Score|
 |-----|----|------|-----|
-|3822B1PE2|ermolaev_vladislav|**9/9**|**510**|
-|3822B1PE2|filatiev_vladislav|**9/9**|**446**|
-|3822B1PE2|filatieva_elizaveta|**9/9**|**445**|
-|3822B1PE2|gusev_nikita|8/9|373|
-|3822B1PE2|kavtorev_dmitry|8/9|376|
-|3822B1PE2|kondratev_yaroslav|**9/9**|**481**|
+|3822B1PE2|ermolaev_vladislav|**9/9**|**509**|
+|3822B1PE2|filatiev_vladislav|**9/9**|**445**|
+|3822B1PE2|filatieva_elizaveta|**9/9**|**444**|
+|3822B1PE2|gusev_nikita|8/9|372|
+|3822B1PE2|kavtorev_dmitry|8/9|375|
+|3822B1PE2|kondratev_yaroslav|**9/9**|**480**|
 |3822B1PE2|korovin_nikita|**9/9**|**504**|
-|3822B1PE2|mukhina_margarita|**9/9**|**491**|
-|3822B1PE2|muradov_mike|**9/9**|**472**|
-|3822B1PE2|sorokin_andrey|**9/9**|**464**|
-|3822B1PE2|titov_semyon|**9/9**|**510**|
-|3822B1PE2|varfolomeev_gregory|6/9|279|
-|3822B1PE2|vladimirova_julia|**9/9**|**436**|
-|3822B1PE2|zolotareva_arina|7/9|369|
+|3822B1PE2|mukhina_margarita|**9/9**|**490**|
+|3822B1PE2|muradov_mike|**9/9**|**471**|
+|3822B1PE2|sorokin_andrey|**9/9**|**463**|
+|3822B1PE2|titov_semyon|**9/9**|**509**|
+|3822B1PE2|varfolomeev_gregory|6/9|278|
+|3822B1PE2|vladimirova_julia|**9/9**|**435**|
+|3822B1PE2|zolotareva_arina|8/9|419|
 
 Passed: 10
 
