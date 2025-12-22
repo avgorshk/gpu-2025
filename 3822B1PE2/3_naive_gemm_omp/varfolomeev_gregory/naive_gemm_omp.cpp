@@ -42,9 +42,9 @@ std::vector<float> NaiveGemmOMP(const std::vector<float>& a,
                        a_ptr[i_offset + k + 3] * bt_ptr[j_offset + k + 3];
             }
             
-#pragma omp simd reduction(+:sum)
-            for (; k < n; ++k) {
-                sum += a_ptr[i_offset + k] * bt_ptr[j_offset + k];
+            // Handle remaining elements
+            for (int k_rem = k; k_rem < n; ++k_rem) {
+                sum += a_ptr[i_offset + k_rem] * bt_ptr[j_offset + k_rem];
             }
             
             c_ptr[i_offset + j] = sum;

@@ -59,10 +59,9 @@ std::vector<float> BlockGemmOMP(const std::vector<float>& a,
                             c_row[j + 3] += a_ik * b_row[j + 3];
                         }
                         
-                        // Handle remaining elements with SIMD
-#pragma omp simd
-                        for (; j < j_end; ++j) {
-                            c_row[j] += a_ik * b_row[j];
+                        // Handle remaining elements
+                        for (int j_rem = j; j_rem < j_end; ++j_rem) {
+                            c_row[j_rem] += a_ik * b_row[j_rem];
                         }
                     }
                 }
