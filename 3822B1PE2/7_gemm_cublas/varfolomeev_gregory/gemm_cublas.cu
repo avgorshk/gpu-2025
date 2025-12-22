@@ -39,30 +39,21 @@ std::vector<float> GemmCUBLAS(const std::vector<float>& a,
     const float beta = 0.0f;
     
     // cuBLAS uses column-major, input is row-major
-    // C = A * B (row-major) is equivalent to C^T = B^T * A^T (column-major)
-    // So we use CUBLAS_OP_T for both matrices and swap order: d_b, d_a
+    // For C = A * B (row-major), cuBLAS will interpret matrices differently
+    // Need to swap order: d_b, d_a to get correct result
     cublasSgemm(handle,
-                CUBLAS_OP_T,  // Transpose B (B^T in column-major = B in row-major)
-                CUBLAS_OP_T,  // Transpose A (A^T in column-major = A in row-major)
+                CUBLAS_OP_N,
+                CUBLAS_OP_N,
                 n, n, n,
                 &alpha,
-                d_b, n,  // B^T
-                d_a, n,  // A^T
+                d_b, n,
+                d_a, n,
                 &beta,
-                d_c, n); // C^T (result in column-major)
+                d_c, n);
     
-    // Result is in column-major, need to transpose back to row-major
-    std::vector<float> c_colmajor(matrix_size);
-    cudaMemcpyAsync(c_colmajor.data(), d_c, bytes, cudaMemcpyDeviceToHost, stream);
+    cudaMemcpyAsync(c.data(), d_c, bytes, cudaMemcpyDeviceToHost, stream);
     
     cudaStreamSynchronize(stream);
-    
-    // Transpose result from column-major to row-major
-    for (int i = 0; i < n; ++i) {
-        for (int j = 0; j < n; ++j) {
-            c[i * n + j] = c_colmajor[j * n + i];
-        }
-    }
     
     cublasDestroy(handle);
     cudaStreamDestroy(stream);
