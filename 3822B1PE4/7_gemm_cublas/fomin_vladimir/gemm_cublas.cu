@@ -4,11 +4,12 @@
 #include <memory>
 #include <stdexcept>
 
-
 std::vector<float> GemmCUBLAS(const std::vector<float> &a,
-                              const std::vector<float> &b, int n) {
+                              const std::vector<float> &b, int n)
+{
   if (a.size() != static_cast<size_t>(n * n) ||
-      b.size() != static_cast<size_t>(n * n)) {
+      b.size() != static_cast<size_t>(n * n))
+  {
     throw std::invalid_argument("Invalid matrix dimensions");
   }
 
