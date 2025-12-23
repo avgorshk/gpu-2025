@@ -3,8 +3,8 @@
 
 #include <vector>
 
-std::vector<float> GemmCUBLAS(const std::vector<float>& a,
-    const std::vector<float>& b,
-    int n);
+std::vector<float> GemmCUBLAS(const std::vector<float>& matrix_a,
+	const std::vector<float>& matrix_b,
+	int matrix_size);
 
 #endif // __GEMM_CUBLAS_H
