@@ -920,7 +920,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE4|shuravina_oksana|0.4180|2|
 |3822B1PE1|voroshilov_vitaliy|0.4237|26|
 |3822B1PE2|varfolomeev_gregory|0.4286|13|
-|3822B1PE3|malyshev_anton|TOO SLOW|-|
+|3822B1PE3|malyshev_anton|1.2394|7|
 
 ## 7_gemm_cublas (4096 elements)
 |Group|Name|Result|Rank|
@@ -1256,13 +1256,13 @@ Passed: 14
 |-----|----|------|-----|
 |3822B1PE3|chernykh_andrey|**9/9**|**526**|
 |3822B1PE3|kazunin_nikita|**9/9**|**530**|
-|3822B1PE3|malyshev_anton|8/9|438|
+|3822B1PE3|malyshev_anton|**9/9**|**490**|
 |3822B1PE3|mironov_ilya|**9/9**|**503**|
 |3822B1PE3|oturin_alexander|**9/9**|**546**|
 |3822B1PE3|sarafanov_maxim|**9/9**|**522**|
 |3822B1PE3|sotskov_andrey|**9/9**|**537**|
 
-Passed: 6
+Passed: 7
 
 ## 3822B1PE4
 |Group|Name|Passed|Score|
@@ -1278,7 +1278,7 @@ Passed: 6
 
 Passed: 5
 
-**Total Passed: 65**
+**Total Passed: 66**
 
 ---
 *Maximum Score: 576 (64 per task)
