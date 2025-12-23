@@ -4,14 +4,6 @@
 #include <algorithm>
 #include <cmath>
 
-__device__ __forceinline__ void computeBlockProduct(float* sA, float* sB, 
-                                                      int tx, int ty, int bs, float& acc) {
-    #pragma unroll 4
-    for (int k = 0; k < bs; k++) {
-        acc += sA[tx * bs + k] * sB[k * bs + ty];
-    }
-}
-
 __global__ void blockGemmKernel(const float* A, const float* B, float* C, int n, int bs) {
     extern __shared__ float smem[];
     float* sA = smem;
@@ -30,7 +22,10 @@ __global__ void blockGemmKernel(const float* A, const float* B, float* C, int n,
         sB[tx * bs + ty] = B[(m * bs + tx) * n + (bx * bs + ty)];
 
         __syncthreads();
-        computeBlockProduct(sA, sB, tx, ty, bs, acc);
+        #pragma unroll 4
+        for (int k = 0; k < bs; k++) {
+            acc += sA[tx * bs + k] * sB[k * bs + ty];
+        }
         __syncthreads();
     }
 
