@@ -523,6 +523,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE3|sarafanov_maxim|0.7546|3|
 |3822B1PE1|odintsov_misha|0.7605|7|
 |3822B1PE1|vedernikova_kseniya|1.0534|22|
+|3822B1PE4|konkov_ivan|BUILD FAILED|-|
 
 ## 2_gelu_cuda (134217728 elements)
 |Group|Name|Result|Rank|
@@ -570,6 +571,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE2|titov_semyon|0.2237|2|
 |3822B1PE3|oturin_alexander|0.2239|2|
 |3822B1PE4|karaseva_ekaterina|0.2244|5|
+|3822B1PE4|konkov_ivan|0.2246|7|
 |3822B1FI1|somov_ivan|0.2246|6|
 |3822B1FI3|solovyev_danila|0.2248|3|
 |3822B1PE2|mukhina_margarita|0.2250|5|
@@ -679,6 +681,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1FI1|shulpin_ilya|0.7960|2|
 |3822B1PE1|odintsov_misha|0.8459|13|
 |3822B1PE4|ghanga_junior|BUILD FAILED|-|
+|3822B1PE4|konkov_ivan|BUILD FAILED|-|
 
 ## 4_naive_gemm_cuda (4096 elements)
 |Group|Name|Result|Rank|
@@ -705,6 +708,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE2|mukhina_margarita|0.1731|4|
 |3822B1PE1|sidorina_polina|0.1733|18|
 |3822B1PE1|sorochkin_danila|0.1740|25|
+|3822B1PE4|konkov_ivan|0.1750|8|
 |3822B1PE4|kolokolova_darya|0.1755|4|
 |3822B1PE1|sadikov_ivan|0.1762|5|
 |3822B1PE2|kondratev_yaroslav|0.1763|3|
@@ -820,6 +824,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE2|kalinin_dmitry|0.1840|14|
 |3822B1FI3|koshkin_nikita|0.1906|5|
 |3822B1PE1|voroshilov_vitaliy|0.1918|26|
+|3822B1PE4|konkov_ivan|0.1924|8|
 |3822B1PE1|korablev_vladlen|0.1959|1|
 |3822B1FI3|kudryashova_irina|0.2012|2|
 |3822B1PE1|polikanov_vitaliy|0.2090|20|
@@ -909,6 +914,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE1|kapustin_ivan|0.3287|22|
 |3822B1PE1|sorochkin_danila|0.3367|25|
 |3822B1PE1|vasilev_sergey|0.3372|21|
+|3822B1PE4|konkov_ivan|0.3373|8|
 |3822B1FI3|koshkin_nikita|0.3405|5|
 |3822B1PE2|korovin_nikita|0.3646|4|
 |3822B1PE4|shuravina_oksana|0.4180|2|
@@ -994,6 +1000,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1FI2|dormidontov_egor|RUN FAILED|-|
 |3822B1PE4|ghanga_junior|BUILD FAILED|-|
 |3822B1PE4|fomin_vladimir|TEST FAILED|-|
+|3822B1PE4|konkov_ivan|TEST FAILED|-|
 
 ## 8_fft_cufft (131072 elements)
 |Group|Name|Result|Rank|
@@ -1062,6 +1069,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE2|sorokin_andrey|0.1543|6|
 |3822B1FI3|kudryashova_irina|0.1546|2|
 |3822B1PE2|filatieva_elizaveta|0.1555|8|
+|3822B1PE4|konkov_ivan|0.1563|7|
 |3822B1PE1|voroshilov_vitaliy|0.1640|26|
 |3822B1PE2|titov_semyon|0.1697|1|
 |3822B1PE4|zinoviev_alexander|0.1713|3|
@@ -1149,6 +1157,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE1|vedernikova_kseniya|RUN FAILED|-|
 |3822B1PE2|gusev_nikita|BUILD FAILED|-|
 |3822B1PE4|fomin_vladimir|BUILD FAILED|-|
+|3822B1PE4|konkov_ivan|TEST FAILED|-|
 |3822B1FI1|somov_ivan|RUN FAILED|-|
 
 # Tasks Done
@@ -1258,13 +1267,14 @@ Passed: 6
 ## 3822B1PE4
 |Group|Name|Passed|Score|
 |-----|----|------|-----|
-|3822B1PE4|fomin_vladimir|6/9|328|
-|3822B1PE4|ghanga_junior|6/9|340|
-|3822B1PE4|karaseva_ekaterina|**9/9**|**524**|
-|3822B1PE4|kolokolova_darya|**9/9**|**527**|
-|3822B1PE4|podovinnikov_artyom|**9/9**|**548**|
-|3822B1PE4|shuravina_oksana|**9/9**|**542**|
-|3822B1PE4|zinoviev_alexander|**9/9**|**531**|
+|3822B1PE4|fomin_vladimir|6/9|326|
+|3822B1PE4|ghanga_junior|6/9|338|
+|3822B1PE4|karaseva_ekaterina|**9/9**|**523**|
+|3822B1PE4|kolokolova_darya|**9/9**|**525**|
+|3822B1PE4|konkov_ivan|5/9|266|
+|3822B1PE4|podovinnikov_artyom|**9/9**|**547**|
+|3822B1PE4|shuravina_oksana|**9/9**|**540**|
+|3822B1PE4|zinoviev_alexander|**9/9**|**529**|
 
 Passed: 5
 
