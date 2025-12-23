@@ -1,0 +1,4 @@
+/home/crazyproger/sandbox/gpu-2025/3822B1PE4/9_gelu_ocl/fomin_vladimir/gelu_ocl.cpp:2:10: fatal error: CL/cl.hpp: No such file or directory
+    2 | #include <CL/cl.hpp>
+      |          ^~~~~~~~~~~
+compilation terminated.

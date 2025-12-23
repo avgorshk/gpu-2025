@@ -494,6 +494,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1FI2|yasakova_tanya|0.6437|1|
 |3822B1PE4|karaseva_ekaterina|0.6467|5|
 |3822B1PE1|polikanov_vitaliy|0.6471|18|
+|3822B1PE4|fomin_vladimir|0.6481|7|
 |3822B1PE1|sidorina_polina|0.6509|19|
 |3822B1FI3|lavrentyev_alexey|0.6559|6|
 |3822B1PE1|korneeva_ekaterina|0.6560|24|
@@ -599,6 +600,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE1|krylov_mikhail|0.2577|11|
 |3822B1PE1|vershinina_alexandra|0.6209|16|
 |3822B1FI1|komshina_daria|0.6698|4|
+|3822B1PE4|fomin_vladimir|TEST FAILED|-|
 
 ## 3_naive_gemm_omp (1024 elements)
 |Group|Name|Result|Rank|
@@ -648,6 +650,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1FI2|mezhuev_maksim|0.6826|4|
 |3822B1FI3|kudryashova_irina|0.6950|1|
 |3822B1FI1|ionova_ekaterina|0.7003|5|
+|3822B1PE4|fomin_vladimir|0.7020|6|
 |3822B1PE1|khasanyanov_kirill|0.7031|15|
 |3822B1FI1|elvin_veliev|0.7035|3|
 |3822B1FI3|solovyev_danila|0.7046|5|
@@ -735,6 +738,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE1|moiseev_artem|0.2539|2|
 |3822B1PE4|zinoviev_alexander|0.2612|3|
 |3822B1FI1|solovev_alexey|0.2613|1|
+|3822B1PE4|fomin_vladimir|0.2643|7|
 |3822B1PE1|korneeva_ekaterina|0.2698|23|
 |3822B1PE3|chernykh_andrey|0.2728|5|
 |3822B1PE1|korablev_vladlen|0.2780|3|
@@ -819,6 +823,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE1|korablev_vladlen|0.1959|1|
 |3822B1FI3|kudryashova_irina|0.2012|2|
 |3822B1PE1|polikanov_vitaliy|0.2090|20|
+|3822B1PE4|fomin_vladimir|0.2100|7|
 |3822B1PE1|kapustin_ivan|0.2126|22|
 |3822B1PE1|morozov_egor|0.2128|18|
 |3822B1PE2|kavtorev_dmitry|0.2424|13|
@@ -852,6 +857,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE2|zolotareva_arina|0.1398|11|
 |3822B1PE1|odintsov_misha|0.1404|11|
 |3822B1PE4|zinoviev_alexander|0.1404|3|
+|3822B1PE4|fomin_vladimir|0.1411|7|
 |3822B1PE4|kolokolova_darya|0.1412|4|
 |3822B1PE2|titov_semyon|0.1417|1|
 |3822B1FI1|solovev_alexey|0.1424|1|
@@ -987,6 +993,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1FI2|sdobnov_vladimir|RUN FAILED|-|
 |3822B1FI2|dormidontov_egor|RUN FAILED|-|
 |3822B1PE4|ghanga_junior|BUILD FAILED|-|
+|3822B1PE4|fomin_vladimir|TEST FAILED|-|
 
 ## 8_fft_cufft (131072 elements)
 |Group|Name|Result|Rank|
@@ -1040,11 +1047,12 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE1|nikolaev_roman|0.1365|7|
 |3822B1PE2|kavtorev_dmitry|0.1381|13|
 |3822B1PE2|mukhina_margarita|0.1397|5|
-|3822B1FI2|dormidontov_egor|0.1398|5|
 |3822B1PE1|sidorina_polina|0.1398|17|
+|3822B1FI2|dormidontov_egor|0.1398|5|
 |3822B1FI1|shulpin_ilya|0.1400|2|
 |3822B1PE1|korablev_vladlen|0.1401|8|
 |3822B1PE1|kalyakina_anastasia|0.1406|15|
+|3822B1PE4|fomin_vladimir|0.1420|6|
 |3822B1FI1|komshina_daria|0.1420|5|
 |3822B1PE2|muradov_mike|0.1422|4|
 |3822B1PE3|sotskov_andrey|0.1424|3|
@@ -1138,6 +1146,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE1|vershinina_alexandra|0.6035|9|
 |3822B1PE1|vedernikova_kseniya|RUN FAILED|-|
 |3822B1PE2|gusev_nikita|BUILD FAILED|-|
+|3822B1PE4|fomin_vladimir|BUILD FAILED|-|
 |3822B1FI1|somov_ivan|RUN FAILED|-|
 
 # Tasks Done
@@ -1247,12 +1256,13 @@ Passed: 6
 ## 3822B1PE4
 |Group|Name|Passed|Score|
 |-----|----|------|-----|
-|3822B1PE4|ghanga_junior|6/9|341|
-|3822B1PE4|karaseva_ekaterina|**9/9**|**525**|
-|3822B1PE4|kolokolova_darya|**9/9**|**530**|
-|3822B1PE4|podovinnikov_artyom|**9/9**|**551**|
-|3822B1PE4|shuravina_oksana|**9/9**|**545**|
-|3822B1PE4|zinoviev_alexander|**9/9**|**532**|
+|3822B1PE4|fomin_vladimir|6/9|328|
+|3822B1PE4|ghanga_junior|6/9|340|
+|3822B1PE4|karaseva_ekaterina|**9/9**|**524**|
+|3822B1PE4|kolokolova_darya|**9/9**|**527**|
+|3822B1PE4|podovinnikov_artyom|**9/9**|**548**|
+|3822B1PE4|shuravina_oksana|**9/9**|**542**|
+|3822B1PE4|zinoviev_alexander|**9/9**|**531**|
 
 Passed: 5
 
