@@ -51,6 +51,7 @@ std::vector<float> GemmCUBLAS(const std::vector<float> &a,
     cudaFree(d_a);
     cudaFree(d_b);
     cudaFree(d_c);
+    cublasDestroy(handle);
     throw std::runtime_error("Failed to copy matrix a to device");
   }
 
@@ -60,6 +61,7 @@ std::vector<float> GemmCUBLAS(const std::vector<float> &a,
     cudaFree(d_a);
     cudaFree(d_b);
     cudaFree(d_c);
+    cublasDestroy(handle);
     throw std::runtime_error("Failed to copy matrix b to device");
   }
 
@@ -69,13 +71,11 @@ std::vector<float> GemmCUBLAS(const std::vector<float> &a,
   cublasStatus_t cublasStatus = cublasSgemm(handle,
                                             CUBLAS_OP_N,
                                             CUBLAS_OP_N,
-                                            n,
-                                            n,
-                                            n,
+                                            n, n, n,
                                             &alpha,
-                                            d_a,
-                                            n,
                                             d_b,
+                                            n,
+                                            d_a,
                                             n,
                                             &beta,
                                             d_c,
