@@ -2,6 +2,7 @@
 
 #include <CL/cl.h>
 #include <cstdint>
+#include <cstring>
 
 namespace {
 
