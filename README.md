@@ -1118,6 +1118,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE1|kapustin_ivan|0.2618|21|
 |3822B1PE1|morozov_egor|0.2646|18|
 |3822B1FI3|kirill_kholin|0.2672|2|
+|3822B1PE2|gusev_nikita|0.2673|15|
 |3822B1PE4|ghanga_junior|0.2706|6|
 |3822B1FI3|lavrentyev_alexey|0.2706|3|
 |3822B1PE1|khasanyanov_kirill|0.2711|10|
@@ -1174,7 +1175,6 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE2|sorokin_andrey|0.3648|3|
 |3822B1PE1|vershinina_alexandra|0.6035|9|
 |3822B1PE1|vedernikova_kseniya|RUN FAILED|-|
-|3822B1PE2|gusev_nikita|BUILD FAILED|-|
 |3822B1PE4|konkov_ivan|TEST FAILED|-|
 |3822B1PE4|kovalchuk_alexander|BUILD FAILED|-|
 
@@ -1251,23 +1251,23 @@ Passed: 25
 ## 3822B1PE2
 |Group|Name|Passed|Score|
 |-----|----|------|-----|
-|3822B1PE2|ermolaev_vladislav|**9/9**|**501**|
-|3822B1PE2|filatiev_vladislav|**9/9**|**435**|
-|3822B1PE2|filatieva_elizaveta|**9/9**|**432**|
-|3822B1PE2|gusev_nikita|8/9|364|
+|3822B1PE2|ermolaev_vladislav|**9/9**|**500**|
+|3822B1PE2|filatiev_vladislav|**9/9**|**434**|
+|3822B1PE2|filatieva_elizaveta|**9/9**|**431**|
+|3822B1PE2|gusev_nikita|**9/9**|**410**|
 |3822B1PE2|kalinin_dmitry|**9/9**|**412**|
 |3822B1PE2|kavtorev_dmitry|**9/9**|**414**|
-|3822B1PE2|kondratev_yaroslav|**9/9**|**470**|
+|3822B1PE2|kondratev_yaroslav|**9/9**|**469**|
 |3822B1PE2|korovin_nikita|**9/9**|**496**|
-|3822B1PE2|mukhina_margarita|**9/9**|**480**|
-|3822B1PE2|muradov_mike|**9/9**|**463**|
-|3822B1PE2|sorokin_andrey|**9/9**|**452**|
-|3822B1PE2|titov_semyon|**9/9**|**501**|
+|3822B1PE2|mukhina_margarita|**9/9**|**479**|
+|3822B1PE2|muradov_mike|**9/9**|**462**|
+|3822B1PE2|sorokin_andrey|**9/9**|**451**|
+|3822B1PE2|titov_semyon|**9/9**|**500**|
 |3822B1PE2|varfolomeev_gregory|**9/9**|**411**|
-|3822B1PE2|vladimirova_julia|**9/9**|**424**|
-|3822B1PE2|zolotareva_arina|**9/9**|**459**|
+|3822B1PE2|vladimirova_julia|**9/9**|**423**|
+|3822B1PE2|zolotareva_arina|**9/9**|**458**|
 
-Passed: 14
+Passed: 15
 
 ## 3822B1PE3
 |Group|Name|Passed|Score|
@@ -1298,7 +1298,7 @@ Passed: 7
 
 Passed: 6
 
-**Total Passed: 69**
+**Total Passed: 70**
 
 ---
 *Maximum Score: 576 (64 per task)
