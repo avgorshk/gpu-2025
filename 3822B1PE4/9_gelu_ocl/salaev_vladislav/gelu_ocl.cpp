@@ -1,6 +1,10 @@
+#define CL_TARGET_OPENCL_VERSION 120
+#define CL_USE_DEPRECATED_OPENCL_1_2_APIS
+
 #include "gelu_ocl.h"
 #include <CL/cl.h>
 #include <string>
+#include <cstring>
 #include <vector>
 
 const char *kernelSource = R"(
@@ -68,7 +72,7 @@ std::vector<float> GeluOCL(const std::vector<float> &input, int platform)
                                     bytes, (void *)input.data(), nullptr);
     cl_mem d_output = clCreateBuffer(context, CL_MEM_WRITE_ONLY, bytes, nullptr, nullptr);
 
-    int n_int = (int)n;
+    int n_int = static_cast<int>(n);
     clSetKernelArg(kernel, 0, sizeof(cl_mem), &d_input);
     clSetKernelArg(kernel, 1, sizeof(cl_mem), &d_output);
     clSetKernelArg(kernel, 2, sizeof(int), &n_int);
