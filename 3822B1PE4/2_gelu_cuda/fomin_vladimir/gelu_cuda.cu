@@ -35,7 +35,6 @@ std::vector<float> GeluCUDA(const std::vector<float> &input)
 
     float *d_input = nullptr, *d_output = nullptr;
 
-    // Allocate device memory
     size_t bytes = n * sizeof(float);
     cudaMalloc(&d_input, bytes);
     cudaMalloc(&d_output, bytes);
@@ -43,9 +42,17 @@ std::vector<float> GeluCUDA(const std::vector<float> &input)
     cudaMemcpy(d_input, input.data(), bytes, cudaMemcpyHostToDevice);
 
     const int block_size = 256;
-    int grid_size = (static_cast<int>(n) + block_size - 1) / block_size;
+    const int max_blocks_x = 65535;
 
-    gelu_kernel<<<grid_size, block_size>>>(d_input, d_output, n);
+    int total_blocks = (static_cast<int>(n) + block_size - 1) / block_size;
+
+    int grid_x = std::min(total_blocks, max_blocks_x);
+    int grid_y = (total_blocks + max_blocks_x - 1) / max_blocks_x;
+
+    dim3 grid(grid_x, grid_y);
+    dim3 block(block_size);
+
+    gelu_kernel<<<grid, block>>>(d_input, d_output, n);
 
     cudaMemcpy(output.data(), d_output, bytes, cudaMemcpyDeviceToHost);
 
