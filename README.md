@@ -1153,6 +1153,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE1|ermilova_darya|0.3401|11|
 |3822B1PE1|shvedova_vitalina|0.3413|8|
 |3822B1FI3|solovyev_danila|0.3414|4|
+|3822B1PE4|fomin_vladimir|0.3416|8|
 |**REF**|**REF**|**0.3419**|**-**|
 |3822B1FI2|yasakova_tanya|0.3426|1|
 |3822B1PE1|polikanov_vitaliy|0.3429|20|
@@ -1174,7 +1175,6 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE1|vershinina_alexandra|0.6035|9|
 |3822B1PE1|vedernikova_kseniya|RUN FAILED|-|
 |3822B1PE2|gusev_nikita|BUILD FAILED|-|
-|3822B1PE4|fomin_vladimir|BUILD FAILED|-|
 |3822B1PE4|konkov_ivan|TEST FAILED|-|
 |3822B1PE4|kovalchuk_alexander|BUILD FAILED|-|
 
@@ -1285,7 +1285,7 @@ Passed: 7
 ## 3822B1PE4
 |Group|Name|Passed|Score|
 |-----|----|------|-----|
-|3822B1PE4|fomin_vladimir|6/9|319|
+|3822B1PE4|fomin_vladimir|7/9|369|
 |3822B1PE4|ghanga_junior|6/9|333|
 |3822B1PE4|karaseva_ekaterina|**9/9**|**515**|
 |3822B1PE4|kolokolova_darya|**9/9**|**517**|
