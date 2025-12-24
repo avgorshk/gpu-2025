@@ -481,6 +481,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE3|sotskov_andrey|0.2822|1|
 |3822B1PE2|varfolomeev_gregory|0.2849|13|
 |3822B1PE2|mukhina_margarita|0.2859|5|
+|3822B1FI2|polyakov_alexey|0.2866|7|
 |3822B1FI2|sdobnov_vladimir|0.2870|4|
 |3822B1PE2|korovin_nikita|0.2914|2|
 |3822B1PE1|khasanyanov_kirill|0.2921|17|
@@ -537,6 +538,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1FI2|dormidontov_egor|0.1841|6|
 |3822B1FI2|shkurinskaya_elena|0.1842|2|
 |3822B1PE2|kavtorev_dmitry|0.1849|14|
+|3822B1FI2|polyakov_alexey|0.1852|7|
 |3822B1FI2|sdobnov_vladimir|0.1867|3|
 |3822B1FI2|mezhuev_maksim|0.1877|4|
 |3822B1PE1|belov_artem|0.1913|20|
@@ -629,6 +631,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE1|tyurin_mikhail|0.0308|8|
 |3822B1PE1|ermilova_darya|0.0312|14|
 |3822B1PE1|konstantinov_ilya|0.0325|7|
+|3822B1FI2|polyakov_alexey|0.0689|7|
 |3822B1FI2|dormidontov_egor|0.0696|6|
 |3822B1FI2|sdobnov_vladimir|0.0702|3|
 |3822B1FI2|shkurinskaya_elena|0.0794|2|
@@ -742,6 +745,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE3|kazunin_nikita|0.2165|2|
 |3822B1FI3|solovyev_danila|0.2174|5|
 |3822B1PE4|salaev_vladislav|0.2260|10|
+|3822B1FI2|polyakov_alexey|0.2333|7|
 |3822B1PE3|mironov_ilya|0.2351|6|
 |3822B1PE1|milovankin_maxim|0.2353|8|
 |3822B1PE4|ghanga_junior|0.2407|6|
@@ -798,6 +802,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE1|gnitienko_kirill|0.0464|9|
 |3822B1PE2|gusev_nikita|0.0522|12|
 |3822B1FI2|sdobnov_vladimir|0.0769|4|
+|3822B1FI2|polyakov_alexey|0.0773|7|
 |3822B1PE2|varfolomeev_gregory|0.0889|15|
 |3822B1FI1|komshina_daria|0.0918|4|
 |3822B1FI2|shkurinskaya_elena|0.0919|2|
@@ -862,6 +867,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |-----|----|------|----|
 |3822B1PE1|gnitienko_kirill|0.0377|7|
 |3822B1FI2|sdobnov_vladimir|0.0756|5|
+|3822B1FI2|polyakov_alexey|0.0766|7|
 |**FAST**|**FAST**|**0.0776**|**-**|
 |3822B1PE3|oturin_alexander|0.1036|3|
 |3822B1PE1|krylov_mikhail|0.1113|3|
@@ -1017,6 +1023,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE2|filatiev_vladislav|0.5419|9|
 |3822B1PE2|filatieva_elizaveta|0.7555|8|
 |3822B1FI2|sdobnov_vladimir|0.7681|5|
+|3822B1FI2|polyakov_alexey|0.7698|7|
 |3822B1PE1|nikolaev_roman|0.7786|8|
 |3822B1FI3|kholin_kirill|TEST FAILED|-|
 |3822B1PE4|ghanga_junior|BUILD FAILED|-|
@@ -1100,6 +1107,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |**REF**|**REF**|**0.2228**|**-**|
 |3822B1PE1|vershinina_alexandra|0.2334|10|
 |3822B1FI2|shkurinskaya_elena|0.2335|2|
+|3822B1FI2|polyakov_alexey|0.2362|7|
 |3822B1PE1|konstantinov_ilya|0.2411|3|
 |3822B1PE4|ghanga_junior|BUILD FAILED|-|
 
@@ -1167,6 +1175,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE1|kalyakina_anastasia|0.3438|24|
 |3822B1FI1|solovev_alexey|0.3438|2|
 |3822B1FI1|komshina_daria|0.3439|4|
+|3822B1FI2|polyakov_alexey|0.3450|7|
 |3822B1PE1|odintsov_misha|0.3453|12|
 |3822B1PE1|tyurin_mikhail|0.3455|13|
 |3822B1PE1|sadikov_ivan|0.3460|14|
@@ -1201,14 +1210,15 @@ Passed: 6
 ## 3822B1FI2
 |Group|Name|Passed|Score|
 |-----|----|------|-----|
-|3822B1FI2|dormidontov_egor|**9/9**|**520**|
-|3822B1FI2|markin_ivan|**9/9**|**515**|
-|3822B1FI2|mezhuev_maksim|**9/9**|**533**|
-|3822B1FI2|sdobnov_vladimir|**9/9**|**525**|
-|3822B1FI2|shkurinskaya_elena|**9/9**|**544**|
-|3822B1FI2|yasakova_tanya|**9/9**|**549**|
+|3822B1FI2|dormidontov_egor|**9/9**|**517**|
+|3822B1FI2|markin_ivan|**9/9**|**510**|
+|3822B1FI2|mezhuev_maksim|**9/9**|**529**|
+|3822B1FI2|polyakov_alexey|**9/9**|**491**|
+|3822B1FI2|sdobnov_vladimir|**9/9**|**522**|
+|3822B1FI2|shkurinskaya_elena|**9/9**|**540**|
+|3822B1FI2|yasakova_tanya|**9/9**|**545**|
 
-Passed: 6
+Passed: 7
 
 ## 3822B1FI3
 |Group|Name|Passed|Score|
@@ -1305,7 +1315,7 @@ Passed: 7
 
 Passed: 6
 
-**Total Passed: 70**
+**Total Passed: 71**
 
 ---
 *Maximum Score: 576 (64 per task)
