@@ -664,6 +664,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1FI1|elvin_veliev|0.7035|3|
 |3822B1FI3|solovyev_danila|0.7046|5|
 |3822B1PE1|sorochkin_danila|0.7074|25|
+|3822B1PE1|koshkin_matvey|0.7089|27|
 |3822B1FI3|koshkin_nikita|0.7102|4|
 |3822B1PE1|sidorina_polina|0.7136|18|
 |3822B1PE4|podovinnikov_artyom|0.7137|1|
@@ -763,6 +764,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE1|voroshilov_vitaliy|0.4488|26|
 |3822B1PE2|vladimirova_julia|0.4506|10|
 |3822B1PE1|odintsov_misha|0.4525|12|
+|3822B1PE1|koshkin_matvey|0.4543|27|
 |3822B1PE2|kavtorev_dmitry|0.4578|14|
 |3822B1PE2|gusev_nikita|0.5191|12|
 |3822B1PE1|morozov_egor|0.5286|17|
@@ -846,6 +848,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE2|ermolaev_vladislav|0.2532|2|
 |3822B1PE4|podovinnikov_artyom|0.2540|1|
 |3822B1PE3|malyshev_anton|0.2547|7|
+|3822B1PE1|koshkin_matvey|0.2760|27|
 |3822B1PE1|sorochkin_danila|0.2766|25|
 |3822B1PE3|sotskov_andrey|0.2963|2|
 |3822B1FI1|solovev_alexey|0.3512|1|
@@ -929,6 +932,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE1|vasilev_sergey|0.3372|21|
 |3822B1PE4|konkov_ivan|0.3373|8|
 |3822B1FI3|koshkin_nikita|0.3405|5|
+|3822B1PE1|koshkin_matvey|0.3446|27|
 |3822B1PE2|korovin_nikita|0.3646|4|
 |3822B1PE4|shuravina_oksana|0.4180|2|
 |3822B1PE1|voroshilov_vitaliy|0.4237|26|
@@ -1223,31 +1227,31 @@ Passed: 5
 |-----|----|------|-----|
 |3822B1PE1|belov_artem|**9/9**|**370**|
 |3822B1PE1|ermilova_darya|**9/9**|**368**|
-|3822B1PE1|gnitienko_kirill|**9/9**|**369**|
+|3822B1PE1|gnitienko_kirill|**9/9**|**368**|
 |3822B1PE1|kalyakina_anastasia|**9/9**|**316**|
-|3822B1PE1|kapustin_ivan|**9/9**|**285**|
+|3822B1PE1|kapustin_ivan|**9/9**|**284**|
 |3822B1PE1|khasanyanov_kirill|**9/9**|**358**|
 |3822B1PE1|konstantinov_ilya|**9/9**|**415**|
 |3822B1PE1|korablev_vladlen|**9/9**|**421**|
 |3822B1PE1|korneeva_ekaterina|**9/9**|**276**|
-|3822B1PE1|koshkin_matvey|2/9|59|
+|3822B1PE1|koshkin_matvey|6/9|118|
 |3822B1PE1|krylov_mikhail|**9/9**|**455**|
 |3822B1PE1|milovankin_maxim|**9/9**|**435**|
 |3822B1PE1|moiseev_artem|**9/9**|**470**|
-|3822B1PE1|morozov_egor|**9/9**|**313**|
+|3822B1PE1|morozov_egor|**9/9**|**312**|
 |3822B1PE1|nikolaev_roman|**9/9**|**367**|
-|3822B1PE1|odintsov_misha|**9/9**|**299**|
-|3822B1PE1|polikanov_vitaliy|**9/9**|**300**|
+|3822B1PE1|odintsov_misha|**9/9**|**297**|
+|3822B1PE1|polikanov_vitaliy|**9/9**|**299**|
 |3822B1PE1|rams_sergei|**9/9**|**470**|
 |3822B1PE1|sadikov_ivan|**9/9**|**399**|
-|3822B1PE1|shvedova_vitalina|**9/9**|**428**|
-|3822B1PE1|sidorina_polina|**9/9**|**297**|
-|3822B1PE1|sorochkin_danila|**9/9**|**260**|
+|3822B1PE1|shvedova_vitalina|**9/9**|**427**|
+|3822B1PE1|sidorina_polina|**9/9**|**295**|
+|3822B1PE1|sorochkin_danila|**9/9**|**259**|
 |3822B1PE1|tyurin_mikhail|**9/9**|**400**|
 |3822B1PE1|vasilev_sergey|**9/9**|**275**|
 |3822B1PE1|vedernikova_kseniya|8/9|237|
 |3822B1PE1|vershinina_alexandra|**9/9**|**295**|
-|3822B1PE1|voroshilov_vitaliy|**9/9**|**199**|
+|3822B1PE1|voroshilov_vitaliy|**9/9**|**198**|
 
 Passed: 25
 
