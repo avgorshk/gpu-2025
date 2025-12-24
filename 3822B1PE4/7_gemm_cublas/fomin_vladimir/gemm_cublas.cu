@@ -45,7 +45,6 @@ std::vector<float> GemmCUBLAS(const std::vector<float> &a,
     throw std::runtime_error("Failed to allocate device memory for d_c");
   }
 
-  // Копируем матрицы на устройство (как они есть, в row-major)
   cudaStatus = cudaMemcpy(d_a, a.data(), matrix_size, cudaMemcpyHostToDevice);
   if (cudaStatus != cudaSuccess)
   {
@@ -69,29 +68,17 @@ std::vector<float> GemmCUBLAS(const std::vector<float> &a,
   const float alpha = 1.0f;
   const float beta = 0.0f;
 
-  // ВАЖНО: cuBLAS ожидает column-major матрицы
-  // Мы хотим вычислить C = A * B (row-major)
-  // В column-major это эквивалентно C^T = B^T * A^T
-  
-  // Используем транспонирование для обеих матриц
-  // C_col_major = alpha * A_col_major^T * B_col_major^T + beta * C_col_major
-  // Но поскольку мы передаем матрицы в row-major, они интерпретируются как транспонированные
-  
-  // Правильный вызов для вычисления C_row_major = A_row_major * B_row_major через cuBLAS:
-  // C_col_major = (A_row_major * B_row_major)^T = B_row_major^T * A_row_major^T
-  // = B_col_major * A_col_major (поскольку B_row_major^T = B_col_major)
-  
   cublasStatus_t cublasStatus = cublasSgemm(handle,
-                                            CUBLAS_OP_N, // B не транспонировать (уже в нужном формате)
-                                            CUBLAS_OP_N, // A не транспонировать
+                                            CUBLAS_OP_N,
+                                            CUBLAS_OP_N,
                                             n, n, n,
                                             &alpha,
-                                            d_b, // B в памяти (row-major, но для cuBLAS это column-major B^T)
+                                            d_b,
                                             n,
-                                            d_a, // A в памяти (row-major, но для cuBLAS это column-major A^T)
+                                            d_a,
                                             n,
                                             &beta,
-                                            d_c, // C в памяти (будет column-major C^T)
+                                            d_c,
                                             n);
 
   if (cublasStatus != CUBLAS_STATUS_SUCCESS)
@@ -112,10 +99,6 @@ std::vector<float> GemmCUBLAS(const std::vector<float> &a,
     cublasDestroy(handle);
     throw std::runtime_error("Failed to copy result to host");
   }
-
-  // Полученный результат в памяти - это C^T в column-major,
-  // что эквивалентно C в row-major (транспонирование матрицы, представленной в другом порядке)
-  // Так что дополнительное транспонирование не нужно
 
   cudaFree(d_a);
   cudaFree(d_b);
