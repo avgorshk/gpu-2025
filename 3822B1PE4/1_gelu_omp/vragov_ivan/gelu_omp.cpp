@@ -11,9 +11,8 @@ std::vector<float> GeluOMP(const std::vector<float>& input) {
     const float coeff = 0.044715f;
     const float half = 0.5f;
     
-    // Параллелизация с векторизацией
-    #pragma omp parallel for simd
-    for (size_t i = 0; i < n; ++i) {
+    #pragma omp parallel for
+    for (int i = 0; i < static_cast<int>(n); ++i) {
         float x = input[i];
         float x3 = x * x * x;
         float inner = sqrt_2_over_pi * (x + coeff * x3);
