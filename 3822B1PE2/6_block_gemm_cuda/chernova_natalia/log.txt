@@ -1,0 +1,9 @@
+/home/crazyproger/sandbox/gpu-2025/3822B1PE2/6_block_gemm_cuda/chernova_natalia/block_gemm_cuda.cu(87): error: namespace "std" has no member "cerr"
+          std::cerr << "Error: Matrix sizes don't match!" << std::endl;
+               ^
+
+/home/crazyproger/sandbox/gpu-2025/3822B1PE2/6_block_gemm_cuda/chernova_natalia/block_gemm_cuda.cu(87): error: namespace "std" has no member "endl"
+          std::cerr << "Error: Matrix sizes don't match!" << std::endl;
+                                                                  ^
+
+2 errors detected in the compilation of "/home/crazyproger/sandbox/gpu-2025/3822B1PE2/6_block_gemm_cuda/chernova_natalia/block_gemm_cuda.cu".
