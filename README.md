@@ -688,6 +688,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE1|sidorina_polina|0.7136|18|
 |3822B1PE4|podovinnikov_artyom|0.7137|1|
 |3822B1PE1|kapustin_ivan|0.7137|23|
+|3822B1PE4|ghanga_junior|0.7157|9|
 |3822B1PE3|malyshev_anton|0.7180|7|
 |3822B1PE2|filatiev_vladislav|0.7226|9|
 |3822B1FI2|yasakova_tanya|0.7227|1|
@@ -708,7 +709,6 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE2|vladimirova_julia|0.7843|10|
 |3822B1FI1|shulpin_ilya|0.7960|2|
 |3822B1PE1|odintsov_misha|0.8459|13|
-|3822B1PE4|ghanga_junior|BUILD FAILED|-|
 |3822B1PE4|konkov_ivan|BUILD FAILED|-|
 |3822B1PE4|muradov_kamal|BUILD FAILED|-|
 |3822B1FI3|budazhapova_ekaterina|BUILD FAILED|-|
@@ -1052,6 +1052,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1FI2|mezhuev_maksim|0.0751|3|
 |3822B1FI1|komshina_daria|0.0763|5|
 |3822B1PE3|oturin_alexander|0.0784|3|
+|3822B1PE4|ghanga_junior|0.0785|10|
 |3822B1PE4|zinoviev_alexander|0.0787|3|
 |3822B1PE2|mukhina_margarita|0.0789|7|
 |3822B1PE1|odintsov_misha|0.1022|12|
@@ -1065,7 +1066,6 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE1|zaitsev_artem|BUILD FAILED|-|
 |3822B1PE2|matynina_aleksandra|TEST FAILED|-|
 |3822B1FI3|kholin_kirill|TEST FAILED|-|
-|3822B1PE4|ghanga_junior|BUILD FAILED|-|
 |3822B1PE4|konkov_ivan|TEST FAILED|-|
 
 ## 8_fft_cufft (131072 elements)
@@ -1129,6 +1129,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1FI2|dormidontov_egor|0.1398|5|
 |3822B1PE4|kovalchuk_alexander|0.1399|8|
 |3822B1FI1|shulpin_ilya|0.1400|2|
+|3822B1PE4|ghanga_junior|0.1401|11|
 |3822B1PE1|korablev_vladlen|0.1401|8|
 |3822B1PE1|kalyakina_anastasia|0.1406|15|
 |3822B1PE4|fomin_vladimir|0.1420|6|
@@ -1153,7 +1154,6 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1FI2|polyakov_alexey|0.2362|7|
 |3822B1PE1|konstantinov_ilya|0.2411|3|
 |3822B1PE2|matynina_aleksandra|0.2422|16|
-|3822B1PE4|ghanga_junior|BUILD FAILED|-|
 |3822B1FI3|budazhapova_ekaterina|BUILD FAILED|-|
 
 ## 9_gelu_ocl (134217728 elements)
@@ -1359,21 +1359,21 @@ Passed: 8
 ## 3822B1PE4
 |Group|Name|Passed|Score|
 |-----|----|------|-----|
-|3822B1PE4|fomin_vladimir|8/9|420|
-|3822B1PE4|ghanga_junior|6/9|329|
+|3822B1PE4|fomin_vladimir|8/9|419|
+|3822B1PE4|ghanga_junior|**9/9**|**474**|
 |3822B1PE4|karaseva_ekaterina|**9/9**|**510**|
-|3822B1PE4|kolokolova_darya|**9/9**|**510**|
-|3822B1PE4|konkov_ivan|5/9|256|
-|3822B1PE4|kovalchuk_alexander|8/9|419|
+|3822B1PE4|kolokolova_darya|**9/9**|**509**|
+|3822B1PE4|konkov_ivan|5/9|255|
+|3822B1PE4|kovalchuk_alexander|8/9|418|
 |3822B1PE4|muradov_kamal|8/9|406|
 |3822B1PE4|podovinnikov_artyom|**9/9**|**531**|
 |3822B1PE4|salaev_vladislav|**9/9**|**477**|
-|3822B1PE4|shuravina_oksana|**9/9**|**527**|
-|3822B1PE4|zinoviev_alexander|**9/9**|**513**|
+|3822B1PE4|shuravina_oksana|**9/9**|**526**|
+|3822B1PE4|zinoviev_alexander|**9/9**|**511**|
 
-Passed: 6
+Passed: 7
 
-**Total Passed: 73**
+**Total Passed: 74**
 
 ---
 *Maximum Score: 576 (64 per task)
