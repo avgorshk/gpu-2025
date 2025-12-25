@@ -1,67 +1,40 @@
 #include "block_gemm_omp.h"
+#include <algorithm>
 #include <omp.h>
-#include <cstddef>
 
-std::vector<float> BlockGemmOMP(const std::vector<float>& a,
-                                const std::vector<float>& b,
-                                int n) {
-    const std::size_t nn = static_cast<std::size_t>(n) * static_cast<std::size_t>(n);
-    if (a.size() != nn || b.size() != nn) {
-        return {};
-    }
+std::vector<float> BlockGemmOMP(const std::vector<float> &a,
+                                const std::vector<float> &b, int n) {
+  std::vector<float> c(n * n, 0.0f);
+  const int BLOCK_SIZE = 64;
 
-    std::vector<float> c(nn, 0.0f);
-    const int BS = 64;
+#pragma omp parallel for schedule(dynamic) collapse(2)
+  for (int ii = 0; ii < n; ii += BLOCK_SIZE) {
+    for (int jj = 0; jj < n; jj += BLOCK_SIZE) {
+      for (int kk = 0; kk < n; kk += BLOCK_SIZE) {
+        int i_end = std::min(ii + BLOCK_SIZE, n);
+        int j_end = std::min(jj + BLOCK_SIZE, n);
+        int k_end = std::min(kk + BLOCK_SIZE, n);
 
-    #pragma omp parallel for collapse(2)
-    for (int ii = 0; ii < n; ii += BS) {
-        for (int jj = 0; jj < n; jj += BS) {
-            int i_max = std::min(ii + BS, n);
-            int j_max = std::min(jj + BS, n);
+        for (int i = ii; i < i_end; ++i) {
+          for (int k = kk; k < k_end; ++k) {
+            float a_ik = a[i * n + k];
+            int j = jj;
 
-            for (int kk = 0; kk < n; kk += BS) {
-                int k_max = std::min(kk + BS, n);
-
-                for (int i = ii; i < i_max; ++i) {
-                    for (int j = jj; j < j_max; ++j) {
-                        float sum0 = 0.0f, sum1 = 0.0f, sum2 = 0.0f, sum3 = 0.0f;
-                        int k = kk;
-                        int limit = kk + ((k_max - kk) & ~3);
-
-                        #pragma omp simd reduction(+:sum0,sum1,sum2,sum3)
-                        for (; k < limit; k += 4) {
-                            const float a0 = a[i * n + (k + 0)];
-                            const float a1 = a[i * n + (k + 1)];
-                            const float a2 = a[i * n + (k + 2)];
-                            const float a3 = a[i * n + (k + 3)];
-
-                            const std::size_t row0 = static_cast<std::size_t>(k + 0) * n;
-                            const std::size_t row1 = static_cast<std::size_t>(k + 1) * n;
-                            const std::size_t row2 = static_cast<std::size_t>(k + 2) * n;
-                            const std::size_t row3 = static_cast<std::size_t>(k + 3) * n;
-
-                            const float b0 = b[row0 + j];
-                            const float b1 = b[row1 + j];
-                            const float b2 = b[row2 + j];
-                            const float b3 = b[row3 + j];
-
-                            sum0 += a0 * b0;
-                            sum1 += a1 * b1;
-                            sum2 += a2 * b2;
-                            sum3 += a3 * b3;
-                        }
-
-                        float sum = sum0 + sum1 + sum2 + sum3;
-                        for (; k < k_max; ++k) {
-                            sum += a[i * n + k] * b[static_cast<std::size_t>(k) * n + j];
-                        }
-
-                        c[static_cast<std::size_t>(i) * n + j] += sum;
-                    }
-                }
+            for (; j <= j_end - 4; j += 4) {
+              c[i * n + j] += a_ik * b[k * n + j];
+              c[i * n + j + 1] += a_ik * b[k * n + j + 1];
+              c[i * n + j + 2] += a_ik * b[k * n + j + 2];
+              c[i * n + j + 3] += a_ik * b[k * n + j + 3];
             }
-        }
-    }
 
-    return c;
+            for (; j < j_end; ++j) {
+              c[i * n + j] += a_ik * b[k * n + j];
+            }
+          }
+        }
+      }
+    }
+  }
+
+  return c;
 }
