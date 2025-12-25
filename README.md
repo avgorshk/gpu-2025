@@ -572,6 +572,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE2|filatieva_elizaveta|0.2206|8|
 |3822B1PE3|sarafanov_maxim|0.2209|4|
 |**REF**|**REF**|**0.2209**|**-**|
+|3822B1PE4|fomin_vladimir|0.2212|11|
 |3822B1PE1|sorochkin_danila|0.2214|25|
 |3822B1PE1|milovankin_maxim|0.2217|10|
 |3822B1FI1|elvin_veliev|0.2220|3|
@@ -623,7 +624,6 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE1|krylov_mikhail|0.2577|11|
 |3822B1PE1|vershinina_alexandra|0.6209|16|
 |3822B1FI1|komshina_daria|0.6698|4|
-|3822B1PE4|fomin_vladimir|TEST FAILED|-|
 
 ## 3_naive_gemm_omp (1024 elements)
 |Group|Name|Result|Rank|
@@ -1366,21 +1366,21 @@ Passed: 8
 ## 3822B1PE4
 |Group|Name|Passed|Score|
 |-----|----|------|-----|
-|3822B1PE4|fomin_vladimir|8/9|418|
-|3822B1PE4|ghanga_junior|**9/9**|**473**|
-|3822B1PE4|karaseva_ekaterina|**9/9**|**509**|
-|3822B1PE4|kolokolova_darya|**9/9**|**508**|
-|3822B1PE4|konkov_ivan|5/9|255|
+|3822B1PE4|fomin_vladimir|**9/9**|**470**|
+|3822B1PE4|ghanga_junior|**9/9**|**472**|
+|3822B1PE4|karaseva_ekaterina|**9/9**|**508**|
+|3822B1PE4|kolokolova_darya|**9/9**|**507**|
+|3822B1PE4|konkov_ivan|5/9|254|
 |3822B1PE4|kovalchuk_alexander|8/9|417|
-|3822B1PE4|muradov_kamal|**9/9**|**459**|
-|3822B1PE4|podovinnikov_artyom|**9/9**|**530**|
-|3822B1PE4|salaev_vladislav|**9/9**|**477**|
+|3822B1PE4|muradov_kamal|**9/9**|**458**|
+|3822B1PE4|podovinnikov_artyom|**9/9**|**529**|
+|3822B1PE4|salaev_vladislav|**9/9**|**476**|
 |3822B1PE4|shuravina_oksana|**9/9**|**525**|
-|3822B1PE4|zinoviev_alexander|**9/9**|**511**|
+|3822B1PE4|zinoviev_alexander|**9/9**|**510**|
 
-Passed: 8
+Passed: 9
 
-**Total Passed: 75**
+**Total Passed: 76**
 
 ---
 *Maximum Score: 576 (64 per task)
