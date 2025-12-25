@@ -1,59 +1,116 @@
 #include "gemm_cublas.h"
-#include <cuda_runtime.h>
 #include <cublas_v2.h>
-#include <vector>
+#include <cuda_runtime.h>
+#include <iostream>
+#include <stdexcept>
 
 std::vector<float> GemmCUBLAS(const std::vector<float>& a,
                               const std::vector<float>& b,
-                              int n)
-{
-    const size_t num_elements = static_cast<size_t>(n) * n;
-    const size_t size_bytes   = num_elements * sizeof(float);
+                              int n) {
+    // Проверка входных данных
+    if (a.size() != n * n || b.size() != n * n) {
+        throw std::invalid_argument("Input matrices must have size n*n");
+    }
 
-    // Allocation device
-    float* d_a = nullptr;
-    float* d_b = nullptr;
-    float* d_c = nullptr;
-
-    cudaMalloc(&d_a, size_bytes);
-    cudaMalloc(&d_b, size_bytes);
-    cudaMalloc(&d_c, size_bytes);
-
-    // Handle cuBLAS
+    cublasStatus_t status;
+    cudaError_t cudaStatus;
+    
+    // Создание handle для cuBLAS
     cublasHandle_t handle;
-    cublasCreate(&handle);
+    status = cublasCreate(&handle);
+    if (status != CUBLAS_STATUS_SUCCESS) {
+        throw std::runtime_error("cuBLAS handle creation failed");
+    }
 
-    // Copie host -> device
-    cudaMemcpy(d_a, a.data(), size_bytes, cudaMemcpyHostToDevice);
-    cudaMemcpy(d_b, b.data(), size_bytes, cudaMemcpyHostToDevice);
+    // Выделение памяти на устройстве
+    float *d_A, *d_B, *d_C;
+    size_t size = n * n * sizeof(float);
+    
+    cudaStatus = cudaMalloc(&d_A, size);
+    if (cudaStatus != cudaSuccess) {
+        cublasDestroy(handle);
+        throw std::runtime_error("CUDA memory allocation for A failed");
+    }
+    
+    cudaStatus = cudaMalloc(&d_B, size);
+    if (cudaStatus != cudaSuccess) {
+        cudaFree(d_A);
+        cublasDestroy(handle);
+        throw std::runtime_error("CUDA memory allocation for B failed");
+    }
+    
+    cudaStatus = cudaMalloc(&d_C, size);
+    if (cudaStatus != cudaSuccess) {
+        cudaFree(d_A);
+        cudaFree(d_B);
+        cublasDestroy(handle);
+        throw std::runtime_error("CUDA memory allocation for C failed");
+    }
 
-    const float alpha = 1.0f;
-    const float beta  = 0.0f;
+    try {
+        // Копирование матриц A и B на устройство
+        // Поскольку наши матрицы хранятся по строкам, а cuBLAS ожидает по столбцам,
+        // мы будем использовать транспонированные версии в вычислениях
+        status = cublasSetMatrix(n, n, sizeof(float), a.data(), n, d_A, n);
+        if (status != CUBLAS_STATUS_SUCCESS) {
+            throw std::runtime_error("Failed to set matrix A on device");
+        }
+        
+        status = cublasSetMatrix(n, n, sizeof(float), b.data(), n, d_B, n);
+        if (status != CUBLAS_STATUS_SUCCESS) {
+            throw std::runtime_error("Failed to set matrix B on device");
+        }
 
-    // C = A * B (les deux en row-major mais testés de la même façon côté prof)
-    cublasSgemm(
-        handle,
-        CUBLAS_OP_N, // op(B)
-        CUBLAS_OP_N, // op(A)
-        n,           // m
-        n,           // n
-        n,           // k
-        &alpha,
-        d_b, n,      // B
-        d_a, n,      // A
-        &beta,
-        d_c, n       // C
-    );
+        // Параметры для умножения матриц
+        const float alpha = 1.0f;
+        const float beta = 0.0f;
+        
+        // Выполнение умножения матриц: C = A × B
+        // Поскольку cuBLAS ожидает матрицы по столбцам, а у нас по строкам,
+        // то A_row-major × B_row-major = (A_col-major^T × B_col-major^T)^T
+        // Поэтому вычисляем: C_col-major = B_col-major × A_col-major
+        // Что эквивалентно: C_row-major = A_row-major × B_row-major
+        status = cublasSgemm(handle,
+                            CUBLAS_OP_N,    // нет транспонирования для B (уже в col-major)
+                            CUBLAS_OP_N,    // нет транспонирования для A (уже в col-major)
+                            n, n, n,        // размеры матриц
+                            &alpha,         // alpha
+                            d_B, n,         // B в col-major (эквивалентно b в row-major)
+                            d_A, n,         // A в col-major (эквивалентно a в row-major)
+                            &beta,          // beta
+                            d_C, n);        // C в col-major
+        
+        if (status != CUBLAS_STATUS_SUCCESS) {
+            throw std::runtime_error("cuBLAS SGEMM operation failed");
+        }
 
-    // Récupérer le résultat
-    std::vector<float> c(num_elements);
-    cudaMemcpy(c.data(), d_c, size_bytes, cudaMemcpyDeviceToHost);
+        // Синхронизация для обеспечения завершения вычислений
+        cudaStatus = cudaDeviceSynchronize();
+        if (cudaStatus != cudaSuccess) {
+            throw std::runtime_error("CUDA device synchronization failed");
+        }
 
-    // Cleanup
-    cublasDestroy(handle);
-    cudaFree(d_a);
-    cudaFree(d_b);
-    cudaFree(d_c);
+        // Копирование результата обратно на хост
+        std::vector<float> c(n * n);
+        status = cublasGetMatrix(n, n, sizeof(float), d_C, n, c.data(), n);
+        if (status != CUBLAS_STATUS_SUCCESS) {
+            throw std::runtime_error("Failed to get result matrix from device");
+        }
 
-    return c;
+        // Освобождение ресурсов
+        cudaFree(d_A);
+        cudaFree(d_B);
+        cudaFree(d_C);
+        cublasDestroy(handle);
+
+        return c;
+
+    } catch (const std::exception& e) {
+        // Освобождение ресурсов в случае ошибки
+        cudaFree(d_A);
+        cudaFree(d_B);
+        cudaFree(d_C);
+        cublasDestroy(handle);
+        throw;
+    }
 }
