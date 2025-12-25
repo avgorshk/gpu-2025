@@ -502,6 +502,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1FI3|lavrentyev_alexey|0.6559|6|
 |3822B1PE1|korneeva_ekaterina|0.6560|24|
 |3822B1FI2|shkurinskaya_elena|0.6565|3|
+|3822B1PE4|muradov_kamal|0.6573|10|
 |3822B1PE3|kazunin_nikita|0.6626|4|
 |3822B1PE1|koshkin_matvey|0.6668|27|
 |3822B1PE3|chernykh_andrey|0.6673|5|
@@ -595,6 +596,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE3|sotskov_andrey|0.2269|1|
 |3822B1PE1|vedernikova_kseniya|0.2270|22|
 |3822B1FI3|kudryashova_irina|0.2274|1|
+|3822B1PE4|muradov_kamal|0.2276|10|
 |3822B1PE4|kolokolova_darya|0.2279|2|
 |3822B1PE4|ghanga_junior|0.2288|6|
 |3822B1PE1|korablev_vladlen|0.2295|2|
@@ -697,6 +699,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE1|odintsov_misha|0.8459|13|
 |3822B1PE4|ghanga_junior|BUILD FAILED|-|
 |3822B1PE4|konkov_ivan|BUILD FAILED|-|
+|3822B1PE4|muradov_kamal|BUILD FAILED|-|
 
 ## 4_naive_gemm_cuda (4096 elements)
 |Group|Name|Result|Rank|
@@ -753,6 +756,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE3|mironov_ilya|0.2351|6|
 |3822B1PE1|milovankin_maxim|0.2353|8|
 |3822B1PE4|ghanga_junior|0.2407|6|
+|3822B1PE4|muradov_kamal|0.2428|11|
 |3822B1PE4|karaseva_ekaterina|0.2430|5|
 |3822B1FI3|lavrentyev_alexey|0.2466|4|
 |3822B1FI1|elvin_veliev|0.2481|3|
@@ -831,6 +835,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE4|karaseva_ekaterina|0.1459|5|
 |3822B1PE1|tyurin_mikhail|0.1463|10|
 |3822B1PE2|filatieva_elizaveta|0.1464|8|
+|3822B1PE4|muradov_kamal|0.1492|10|
 |3822B1PE2|filatiev_vladislav|0.1557|9|
 |3822B1FI3|solovyev_danila|0.1575|6|
 |3822B1FI2|markin_ivan|0.1613|5|
@@ -895,6 +900,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1FI3|kirill_kholin|0.1428|3|
 |3822B1PE3|chernykh_andrey|0.1436|5|
 |3822B1PE2|sorokin_andrey|0.1449|6|
+|3822B1PE4|muradov_kamal|0.1458|11|
 |3822B1PE2|vladimirova_julia|0.1470|10|
 |3822B1FI3|lavrentyev_alexey|0.1473|4|
 |3822B1PE4|karaseva_ekaterina|0.1478|5|
@@ -989,6 +995,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1FI3|lavrentyev_alexey|0.0518|3|
 |3822B1PE1|kapustin_ivan|0.0519|22|
 |3822B1PE4|fomin_vladimir|0.0520|8|
+|3822B1PE4|muradov_kamal|0.0520|9|
 |3822B1FI2|dormidontov_egor|0.0521|6|
 |3822B1PE2|kalinin_dmitry|0.0523|14|
 |3822B1PE3|sotskov_andrey|0.0524|1|
@@ -1042,6 +1049,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE1|belov_artem|0.0903|19|
 |3822B1PE1|korneeva_ekaterina|0.0909|23|
 |3822B1PE3|chernykh_andrey|0.1048|5|
+|3822B1PE4|muradov_kamal|0.1063|10|
 |**FAST**|**FAST**|**0.1075**|**-**|
 |3822B1PE1|kapustin_ivan|0.1084|22|
 |3822B1PE1|rams_sergei|0.1094|4|
@@ -1134,6 +1142,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE4|karaseva_ekaterina|0.2239|3|
 |3822B1PE2|varfolomeev_gregory|0.2261|11|
 |3822B1PE2|korovin_nikita|0.2294|5|
+|3822B1PE4|muradov_kamal|0.2339|10|
 |3822B1PE3|mironov_ilya|0.2439|6|
 |3822B1FI1|ionova_ekaterina|0.2464|5|
 |3822B1PE3|oturin_alexander|0.2614|3|
@@ -1312,16 +1321,17 @@ Passed: 7
 ## 3822B1PE4
 |Group|Name|Passed|Score|
 |-----|----|------|-----|
-|3822B1PE4|fomin_vladimir|8/9|424|
-|3822B1PE4|ghanga_junior|6/9|332|
-|3822B1PE4|karaseva_ekaterina|**9/9**|**514**|
-|3822B1PE4|kolokolova_darya|**9/9**|**515**|
-|3822B1PE4|konkov_ivan|5/9|259|
-|3822B1PE4|kovalchuk_alexander|8/9|423|
-|3822B1PE4|podovinnikov_artyom|**9/9**|**536**|
-|3822B1PE4|salaev_vladislav|**9/9**|**481**|
-|3822B1PE4|shuravina_oksana|**9/9**|**531**|
-|3822B1PE4|zinoviev_alexander|**9/9**|**517**|
+|3822B1PE4|fomin_vladimir|8/9|420|
+|3822B1PE4|ghanga_junior|6/9|329|
+|3822B1PE4|karaseva_ekaterina|**9/9**|**510**|
+|3822B1PE4|kolokolova_darya|**9/9**|**510**|
+|3822B1PE4|konkov_ivan|5/9|256|
+|3822B1PE4|kovalchuk_alexander|8/9|419|
+|3822B1PE4|muradov_kamal|8/9|406|
+|3822B1PE4|podovinnikov_artyom|**9/9**|**531**|
+|3822B1PE4|salaev_vladislav|**9/9**|**477**|
+|3822B1PE4|shuravina_oksana|**9/9**|**527**|
+|3822B1PE4|zinoviev_alexander|**9/9**|**513**|
 
 Passed: 6
 

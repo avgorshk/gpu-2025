@@ -1,0 +1,8 @@
+/home/crazyproger/sandbox/gpu-2025/3822B1PE4/3_naive_gemm_omp/muradov_kamal/naive_gemm_omp.cpp: In function ‘std::vector<float> NaiveGemmOMP(const std::vector<float>&, const std::vector<float>&, int)’:
+/home/crazyproger/sandbox/gpu-2025/3822B1PE4/3_naive_gemm_omp/muradov_kamal/naive_gemm_omp.cpp:8:38: error: ‘size_t’ does not name a type
+    8 |     std::vector<float> c(static_cast<size_t>(n) * n, 0.0f);
+      |                                      ^~~~~~
+/home/crazyproger/sandbox/gpu-2025/3822B1PE4/3_naive_gemm_omp/muradov_kamal/naive_gemm_omp.cpp:2:1: note: ‘size_t’ is defined in header ‘<cstddef>’; did you forget to ‘#include <cstddef>’?
+    1 | #include "naive_gemm_omp.h"
+  +++ |+#include <cstddef>
+    2 | 
