@@ -11,35 +11,22 @@ std::vector<float> BlockGemmOMP(const std::vector<float>& a,
     }
 
     std::vector<float> c(nn, 0.0f);
-
     const int BS = 64;
 
     #pragma omp parallel for collapse(2)
     for (int ii = 0; ii < n; ii += BS) {
         for (int jj = 0; jj < n; jj += BS) {
-
-            int i_max = ii + BS;
-            int j_max = jj + BS;
-
-            if (i_max > n) i_max = n;
-            if (j_max > n) j_max = n;
+            int i_max = std::min(ii + BS, n);
+            int j_max = std::min(jj + BS, n);
 
             for (int kk = 0; kk < n; kk += BS) {
-
-                int k_max = kk + BS;
-                if (k_max > n) k_max = n;
+                int k_max = std::min(kk + BS, n);
 
                 for (int i = ii; i < i_max; ++i) {
                     for (int j = jj; j < j_max; ++j) {
-
-                        float sum0 = 0.0f;
-                        float sum1 = 0.0f;
-                        float sum2 = 0.0f;
-                        float sum3 = 0.0f;
-
+                        float sum0 = 0.0f, sum1 = 0.0f, sum2 = 0.0f, sum3 = 0.0f;
                         int k = kk;
-                        int limit = (k_max - kk) & ~3;
-                        limit += kk;
+                        int limit = kk + ((k_max - kk) & ~3);
 
                         #pragma omp simd reduction(+:sum0,sum1,sum2,sum3)
                         for (; k < limit; k += 4) {
@@ -65,7 +52,6 @@ std::vector<float> BlockGemmOMP(const std::vector<float>& a,
                         }
 
                         float sum = sum0 + sum1 + sum2 + sum3;
-
                         for (; k < k_max; ++k) {
                             sum += a[i * n + k] * b[static_cast<std::size_t>(k) * n + j];
                         }
