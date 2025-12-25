@@ -1180,6 +1180,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE4|muradov_kamal|0.2339|10|
 |3822B1PE3|mironov_ilya|0.2439|6|
 |3822B1FI1|ionova_ekaterina|0.2464|5|
+|3822B1PE1|vedernikova_kseniya|0.2565|28|
 |3822B1PE3|oturin_alexander|0.2614|3|
 |3822B1PE1|kapustin_ivan|0.2618|21|
 |3822B1PE1|morozov_egor|0.2646|18|
@@ -1247,7 +1248,6 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE1|konstantinov_ilya|0.3629|4|
 |3822B1PE2|sorokin_andrey|0.3648|3|
 |3822B1PE1|vershinina_alexandra|0.6035|9|
-|3822B1PE1|vedernikova_kseniya|RUN FAILED|-|
 |3822B1PE2|matynina_aleksandra|BUILD FAILED|-|
 |3822B1PE4|konkov_ivan|TEST FAILED|-|
 
@@ -1295,35 +1295,35 @@ Passed: 6
 |Group|Name|Passed|Score|
 |-----|----|------|-----|
 |3822B1PE1|belov_artem|**9/9**|**368**|
-|3822B1PE1|ermilova_darya|**9/9**|**365**|
-|3822B1PE1|gnitienko_kirill|**9/9**|**361**|
-|3822B1PE1|kalyakina_anastasia|**9/9**|**309**|
-|3822B1PE1|kapustin_ivan|**9/9**|**279**|
-|3822B1PE1|khasanyanov_kirill|**9/9**|**353**|
-|3822B1PE1|konstantinov_ilya|**9/9**|**408**|
-|3822B1PE1|korablev_vladlen|**9/9**|**415**|
+|3822B1PE1|ermilova_darya|**9/9**|**364**|
+|3822B1PE1|gnitienko_kirill|**9/9**|**360**|
+|3822B1PE1|kalyakina_anastasia|**9/9**|**308**|
+|3822B1PE1|kapustin_ivan|**9/9**|**278**|
+|3822B1PE1|khasanyanov_kirill|**9/9**|**352**|
+|3822B1PE1|konstantinov_ilya|**9/9**|**407**|
+|3822B1PE1|korablev_vladlen|**9/9**|**414**|
 |3822B1PE1|korneeva_ekaterina|**9/9**|**271**|
-|3822B1PE1|koshkin_matvey|**9/9**|**178**|
-|3822B1PE1|krylov_mikhail|**9/9**|**452**|
-|3822B1PE1|milovankin_maxim|**9/9**|**432**|
-|3822B1PE1|moiseev_artem|**9/9**|**466**|
-|3822B1PE1|morozov_egor|**9/9**|**305**|
-|3822B1PE1|nikolaev_roman|**9/9**|**360**|
-|3822B1PE1|odintsov_misha|**9/9**|**288**|
-|3822B1PE1|polikanov_vitaliy|**9/9**|**293**|
-|3822B1PE1|rams_sergei|**9/9**|**466**|
-|3822B1PE1|sadikov_ivan|**9/9**|**390**|
-|3822B1PE1|shvedova_vitalina|**9/9**|**425**|
-|3822B1PE1|sidorina_polina|**9/9**|**288**|
-|3822B1PE1|sorochkin_danila|**9/9**|**255**|
-|3822B1PE1|tyurin_mikhail|**9/9**|**395**|
-|3822B1PE1|vasilev_sergey|**9/9**|**269**|
-|3822B1PE1|vedernikova_kseniya|8/9|232|
-|3822B1PE1|vershinina_alexandra|**9/9**|**285**|
-|3822B1PE1|voroshilov_vitaliy|**9/9**|**189**|
-|3822B1PE1|zaitsev_artem|8/9|207|
+|3822B1PE1|koshkin_matvey|**9/9**|**177**|
+|3822B1PE1|krylov_mikhail|**9/9**|**451**|
+|3822B1PE1|milovankin_maxim|**9/9**|**431**|
+|3822B1PE1|moiseev_artem|**9/9**|**465**|
+|3822B1PE1|morozov_egor|**9/9**|**304**|
+|3822B1PE1|nikolaev_roman|**9/9**|**359**|
+|3822B1PE1|odintsov_misha|**9/9**|**287**|
+|3822B1PE1|polikanov_vitaliy|**9/9**|**292**|
+|3822B1PE1|rams_sergei|**9/9**|**465**|
+|3822B1PE1|sadikov_ivan|**9/9**|**389**|
+|3822B1PE1|shvedova_vitalina|**9/9**|**424**|
+|3822B1PE1|sidorina_polina|**9/9**|**287**|
+|3822B1PE1|sorochkin_danila|**9/9**|**254**|
+|3822B1PE1|tyurin_mikhail|**9/9**|**394**|
+|3822B1PE1|vasilev_sergey|**9/9**|**268**|
+|3822B1PE1|vedernikova_kseniya|**9/9**|**267**|
+|3822B1PE1|vershinina_alexandra|**9/9**|**284**|
+|3822B1PE1|voroshilov_vitaliy|**9/9**|**188**|
+|3822B1PE1|zaitsev_artem|8/9|206|
 
-Passed: 26
+Passed: 27
 
 ## 3822B1PE2
 |Group|Name|Passed|Score|
@@ -1380,7 +1380,7 @@ Passed: 8
 
 Passed: 10
 
-**Total Passed: 79**
+**Total Passed: 80**
 
 ---
 *Maximum Score: 576 (64 per task)
