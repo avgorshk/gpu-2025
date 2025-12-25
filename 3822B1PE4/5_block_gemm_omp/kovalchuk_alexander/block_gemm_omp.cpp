@@ -1,4 +1,4 @@
-﻿#include "block_gemm_omp.h"
+#include "block_gemm_omp.h"
 #include <omp.h>
 #include <cstddef>
 
@@ -18,14 +18,15 @@ std::vector<float> BlockGemmOMP(const std::vector<float>& a,
     for (int ii = 0; ii < n; ii += BS) {
         for (int jj = 0; jj < n; jj += BS) {
 
+            int i_max = ii + BS;
+            int j_max = jj + BS;
+
+            if (i_max > n) i_max = n;
+            if (j_max > n) j_max = n;
+
             for (int kk = 0; kk < n; kk += BS) {
 
-                int i_max = ii + BS;
-                int j_max = jj + BS;
                 int k_max = kk + BS;
-
-                if (i_max > n) i_max = n;
-                if (j_max > n) j_max = n;
                 if (k_max > n) k_max = n;
 
                 for (int i = ii; i < i_max; ++i) {
