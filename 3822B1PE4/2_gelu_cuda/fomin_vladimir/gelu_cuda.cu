@@ -11,7 +11,9 @@
 
 __global__ void gelu_kernel(const float *__restrict__ input, float *__restrict__ output, size_t n)
 {
-    size_t idx = blockIdx.x * blockDim.x + threadIdx.x;
+    size_t block_idx = blockIdx.y * gridDim.x + blockIdx.x;
+    size_t idx = block_idx * blockDim.x + threadIdx.x;
+
     if (idx >= n)
         return;
 
