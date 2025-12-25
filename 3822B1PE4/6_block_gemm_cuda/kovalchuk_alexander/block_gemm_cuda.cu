@@ -1,4 +1,4 @@
-﻿#include "block_gemm_cuda.h"
+#include "block_gemm_cuda.h"
 #include <cuda_runtime.h>
 #include <stdexcept>
 
@@ -14,56 +14,42 @@ __global__ void block_gemm_kernel(const float* __restrict__ A,
     int row = blockIdx.y * TILE + threadIdx.y;
     int col = blockIdx.x * TILE + threadIdx.x;
 
-    float sum0 = 0.0f;
-    float sum1 = 0.0f;
+    float sum = 0.0f;
 
-    int col1 = col + TILE / 2;
-    bool has_second = (col1 < n);
-
-    int numTiles = n / TILE;
+    int numTiles = (n + TILE - 1) / TILE;
 
     for (int t = 0; t < numTiles; ++t) {
         int aCol = t * TILE + threadIdx.x;
         int bRow = t * TILE + threadIdx.y;
 
+        // Загрузка тайла из A
         if (row < n && aCol < n) {
             As[threadIdx.y][threadIdx.x] = A[row * n + aCol];
         } else {
             As[threadIdx.y][threadIdx.x] = 0.0f;
         }
 
-        int bCol0 = col;
-        int bCol1 = has_second ? col1 : col;
-
-        if (bRow < n && bCol0 < n) {
-            Bs[threadIdx.y][threadIdx.x] = B[bRow * n + bCol0];
+        // Загрузка тайла из B
+        if (bRow < n && col < n) {
+            Bs[threadIdx.y][threadIdx.x] = B[bRow * n + col];
         } else {
             Bs[threadIdx.y][threadIdx.x] = 0.0f;
         }
 
         __syncthreads();
 
+        // Вычисление частичного произведения для текущего тайла
         #pragma unroll
         for (int k = 0; k < TILE; ++k) {
-            float a_val = As[threadIdx.y][k];
-            float b0    = Bs[k][threadIdx.x];
-            sum0 += a_val * b0;
-
-            if (has_second) {
-                int b1_col_local = threadIdx.x + TILE / 2;
-                float b1 = Bs[k][b1_col_local];
-                sum1 += a_val * b1;
-            }
+            sum += As[threadIdx.y][k] * Bs[k][threadIdx.x];
         }
 
         __syncthreads();
     }
 
+    // Запись результата
     if (row < n && col < n) {
-        C[row * n + col] = sum0;
-    }
-    if (has_second && row < n) {
-        C[row * n + col1] = sum1;
+        C[row * n + col] = sum;
     }
 }
 

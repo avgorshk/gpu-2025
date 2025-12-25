@@ -4,15 +4,14 @@
 #include <string>
 
 const char *kernelSource = R"(
-__global__ void gelu_kernel(__global const float* input, __global float* output, int n) {
+__kernel void gelu(__global const float* input, __global float* output, int n) {
     int idx = get_global_id(0);
-    const float c = 0.044715f;
-    const float a = 0.79788456f; 
     if (idx < n) {
         float x = input[idx];
-        float tanh_arg = a * x * (1.0f + c * x * x);
-        float tanh = (exp(tanh_arg) - (1 / exp(tanh_arg))) / (exp(tanh_arg) + (1 / exp(tanh_arg)));
-        output[idx] = 0.5f * x * (1.0f + tanh);
+        float coef = 0.7978845608f * (x + 0.044715f * x * x * x);
+        float coef2 = exp(2.0f * coef);
+        float tanh_ = (coef2 - 1.0f) / (coef2 + 1.0f);
+        output[idx] = 0.5f * x * (1.0f + tanh_);
     }
 }
 )";
