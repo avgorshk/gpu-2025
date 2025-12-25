@@ -2,6 +2,7 @@
 #include <cublas_v2.h>
 #include <cuda_runtime.h>
 #include <vector>
+#include <iostream>
 
 std::vector<float> GemmCUBLAS(const std::vector<float> &a,
                               const std::vector<float> &b,

@@ -1,6 +1,8 @@
 #include "block_gemm_omp.h"
 #include <vector>
 #include <omp.h>
+#include <cstddef>
+#include <algorithm>
 
 std::vector<float> BlockGemmOMP(const std::vector<float> &a, const std::vector<float> &b, int n)
 {
@@ -19,7 +21,7 @@ std::vector<float> BlockGemmOMP(const std::vector<float> &a, const std::vector<f
         for (int j_out = 0; j_out < n; j_out += BLOCK_SIZE)
         {
             int i_min = std::min(i_out + BLOCK_SIZE, n);
-            int min = std::min(j_out + BLOCK_SIZE, n);
+            int j_min = std::min(j_out + BLOCK_SIZE, n);
             for (int k_out = 0; k_out < n; k_out += BLOCK_SIZE)
             {
                 int k_min = std::min(k_out + BLOCK_SIZE, n);
