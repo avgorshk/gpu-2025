@@ -1,6 +1,7 @@
 #include "block_gemm_cuda.h"
 #include <cuda_runtime.h>
 #include <vector>
+#include <iostream>
 
 #define TILE_SIZE 32
 #define SUB_TILE 4

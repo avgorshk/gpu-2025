@@ -1,6 +1,7 @@
 #include "naive_gemm_cuda.h"
 #include <cuda_runtime.h>
 #include <vector>
+#include <iostream>
 
 __global__ void MultMatrEl(const float *a, const float *b, float *c, int n)
 {
@@ -27,7 +28,7 @@ std::vector<float> NaiveGemmCUDA(const std::vector<float> &a,
         std::cerr << "Error: Matrix sizes don't match!" << std::endl;
         return std::vector<float>();
     }
-    
+
     int num_elements = n * n;
     int byte_size = num_elements * sizeof(float);
     float *d_a, *d_b, *d_c;

@@ -23,11 +23,11 @@ static std::once_flag once;
 
 std::vector<float> GeluOCL(const std::vector<float> &input, int platform)
 {
-    if (input.empty())
-        return output;
-
     size_t n = input.size();
     std::vector<float> output(n);
+
+    if (input.empty())
+        return output;
 
     int platform_id = platform;
 
