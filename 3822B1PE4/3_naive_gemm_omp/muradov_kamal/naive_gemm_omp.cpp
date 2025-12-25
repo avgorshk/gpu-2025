@@ -1,5 +1,6 @@
 #include "naive_gemm_omp.h"
 
+#include <cstddef>
 #include <vector>
 
 std::vector<float> NaiveGemmOMP(const std::vector<float>& a,
