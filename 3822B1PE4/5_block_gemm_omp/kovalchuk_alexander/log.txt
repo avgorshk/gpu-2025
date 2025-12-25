@@ -1,4 +1,4 @@
 /home/crazyproger/sandbox/gpu-2025/3822B1PE4/5_block_gemm_omp/kovalchuk_alexander/block_gemm_omp.cpp: In function ‘std::vector<float> BlockGemmOMP(const std::vector<float>&, const std::vector<float>&, int)’:
-/home/crazyproger/sandbox/gpu-2025/3822B1PE4/5_block_gemm_omp/kovalchuk_alexander/block_gemm_omp.cpp:45:25: error: expected iteration declaration or initialization
-   45 |                         for (; k < limit; k += 4) {
+/home/crazyproger/sandbox/gpu-2025/3822B1PE4/5_block_gemm_omp/kovalchuk_alexander/block_gemm_omp.cpp:32:25: error: expected iteration declaration or initialization
+   32 |                         for (; k < limit; k += 4) {
       |                         ^~~
