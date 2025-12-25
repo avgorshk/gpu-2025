@@ -646,8 +646,8 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE1|rams_sergei|0.1143|5|
 |3822B1PE1|belov_artem|0.1227|19|
 |3822B1PE1|kalyakina_anastasia|0.1230|16|
-|3822B1PE1|zaitsev_artem|0.1242|28|
 |3822B1PE2|gusev_nikita|0.1242|12|
+|3822B1PE1|zaitsev_artem|0.1242|28|
 |3822B1PE1|sadikov_ivan|0.1249|1|
 |3822B1PE4|karaseva_ekaterina|0.1440|5|
 |3822B1PE3|kazunin_nikita|0.1819|3|
@@ -943,6 +943,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE1|sorochkin_danila|0.3367|25|
 |3822B1PE1|vasilev_sergey|0.3372|21|
 |3822B1PE4|konkov_ivan|0.3373|8|
+|3822B1PE4|kovalchuk_alexander|0.3382|10|
 |3822B1FI3|koshkin_nikita|0.3405|5|
 |3822B1PE1|koshkin_matvey|0.3446|27|
 |3822B1PE2|korovin_nikita|0.3646|4|
@@ -950,7 +951,6 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE1|voroshilov_vitaliy|0.4237|26|
 |3822B1PE2|varfolomeev_gregory|0.4286|13|
 |3822B1PE3|malyshev_anton|1.2394|7|
-|3822B1PE4|kovalchuk_alexander|TEST FAILED|-|
 
 ## 7_gemm_cublas (4096 elements)
 |Group|Name|Result|Rank|
@@ -1141,6 +1141,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE1|morozov_egor|0.2646|18|
 |3822B1FI3|kirill_kholin|0.2672|2|
 |3822B1PE2|gusev_nikita|0.2673|15|
+|3822B1PE4|kovalchuk_alexander|0.2687|9|
 |3822B1PE4|ghanga_junior|0.2706|6|
 |3822B1FI3|lavrentyev_alexey|0.2706|3|
 |3822B1PE1|khasanyanov_kirill|0.2711|10|
@@ -1200,7 +1201,6 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE1|vershinina_alexandra|0.6035|9|
 |3822B1PE1|vedernikova_kseniya|RUN FAILED|-|
 |3822B1PE4|konkov_ivan|TEST FAILED|-|
-|3822B1PE4|kovalchuk_alexander|BUILD FAILED|-|
 
 # Tasks Done
 ## 3822B1FI1
@@ -1312,16 +1312,16 @@ Passed: 7
 ## 3822B1PE4
 |Group|Name|Passed|Score|
 |-----|----|------|-----|
-|3822B1PE4|fomin_vladimir|8/9|425|
-|3822B1PE4|ghanga_junior|6/9|333|
+|3822B1PE4|fomin_vladimir|8/9|424|
+|3822B1PE4|ghanga_junior|6/9|332|
 |3822B1PE4|karaseva_ekaterina|**9/9**|**514**|
-|3822B1PE4|kolokolova_darya|**9/9**|**516**|
+|3822B1PE4|kolokolova_darya|**9/9**|**515**|
 |3822B1PE4|konkov_ivan|5/9|259|
-|3822B1PE4|kovalchuk_alexander|6/9|321|
-|3822B1PE4|podovinnikov_artyom|**9/9**|**537**|
-|3822B1PE4|salaev_vladislav|**9/9**|**482**|
-|3822B1PE4|shuravina_oksana|**9/9**|**533**|
-|3822B1PE4|zinoviev_alexander|**9/9**|**518**|
+|3822B1PE4|kovalchuk_alexander|8/9|423|
+|3822B1PE4|podovinnikov_artyom|**9/9**|**536**|
+|3822B1PE4|salaev_vladislav|**9/9**|**481**|
+|3822B1PE4|shuravina_oksana|**9/9**|**531**|
+|3822B1PE4|zinoviev_alexander|**9/9**|**517**|
 
 Passed: 6
 
