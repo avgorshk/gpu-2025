@@ -6,6 +6,7 @@ std::vector<float> GeluOMP(const std::vector<float> &input)
     const float calcCoef = sqrt(2.0f / piii);
     // Place your implementation here
     std::vector<float> res(input.size());
+#pragma omp parallel for
     for (int i = 0; i < input.size(); i++)
     {
         float x = input[i];
