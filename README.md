@@ -538,6 +538,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE1|odintsov_misha|0.7605|7|
 |3822B1PE1|vedernikova_kseniya|1.0534|22|
 |3822B1PE2|strakhov_andrey|BUILD FAILED|-|
+|3822B1FI3|agafeev_sergey|BUILD FAILED|-|
 
 ## 2_gelu_cuda (134217728 elements)
 |Group|Name|Result|Rank|
@@ -626,6 +627,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1FI3|kirill_kholin|0.2325|2|
 |3822B1PE1|morozov_egor|0.2372|4|
 |3822B1PE1|nikolaev_roman|0.2395|12|
+|3822B1FI3|agafeev_sergey|0.2520|7|
 |3822B1PE1|krylov_mikhail|0.2577|11|
 |3822B1PE1|vershinina_alexandra|0.6209|16|
 |3822B1FI1|komshina_daria|0.6698|4|
@@ -687,6 +689,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1FI2|mezhuev_maksim|0.6826|4|
 |3822B1FI3|kudryashova_irina|0.6950|1|
 |3822B1FI1|ionova_ekaterina|0.7003|5|
+|3822B1FI3|agafeev_sergey|0.7009|7|
 |3822B1PE4|fomin_vladimir|0.7020|6|
 |3822B1PE1|khasanyanov_kirill|0.7031|15|
 |3822B1FI1|elvin_veliev|0.7035|3|
@@ -758,6 +761,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE2|kondratev_yaroslav|0.1763|3|
 |3822B1PE1|zaitsev_artem|0.1770|28|
 |3822B1PE2|strakhov_andrey|0.1774|19|
+|3822B1FI3|agafeev_sergey|0.1808|7|
 |3822B1PE2|pikarychev_ilya|0.1810|18|
 |3822B1FI3|kirill_kholin|0.1816|1|
 |3822B1FI3|kudryashova_irina|0.1833|2|
@@ -841,6 +845,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE4|salaev_vladislav|0.0412|9|
 |3822B1FI2|dormidontov_egor|0.0422|6|
 |3822B1FI2|yasakova_tanya|0.0424|1|
+|3822B1FI3|agafeev_sergey|0.0426|8|
 |3822B1PE1|gnitienko_kirill|0.0464|9|
 |3822B1PE2|gusev_nikita|0.0522|12|
 |3822B1FI2|sdobnov_vladimir|0.0769|4|
@@ -931,6 +936,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE2|chernova_natalia|0.1361|17|
 |3822B1PE4|prokhorov_nikita|0.1372|13|
 |3822B1PE4|vragov_ivan|0.1381|12|
+|3822B1FI3|agafeev_sergey|0.1384|8|
 |3822B1PE1|shvedova_vitalina|0.1390|10|
 |3822B1FI2|yasakova_tanya|0.1396|1|
 |3822B1PE2|kavtorev_dmitry|0.1397|14|
@@ -1046,6 +1052,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE4|shuravina_oksana|0.0517|2|
 |3822B1PE1|sidorina_polina|0.0518|17|
 |3822B1FI3|lavrentyev_alexey|0.0518|3|
+|3822B1FI3|agafeev_sergey|0.0519|7|
 |3822B1PE1|kapustin_ivan|0.0519|22|
 |3822B1PE2|chernova_natalia|0.0519|16|
 |3822B1PE4|fomin_vladimir|0.0520|8|
@@ -1107,6 +1114,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE1|korneeva_ekaterina|0.0909|23|
 |3822B1PE3|chernykh_andrey|0.1048|5|
 |3822B1PE4|muradov_kamal|0.1063|10|
+|3822B1FI3|agafeev_sergey|0.1072|7|
 |**FAST**|**FAST**|**0.1075**|**-**|
 |3822B1FI3|budazhapova_ekaterina|0.1083|6|
 |3822B1PE1|kapustin_ivan|0.1084|22|
@@ -1285,6 +1293,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE4|vragov_ivan|0.3648|11|
 |3822B1PE1|vershinina_alexandra|0.6035|9|
 |3822B1PE4|prokhorov_nikita|TEST FAILED|-|
+|3822B1FI3|agafeev_sergey|BUILD FAILED|-|
 
 # Tasks Done
 ## 3822B1FI1
@@ -1316,13 +1325,14 @@ Passed: 7
 ## 3822B1FI3
 |Group|Name|Passed|Score|
 |-----|----|------|-----|
-|3822B1FI3|budazhapova_ekaterina|**9/9**|**494**|
-|3822B1FI3|kholin_kirill|3/9|190|
-|3822B1FI3|kirill_kholin|**9/9**|**551**|
-|3822B1FI3|koshkin_nikita|**9/9**|**517**|
-|3822B1FI3|kudryashova_irina|**9/9**|**542**|
-|3822B1FI3|lavrentyev_alexey|**9/9**|**531**|
-|3822B1FI3|solovyev_danila|**9/9**|**517**|
+|3822B1FI3|agafeev_sergey|7/9|390|
+|3822B1FI3|budazhapova_ekaterina|**9/9**|**488**|
+|3822B1FI3|kholin_kirill|3/9|189|
+|3822B1FI3|kirill_kholin|**9/9**|**547**|
+|3822B1FI3|koshkin_nikita|**9/9**|**512**|
+|3822B1FI3|kudryashova_irina|**9/9**|**537**|
+|3822B1FI3|lavrentyev_alexey|**9/9**|**527**|
+|3822B1FI3|solovyev_danila|**9/9**|**512**|
 
 Passed: 6
 
