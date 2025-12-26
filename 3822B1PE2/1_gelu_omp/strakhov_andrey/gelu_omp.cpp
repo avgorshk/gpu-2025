@@ -1,13 +1,15 @@
 #include "gelu_omp.h"
-#define M_PI 3.14159265358979323846
+
 std::vector<float> GeluOMP(const std::vector<float> &input)
 {
+    const float M_PI = 3.14159265358979323846f;
+    const float calcCoef = sqrt(2.0f / M_PI);
     // Place your implementation here
     std::vector<float> res(input.size());
     for (int i = 0; i < input.size(); i++)
     {
         float x = input[i];
-        res[i] = 0.5f * x * (1.0f + tanh(sqrt(2.0f / M_PI * (x + 0.044715f * x * x * x))));
+        res[i] = 0.5f * x * (1.0f + tanh(calcCoef * (x + 0.044715f * x * x * x)));
     }
     return res;
     // gelu(x) = 0.5*x*(1 + tanh(sqrt(2/M_PI*(x+0.044715*x*x*x)))

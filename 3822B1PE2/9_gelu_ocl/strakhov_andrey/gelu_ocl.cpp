@@ -6,10 +6,12 @@
 const char *CODE = R"(
 __kernel void kernel(__global const float* input, __global float* output, const int size) {
     int id = get_global_id(0);
+    float M_PI = 3.14159265358979323846f;
+    float calcCoef = sqrt(2.0f / M_PI);
     if (id < size) {
     
     float x = input[id];
-     output[id] *= 0.5 * (1.0 + tanhf(2.0 / 3.14159265358979323846 * (x + 0.044715 * x * x * x)));}
+     output[id] *= 0.5f * x * (1.0f + tanh(calcCoef * (x + 0.044715f * x * x * x)));
 }
 )";
 

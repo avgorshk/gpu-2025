@@ -1,15 +1,14 @@
 #include "gelu_cuda.h"
 
-__constant__ float M_PI = 3.14159265358979323846;
-
 __global__ void kernel(float *__restrict__ out, int size)
 {
     int index = blockIdx.x * blockDim.x + threadIdx.x;
-
+    float M_PI = 3.14159265358979323846f;
+    float calcCoef = sqrt(2.0f / M_PI);
     if (index < size)
     {
         float x = out[index];
-        out[index] *= 0.5f * (1.0 + tanhf(2.0f / M_PI * (x + 0.044715f * x * x * x)));
+        out[index] *= 0.5f * x * (1.0f + tanh(calcCoef * (x + 0.044715f * x * x * x)));
     }
 }
 
