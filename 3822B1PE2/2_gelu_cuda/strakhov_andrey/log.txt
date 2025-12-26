@@ -2,8 +2,4 @@
                     3.14159265358979323846 
                     ^
 
-/home/crazyproger/sandbox/gpu-2025/3822B1PE2/2_gelu_cuda/strakhov_andrey/gelu_cuda.cu(20): error: identifier "n" is undefined
-      std::vector<float> out(n);
-                             ^
-
-2 errors detected in the compilation of "/home/crazyproger/sandbox/gpu-2025/3822B1PE2/2_gelu_cuda/strakhov_andrey/gelu_cuda.cu".
+1 error detected in the compilation of "/home/crazyproger/sandbox/gpu-2025/3822B1PE2/2_gelu_cuda/strakhov_andrey/gelu_cuda.cu".
