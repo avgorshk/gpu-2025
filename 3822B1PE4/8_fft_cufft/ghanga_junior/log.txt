@@ -1,1 +1,0 @@
-Source file /home/crazyproger/sandbox/gpu-2025/3822B1PE4/8_fft_cufft/ghanga_junior/fft_cufft.cu not found
