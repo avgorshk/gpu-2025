@@ -3,8 +3,8 @@
 __global__ void kernel(float *__restrict__ out, int size)
 {
     int index = blockIdx.x * blockDim.x + threadIdx.x;
-    float M_PI = 3.14159265358979323846f;
-    float calcCoef = sqrt(2.0f / M_PI);
+    float piii = 3.14159265358979323846f;
+    float calcCoef = sqrt(2.0f / piii);
     if (index < size)
     {
         float x = out[index];
