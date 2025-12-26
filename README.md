@@ -1098,6 +1098,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE1|nikolaev_roman|0.7786|8|
 |3822B1PE1|zaitsev_artem|BUILD FAILED|-|
 |3822B1FI3|kholin_kirill|TEST FAILED|-|
+|3822B1PE4|prokhorov_nikita|TEST FAILED|-|
 
 ## 8_fft_cufft (131072 elements)
 |Group|Name|Result|Rank|
