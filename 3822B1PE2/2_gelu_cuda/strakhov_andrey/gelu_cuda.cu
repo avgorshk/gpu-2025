@@ -1,6 +1,6 @@
 #include "gelu_cuda.h"
 
-__constant__ float M_PI 3.14159265358979323846;
+__constant__ float M_PI = 3.14159265358979323846;
 
 __global__ void kernel(float *__restrict__ out, int size)
 {
@@ -9,7 +9,7 @@ __global__ void kernel(float *__restrict__ out, int size)
     if (index < size)
     {
         float x = out[index];
-        out[index] *= 0.5 * (1.0 + tanhf(2.0 / M_PI * (x + 0.044715 * x * x * x)));
+        out[index] *= 0.5f * (1.0 + tanhf(2.0f / M_PI * (x + 0.044715f * x * x * x)));
     }
 }
 
@@ -17,7 +17,7 @@ std::vector<float> GeluCUDA(const std::vector<float> &input)
 {
 
     int size = input.size();
-    std::vector<float> out(n);
+    std::vector<float> out(size);
     float *d_out;
 
     cudaMalloc(&d_out, size * sizeof(float));
@@ -34,4 +34,3 @@ std::vector<float> GeluCUDA(const std::vector<float> &input)
 
     return out;
 }
-

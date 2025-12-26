@@ -4,12 +4,12 @@
 #include <mutex>
 
 const char *CODE = R"(
-__kernel void gelu(__global const float* input, __global float* output, const int size) {
+__kernel void kernel(__global const float* input, __global float* output, const int size) {
     int id = get_global_id(0);
     if (id < size) {
     
     float x = input[id];
-     output[index] *= 0.5 * (1.0 + tanhf(2.0 / 3.14159265358979323846 * (x + 0.044715 * x * x * x)));}
+     output[id] *= 0.5 * (1.0 + tanhf(2.0 / 3.14159265358979323846 * (x + 0.044715 * x * x * x)));}
 }
 )";
 
@@ -41,7 +41,7 @@ std::vector<float> GeluOCL(const std::vector<float> &input, int platform)
                                bitsize, (void *)input.data(), NULL);
     cl_mem out = clCreateBuffer(context, CL_MEM_WRITE_ONLY, bitsize, NULL, NULL);
 
-    cl_kernel kernel = clCreateKernel(prog, "gelu", NULL);
+    cl_kernel kernel = clCreateKernel(prog, "kernel", NULL);
 
     clSetKernelArg(kernel, 0, sizeof(cl_mem), &in);
     clSetKernelArg(kernel, 1, sizeof(cl_mem), &out);
