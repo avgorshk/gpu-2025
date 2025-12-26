@@ -11,7 +11,8 @@ __kernel void kernel(__global const float* input, __global float* output, const 
     if (id < size) {
     
     float x = input[id];
-     output[id] = 0.5f * x * (1.0f + tanh(calcCoef * (x + 0.044715f * x * x * x)));
+    output[id] = 0.5f * x * (1.0f + tanh(calcCoef * (x + 0.044715f * x * x * x)));
+    }
 }
 )";
 
