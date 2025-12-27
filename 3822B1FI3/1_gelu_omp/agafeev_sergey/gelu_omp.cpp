@@ -1,22 +1,21 @@
-#include <omp.h>
-#include <cmath>
 #include "gelu_omp.h"
+#include <cmath>
+#include <omp.h>
 
-AlignedVector GeluOMP(const AlignedVector &input)
-{
-    AlignedVector result(input.size());
-    const float precalc_sqrt = std::sqrt(2.0f / M_PI);
-    float x = 0;
-    float x3 = 0;
-    float arg = 0;
-    auto sz = input.size();
+std::vector<float> GeluOMP(const std::vector<float>& input) {
+    std::vector<float> out(input.size());
+
+    constexpr float SQRT_2_OVER_PI = 0.7978845608f;
+    constexpr float GELU_COEFF     = 0.044715f;
+
 #pragma omp parallel for
-    for (size_t i = 0; i < sz; i++)
-    {
-        x = input[i];
-        x3 = x * x * x;
-        arg = precalc_sqrt * (x + 0.044715f * x3);
-        result[i] = 0.5f * x * (1.0f + std::tanh(arg));
+    for (int i = 0; i < static_cast<int>(input.size()); ++i) {
+        float x  = input[i];
+        float x2 = x * x;
+        float inner = SQRT_2_OVER_PI * (x + GELU_COEFF * x * x2);
+
+        out[i] = 0.5f * x * (1.0f + tanhf(inner));
     }
-    return result;
+
+    return out;
 }
