@@ -504,6 +504,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE4|fomin_vladimir|0.6481|7|
 |3822B1PE4|kovalchuk_alexander|0.6481|8|
 |3822B1PE1|sidorina_polina|0.6509|19|
+|3822B1FI3|agafeev_sergey|0.6527|8|
 |3822B1PE3|ersoz_berke_eren|0.6537|8|
 |3822B1FI3|lavrentyev_alexey|0.6559|6|
 |3822B1PE1|korneeva_ekaterina|0.6560|24|
@@ -538,7 +539,6 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE3|sarafanov_maxim|0.7546|3|
 |3822B1PE1|odintsov_misha|0.7605|7|
 |3822B1PE1|vedernikova_kseniya|1.0534|22|
-|3822B1FI3|agafeev_sergey|BUILD FAILED|-|
 
 ## 2_gelu_cuda (134217728 elements)
 |Group|Name|Result|Rank|
@@ -1236,6 +1236,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1FI3|kudryashova_irina|0.2983|1|
 |3822B1PE2|pikarychev_ilya|0.2990|18|
 |3822B1PE4|kolokolova_darya|0.2995|4|
+|3822B1FI3|agafeev_sergey|0.2998|7|
 |3822B1PE2|strakhov_andrey|0.3007|19|
 |3822B1FI1|shulpin_ilya|0.3014|1|
 |3822B1PE1|krylov_mikhail|0.3019|2|
@@ -1294,7 +1295,6 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE2|sorokin_andrey|0.3648|3|
 |3822B1PE4|vragov_ivan|0.3648|11|
 |3822B1PE1|vershinina_alexandra|0.6035|9|
-|3822B1FI3|agafeev_sergey|BUILD FAILED|-|
 
 # Tasks Done
 ## 3822B1FI1
@@ -1326,16 +1326,16 @@ Passed: 7
 ## 3822B1FI3
 |Group|Name|Passed|Score|
 |-----|----|------|-----|
-|3822B1FI3|agafeev_sergey|7/9|390|
-|3822B1FI3|budazhapova_ekaterina|**9/9**|**488**|
+|3822B1FI3|agafeev_sergey|**9/9**|**498**|
+|3822B1FI3|budazhapova_ekaterina|**9/9**|**486**|
 |3822B1FI3|kholin_kirill|3/9|189|
 |3822B1FI3|kirill_kholin|**9/9**|**547**|
-|3822B1FI3|koshkin_nikita|**9/9**|**512**|
+|3822B1FI3|koshkin_nikita|**9/9**|**511**|
 |3822B1FI3|kudryashova_irina|**9/9**|**537**|
-|3822B1FI3|lavrentyev_alexey|**9/9**|**527**|
-|3822B1FI3|solovyev_danila|**9/9**|**512**|
+|3822B1FI3|lavrentyev_alexey|**9/9**|**526**|
+|3822B1FI3|solovyev_danila|**9/9**|**510**|
 
-Passed: 6
+Passed: 7
 
 ## 3822B1PE1
 |Group|Name|Passed|Score|
@@ -1430,7 +1430,7 @@ Passed: 8
 
 Passed: 13
 
-**Total Passed: 87**
+**Total Passed: 88**
 
 ---
 *Maximum Score: 576 (64 per task)
