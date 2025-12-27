@@ -1,5 +1,0 @@
-/home/crazyproger/sandbox/gpu-2025/3822B1PE4/8_fft_cufft/prokhorov_nikita/fft_cufft.cu(39): error: a host function call cannot be configured
-      normalize_kernel<<<blocks, threads, 0, stream>>>((cufftComplex*)d_data, scale, total_size);
-                                                      ^
-
-1 error detected in the compilation of "/home/crazyproger/sandbox/gpu-2025/3822B1PE4/8_fft_cufft/prokhorov_nikita/fft_cufft.cu".
