@@ -705,6 +705,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE4|ghanga_junior|0.7157|9|
 |3822B1PE3|malyshev_anton|0.7180|7|
 |3822B1PE2|chernova_natalia|0.7183|17|
+|3822B1PE4|prokhorov_nikita|0.7198|14|
 |3822B1PE2|filatiev_vladislav|0.7226|9|
 |3822B1FI2|yasakova_tanya|0.7227|1|
 |3822B1PE4|shuravina_oksana|0.7258|2|
@@ -1415,21 +1416,21 @@ Passed: 8
 |3822B1PE4|fomin_vladimir|**9/9**|**455**|
 |3822B1PE4|ghanga_junior|**9/9**|**457**|
 |3822B1PE4|karaseva_ekaterina|**9/9**|**495**|
-|3822B1PE4|kolokolova_darya|**9/9**|**490**|
+|3822B1PE4|kolokolova_darya|**9/9**|**489**|
 |3822B1PE4|konkov_ivan|**9/9**|**430**|
-|3822B1PE4|kovalchuk_alexander|**9/9**|**454**|
+|3822B1PE4|kovalchuk_alexander|**9/9**|**453**|
 |3822B1PE4|muradov_kamal|**9/9**|**444**|
 |3822B1PE4|podovinnikov_artyom|**9/9**|**517**|
-|3822B1PE4|prokhohov_nikita|1/9|41|
-|3822B1PE4|prokhorov_nikita|8/9|382|
+|3822B1PE4|prokhohov_nikita|1/9|40|
+|3822B1PE4|prokhorov_nikita|**9/9**|**424**|
 |3822B1PE4|salaev_vladislav|**9/9**|**466**|
-|3822B1PE4|shuravina_oksana|**9/9**|**511**|
+|3822B1PE4|shuravina_oksana|**9/9**|**510**|
 |3822B1PE4|vragov_ivan|**9/9**|**445**|
 |3822B1PE4|zinoviev_alexander|**9/9**|**497**|
 
-Passed: 12
+Passed: 13
 
-**Total Passed: 86**
+**Total Passed: 87**
 
 ---
 *Maximum Score: 576 (64 per task)
