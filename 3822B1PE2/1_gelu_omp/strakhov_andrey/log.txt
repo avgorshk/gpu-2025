@@ -1,7 +1,0 @@
-In file included from /usr/include/c++/11/cmath:45,
-                 from /home/crazyproger/sandbox/gpu-2025/3822B1PE2/1_gelu_omp/strakhov_andrey/gelu_omp.h:5,
-                 from /home/crazyproger/sandbox/gpu-2025/3822B1PE2/1_gelu_omp/strakhov_andrey/gelu_omp.cpp:1:
-/home/crazyproger/sandbox/gpu-2025/3822B1PE2/1_gelu_omp/strakhov_andrey/gelu_omp.cpp: In function ‘std::vector<float> GeluOMP(const std::vector<float>&)’:
-/home/crazyproger/sandbox/gpu-2025/3822B1PE2/1_gelu_omp/strakhov_andrey/gelu_omp.cpp:5:17: error: expected unqualified-id before numeric constant
-    5 |     const float M_PI = 3.14159265358979323846f;
-      |                 ^~~~
