@@ -61,10 +61,10 @@ void InitOpenCL(int id) {
 }
 } // namespace
 
-std::vector<float> GeluOCL(const std::vector<float>& input, int pid) {
+std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
   if (input.empty()) return {};
 
-  InitOpenCL(pid);
+  InitOpenCL(platform);
   size_t n = input.size();
 
   cl::Buffer buf_in(ctx, CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR,
