@@ -602,6 +602,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1FI3|solovyev_danila|0.2248|3|
 |3822B1PE2|mukhina_margarita|0.2250|5|
 |3822B1PE1|sidorina_polina|0.2252|19|
+|3822B1PE4|prokhorov_nikita|0.2255|13|
 |3822B1PE3|ersoz_berke_eren|0.2256|8|
 |3822B1PE1|voroshilov_vitaliy|0.2257|26|
 |3822B1FI3|koshkin_nikita|0.2257|5|
@@ -632,7 +633,6 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE1|krylov_mikhail|0.2577|11|
 |3822B1PE1|vershinina_alexandra|0.6209|16|
 |3822B1FI1|komshina_daria|0.6698|4|
-|3822B1PE4|prokhorov_nikita|TEST FAILED|-|
 
 ## 3_naive_gemm_omp (1024 elements)
 |Group|Name|Result|Rank|
@@ -1413,15 +1413,15 @@ Passed: 8
 |Group|Name|Passed|Score|
 |-----|----|------|-----|
 |3822B1PE4|fomin_vladimir|**9/9**|**457**|
-|3822B1PE4|ghanga_junior|**9/9**|**460**|
+|3822B1PE4|ghanga_junior|**9/9**|**459**|
 |3822B1PE4|karaseva_ekaterina|**9/9**|**495**|
-|3822B1PE4|kolokolova_darya|**9/9**|**492**|
+|3822B1PE4|kolokolova_darya|**9/9**|**491**|
 |3822B1PE4|konkov_ivan|**9/9**|**432**|
 |3822B1PE4|kovalchuk_alexander|**9/9**|**455**|
-|3822B1PE4|muradov_kamal|**9/9**|**445**|
+|3822B1PE4|muradov_kamal|**9/9**|**444**|
 |3822B1PE4|podovinnikov_artyom|**9/9**|**518**|
 |3822B1PE4|prokhohov_nikita|1/9|41|
-|3822B1PE4|prokhorov_nikita|4/9|204|
+|3822B1PE4|prokhorov_nikita|5/9|247|
 |3822B1PE4|salaev_vladislav|**9/9**|**467**|
 |3822B1PE4|shuravina_oksana|**9/9**|**512**|
 |3822B1PE4|vragov_ivan|**9/9**|**447**|
