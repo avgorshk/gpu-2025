@@ -1,72 +1,68 @@
-﻿#include "gelu_ocl.h"
-#include <CL/cl.h>
-#include <vector>
+﻿#define CL_HPP_TARGET_OPENCL_VERSION 120
+#define CL_HPP_MINIMUM_OPENCL_VERSION 120
+#define CL_HPP_ENABLE_EXCEPTIONS
+#include <CL/opencl.hpp>
+#include "gelu_ocl.h"
 #include <iostream>
+#include <vector>
+#include <mutex>
 
-const char* gelu_kernel_source = R"(
-__kernel void gelu_kernel(__global const float* input, __global float* output, int n) {
+static const char* gelu_kernel_source = R"(
+__kernel void gelu(__global const float* input, __global float* output, int n) {
     int idx = get_global_id(0);
     if (idx >= n) return;
-    
     float x = input[idx];
-    // Быстрая аппроксимация GELU: x * σ(1.702x)
-    float sigmoid = 1.0f / (1.0f + exp(-1.702f * x));
-    output[idx] = x * sigmoid;
+    const float SQRT_2_OVER_PI = 0.79788456080286535587989211986856f;
+    float x3 = x * x * x;
+    float inner = SQRT_2_OVER_PI * (x + 0.044715f * x3);
+    float exp_val = exp(2.0f * inner);
+    float tanh_val = (exp_val - 1.0f) / (exp_val + 1.0f);
+    output[idx] = 0.5f * x * (1.0f + tanh_val);
 }
 )";
 
-std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
-	if (input.empty()) return {};
+static cl::Context g_context;
+static cl::CommandQueue g_queue;
+static cl::Kernel g_kernel;
+static bool g_initialized = false;
+static std::mutex g_init_mutex;
 
-	cl_int err;
-
-	cl_uint num_platforms;
-	clGetPlatformIDs(0, NULL, &num_platforms);
-	std::vector<cl_platform_id> platforms(num_platforms);
-	clGetPlatformIDs(num_platforms, platforms.data(), NULL);
-
-	if (platform >= (int)num_platforms) return {};
-
-	cl_uint num_devices;
-	clGetDeviceIDs(platforms[platform], CL_DEVICE_TYPE_GPU, 0, NULL, &num_devices);
-	std::vector<cl_device_id> devices(num_devices);
-	clGetDeviceIDs(platforms[platform], CL_DEVICE_TYPE_GPU, num_devices, devices.data(), NULL);
-
-	if (num_devices == 0) return {};
-
-	cl_context context = clCreateContext(NULL, 1, &devices[0], NULL, NULL, &err);
-	cl_command_queue queue = clCreateCommandQueue(context, devices[0], 0, &err);
-
-	cl_program program = clCreateProgramWithSource(context, 1, &gelu_kernel_source, NULL, &err);
-	clBuildProgram(program, 1, &devices[0], NULL, NULL, NULL);
-	cl_kernel kernel = clCreateKernel(program, "gelu_kernel", &err);
-
+std::vector<float> GeluOCL(const std::vector<float>& input, int platform_id) {
 	size_t n = input.size();
-	size_t size = n * sizeof(float);
+	if (n == 0) return {};
 
-	cl_mem d_input = clCreateBuffer(context, CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR,
-		size, (void*)input.data(), &err);
-	cl_mem d_output = clCreateBuffer(context, CL_MEM_WRITE_ONLY, size, NULL, &err);
+	std::lock_guard<std::mutex> lock(g_init_mutex);
+	if (!g_initialized) {
+		std::vector<cl::Platform> platforms;
+		cl::Platform::get(&platforms);
+		if (platform_id < 0 || platform_id >= static_cast<int>(platforms.size()))
+			platform_id = 0;
 
-	std::vector<float> output(n);
+		cl::Platform platform = platforms[platform_id];
+		std::vector<cl::Device> devices;
+		platform.getDevices(CL_DEVICE_TYPE_GPU, &devices);
 
-	clSetKernelArg(kernel, 0, sizeof(cl_mem), &d_input);
-	clSetKernelArg(kernel, 1, sizeof(cl_mem), &d_output);
-	clSetKernelArg(kernel, 2, sizeof(int), &n);
+		g_context = cl::Context(devices);
+		g_queue = cl::CommandQueue(g_context, devices[0]);
 
-	size_t global_size = (n + 255) / 256 * 256;
-	size_t local_size = 256;
+		cl::Program program(g_context, gelu_kernel_source);
+		program.build(devices);
+		g_kernel = cl::Kernel(program, "gelu");
+		g_initialized = true;
+	}
 
-	clEnqueueNDRangeKernel(queue, kernel, 1, NULL, &global_size, &local_size, 0, NULL, NULL);
+	cl::Buffer input_buf(g_context, CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR,
+		n * sizeof(float), const_cast<float*>(input.data()));
+	cl::Buffer output_buf(g_context, CL_MEM_WRITE_ONLY, n * sizeof(float));
 
-	clEnqueueReadBuffer(queue, d_output, CL_TRUE, 0, size, output.data(), 0, NULL, NULL);
+	g_kernel.setArg(0, input_buf);
+	g_kernel.setArg(1, output_buf);
+	g_kernel.setArg(2, static_cast<int>(n));
 
-	clReleaseMemObject(d_input);
-	clReleaseMemObject(d_output);
-	clReleaseKernel(kernel);
-	clReleaseProgram(program);
-	clReleaseCommandQueue(queue);
-	clReleaseContext(context);
+	g_queue.enqueueNDRangeKernel(g_kernel, cl::NullRange, cl::NDRange(n), cl::NullRange);
+	g_queue.finish();
 
-	return output;
+	std::vector<float> result(n);
+	g_queue.enqueueReadBuffer(output_buf, CL_TRUE, 0, n * sizeof(float), result.data());
+	return result;
 }
