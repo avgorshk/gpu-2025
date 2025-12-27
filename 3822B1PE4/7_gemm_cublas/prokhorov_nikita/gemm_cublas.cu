@@ -10,7 +10,7 @@ std::vector<float> GemmCUBLAS(const std::vector<float>& a,
     
     std::vector<float> c(n * n);
     
-    float *d_a, *d_b, *d_c;
+    float *d_a = nullptr, *d_b = nullptr, *d_c = nullptr;
     size_t size = n * n * sizeof(float);
     
     cudaMalloc(&d_a, size);
@@ -27,14 +27,14 @@ std::vector<float> GemmCUBLAS(const std::vector<float>& a,
     const float beta = 0.0f;
     
     cublasSgemm(handle,
-                CUBLAS_OP_T,  
-                CUBLAS_OP_T,  
-                n, n, n,      
+                CUBLAS_OP_N,
+                CUBLAS_OP_N,
+                n, n, n,
                 &alpha,
-                d_b, n,       
-                d_a, n,       
+                d_b, n,
+                d_a, n,
                 &beta,
-                d_c, n);      
+                d_c, n);
     
     cudaMemcpy(c.data(), d_c, size, cudaMemcpyDeviceToHost);
     
