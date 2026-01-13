@@ -1,0 +1,37 @@
+/home/crazyproger/sandbox/gpu-2025/3822B1PE2/8_fft_cufft/fyodorov_matthew/fft_cufft.cu(54): error: identifier "cleanup_fft" is undefined
+          cleanup_fft(d_input, d_fft, stream, nullptr);
+          ^
+
+/home/crazyproger/sandbox/gpu-2025/3822B1PE2/8_fft_cufft/fyodorov_matthew/fft_cufft.cu(65): error: identifier "cleanup_fft" is undefined
+          cleanup_fft(d_input, d_fft, stream, nullptr);
+          ^
+
+/home/crazyproger/sandbox/gpu-2025/3822B1PE2/8_fft_cufft/fyodorov_matthew/fft_cufft.cu(73): error: identifier "cleanup_fft" is undefined
+          cleanup_fft(d_input, d_fft, stream, nullptr);
+          ^
+
+/home/crazyproger/sandbox/gpu-2025/3822B1PE2/8_fft_cufft/fyodorov_matthew/fft_cufft.cu(85): error: identifier "cleanup_fft" is undefined
+          cleanup_fft(d_input, d_fft, stream, nullptr);
+          ^
+
+/home/crazyproger/sandbox/gpu-2025/3822B1PE2/8_fft_cufft/fyodorov_matthew/fft_cufft.cu(94): error: identifier "cleanup_fft" is undefined
+          cleanup_fft(d_input, d_fft, stream, nullptr);
+          ^
+
+/home/crazyproger/sandbox/gpu-2025/3822B1PE2/8_fft_cufft/fyodorov_matthew/fft_cufft.cu(101): error: identifier "normalize_kernel" is undefined
+      normalize_kernel<<<total_blocks, total_threads, 0, stream>>>(
+      ^
+
+/home/crazyproger/sandbox/gpu-2025/3822B1PE2/8_fft_cufft/fyodorov_matthew/fft_cufft.cu(109): error: identifier "cleanup_fft" is undefined
+          cleanup_fft(d_input, d_fft, stream, nullptr);
+          ^
+
+/home/crazyproger/sandbox/gpu-2025/3822B1PE2/8_fft_cufft/fyodorov_matthew/fft_cufft.cu(121): error: identifier "cleanup_fft" is undefined
+          cleanup_fft(d_input, d_fft, stream, nullptr);
+          ^
+
+/home/crazyproger/sandbox/gpu-2025/3822B1PE2/8_fft_cufft/fyodorov_matthew/fft_cufft.cu(130): error: identifier "cleanup_fft" is undefined
+      cleanup_fft(d_input, d_fft, stream, nullptr);
+      ^
+
+9 errors detected in the compilation of "/home/crazyproger/sandbox/gpu-2025/3822B1PE2/8_fft_cufft/fyodorov_matthew/fft_cufft.cu".

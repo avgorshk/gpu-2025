@@ -1,0 +1,25 @@
+/home/crazyproger/sandbox/gpu-2025/3822B1PE2/7_gemm_cublas/fyodorov_matthew/gemm_cublas.cu(54): error: identifier "cleanup" is undefined
+          cleanup(d_a, d_b, d_c, stream, nullptr);
+          ^
+
+/home/crazyproger/sandbox/gpu-2025/3822B1PE2/7_gemm_cublas/fyodorov_matthew/gemm_cublas.cu(62): error: identifier "cleanup" is undefined
+          cleanup(d_a, d_b, d_c, stream, nullptr);
+          ^
+
+/home/crazyproger/sandbox/gpu-2025/3822B1PE2/7_gemm_cublas/fyodorov_matthew/gemm_cublas.cu(71): error: identifier "cleanup" is undefined
+          cleanup(d_a, d_b, d_c, stream, nullptr);
+          ^
+
+/home/crazyproger/sandbox/gpu-2025/3822B1PE2/7_gemm_cublas/fyodorov_matthew/gemm_cublas.cu(92): error: identifier "cleanup" is undefined
+          cleanup(d_a, d_b, d_c, stream, handle);
+          ^
+
+/home/crazyproger/sandbox/gpu-2025/3822B1PE2/7_gemm_cublas/fyodorov_matthew/gemm_cublas.cu(99): error: identifier "cleanup" is undefined
+          cleanup(d_a, d_b, d_c, stream, handle);
+          ^
+
+/home/crazyproger/sandbox/gpu-2025/3822B1PE2/7_gemm_cublas/fyodorov_matthew/gemm_cublas.cu(106): error: identifier "cleanup" is undefined
+      cleanup(d_a, d_b, d_c, stream, handle);
+      ^
+
+6 errors detected in the compilation of "/home/crazyproger/sandbox/gpu-2025/3822B1PE2/7_gemm_cublas/fyodorov_matthew/gemm_cublas.cu".
