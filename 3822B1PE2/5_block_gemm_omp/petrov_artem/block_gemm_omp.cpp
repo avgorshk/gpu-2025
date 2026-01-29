@@ -1,62 +1,50 @@
-﻿#include "naive_gemm_cuda.h"
-#include <cuda_runtime.h>
+﻿#include "block_gemm_omp.h"
+#include <vector>
+#include <omp.h>
+#include <algorithm>
 
-constexpr int BLOCK_SIZE = 32;
+#define BLOCK_SIZE 64
 
-__global__ void naive_gemm_kernel(const float* __restrict__ a, const float* __restrict__ b, float* __restrict__ c, int n) {
+std::vector<float> BlockGemmOMP(const std::vector<float>& a, const std::vector<float>& b, int n) {
     
-    const int tile_size = BLOCK_SIZE;
-    int I = blockIdx.y;
-    int J = blockIdx.x;
+    std::vector<float> c(n * n, 0.0f);
+    if (n == 0) return c;
     
-    int i = I * tile_size + threadIdx.y;
-    int j = J * tile_size + threadIdx.x;
+    const float* a_ptr = a.data();
+    const float* b_ptr = b.data();
+    float* c_ptr = c.data();
     
-    if (i >= n || j >= n) return;
+    const int num_blocks = (n + BLOCK_SIZE - 1) / BLOCK_SIZE;
     
-    float sum = 0.0f;
-    
-    int block_count = (n + tile_size - 1) / tile_size;
-    
-    for (int K = 0; K < block_count; ++K) {
-        for (int kk = 0; kk < tile_size; ++kk) {
-            int k = K * tile_size + kk;
-            if (k < n) {
-                sum += a[i * n + k] * b[k * n + j];
+    #pragma omp parallel for collapse(2) schedule(static)
+    for (int bi = 0; bi < num_blocks; ++bi) {
+        for (int bj = 0; bj < num_blocks; ++bj) {
+            
+            const int i_start = bi * BLOCK_SIZE;
+            const int i_end = std::min(i_start + BLOCK_SIZE, n);
+            const int j_start = bj * BLOCK_SIZE;
+            const int j_end = std::min(j_start + BLOCK_SIZE, n);
+            
+            for (int bk = 0; bk < num_blocks; ++bk) {
+                const int k_start = bk * BLOCK_SIZE;
+                const int k_end = std::min(k_start + BLOCK_SIZE, n);
+                
+                for (int i = i_start; i < i_end; ++i) {
+                    const int i_offset = i * n;
+                    
+                    for (int k = k_start; k < k_end; ++k) {
+                        const float a_ik = a_ptr[i_offset + k];
+                        const int k_offset = k * n;
+                        
+                        #pragma omp simd
+                        for (int j = j_start; j < j_end; ++j) {
+                            c_ptr[i_offset + j] += a_ik * b_ptr[k_offset + j];
+                        }
+                    }
+                }
             }
         }
     }
-    
-    c[i * n + j] = sum;
-}
-
-std::vector<float> NaiveGemmCUDA(const std::vector<float>& a, const std::vector<float>& b, int n) {
-    if (n == 0) return {};
-    
-    size_t bytes = n * n * sizeof(float);
-    
-    float *d_a, *d_b, *d_c;
-    cudaMalloc(&d_a, bytes);
-    cudaMalloc(&d_b, bytes);
-    cudaMalloc(&d_c, bytes);
-    
-    cudaMemcpy(d_a, a.data(), bytes, cudaMemcpyHostToDevice);
-    cudaMemcpy(d_b, b.data(), bytes, cudaMemcpyHostToDevice);
-    
-    dim3 block(BLOCK_SIZE, BLOCK_SIZE);
-    int grid_x = (n + BLOCK_SIZE - 1) / BLOCK_SIZE;
-    int grid_y = (n + BLOCK_SIZE - 1) / BLOCK_SIZE;
-    dim3 grid(grid_x, grid_y);
-    
-    naive_gemm_kernel<<<grid, block>>>(d_a, d_b, d_c, n);
-    cudaDeviceSynchronize();
-    
-    std::vector<float> c(n * n);
-    cudaMemcpy(c.data(), d_c, bytes, cudaMemcpyDeviceToHost);
-    
-    cudaFree(d_a);
-    cudaFree(d_b);
-    cudaFree(d_c);
     
     return c;
 }
