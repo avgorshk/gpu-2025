@@ -1,54 +1,51 @@
 #include "gelu_cuda.h"
 #include <cuda_runtime.h>
+#include <vector>
 
-__constant__ float kSqrtTwoOverPi = 0.7978845608028654f;
-__constant__ float kGeluCoeff = 0.044715f;
+__constant__ float c_sqrt_2_over_pi = 0.7978845608028654f;
+__constant__ float c_gelu_alpha = 0.044715f;
 
-__global__ void GeluKernel(const float* __restrict__ input,
-                          float* __restrict__ output,
-                          int size) {
-    int idx = blockIdx.x * blockDim.x + threadIdx.x;
+__device__ __forceinline__ float a_tanh(float x) {
+    if (x > 8.0f) return 1.0f;
+    if (x < -8.0f) return -1.0f;
+    const float exp_2x = __expf(2.0f * x);
+    return (exp_2x - 1.0f) / (exp_2x + 1.0f);
+}
+
+__global__ void gelu_kernel(const float* __restrict__ input, 
+                           float* __restrict__ output, 
+                           const int n) {
+    const int idx = blockIdx.x * blockDim.x + threadIdx.x;
     
-    if (idx < size) {
+    if (idx < n) {
         float x = input[idx];
-        float x3 = x * x * x;
-        
-        float inner = kSqrtTwoOverPi * (x + kGeluCoeff * x3);
-        
-        float exp_val = __expf(-2.0f * inner);
-        float tanh_val = 1.0f - 2.0f / (1.0f + exp_val);
-        
-        output[idx] = 0.5f * x * (1.0f + tanh_val);
+        float tanh_arg = c_sqrt_2_over_pi * __fmaf_rn(c_gelu_alpha, x * x * x, x);
+        output[idx] = __fmaf_rn(0.5f * x, __fadd_rn(1.0f, a_tanh(tanh_arg)), 0.0f);
     }
 }
 
 std::vector<float> GeluCUDA(const std::vector<float>& input) {
-    int size = static_cast<int>(input.size());
-    if (size == 0) {
+    if (input.empty()) {
         return std::vector<float>();
     }
+
+    const int input_size = static_cast<int>(input.size());
+    std::vector<float> output(input_size);
+    float *d_input, *d_output;
     
-    std::vector<float> output(size);
+    cudaMalloc(&d_input, input_size * sizeof(float));
+    cudaMalloc(&d_output, input_size * sizeof(float));
     
-    float* d_input = nullptr;
-    float* d_output = nullptr;
+    cudaMemcpy(d_input, input.data(), input_size * sizeof(float), cudaMemcpyHostToDevice);
     
-    cudaMalloc(&d_input, size * sizeof(float));
-    cudaMalloc(&d_output, size * sizeof(float));
+    const int block_size = 1024;
+    const int num_blocks = (input_size + block_size - 1) / block_size;
     
-    cudaMemcpyAsync(d_input, input.data(), size * sizeof(float), 
-                   cudaMemcpyHostToDevice);
-    
-    int blockSize = 256;
-    int gridSize = (size + blockSize - 1) / blockSize;
-    
-    GeluKernel<<<gridSize, blockSize>>>(d_input, d_output, size);
-    
-    cudaMemcpyAsync(output.data(), d_output, size * sizeof(float),
-                   cudaMemcpyDeviceToHost);
-    
+    gelu_kernel<<<num_blocks, block_size>>>(d_input, d_output, input_size);
+
     cudaDeviceSynchronize();
     
+    cudaMemcpy(output.data(), d_output, input_size * sizeof(float), cudaMemcpyDeviceToHost);
     cudaFree(d_input);
     cudaFree(d_output);
     
