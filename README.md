@@ -1096,6 +1096,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE2|kavtorev_dmitry|0.0529|13|
 |3822B1FI3|kirill_kholin|0.0529|2|
 |3822B1PE1|kalyakina_anastasia|0.0530|16|
+|3822B1PE2|zaytsev_denis|0.0530|20|
 |3822B1PE2|sorokin_andrey|0.0531|4|
 |3822B1FI3|koshkin_nikita|0.0531|4|
 |3822B1PE4|kolokolova_darya|0.0531|5|
@@ -1139,7 +1140,6 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE1|nikolaev_roman|0.7786|8|
 |3822B1PE2|fyodorov_matthew|BUILD FAILED|-|
 |3822B1PE2|naumov_bogdan|TEST FAILED|-|
-|3822B1PE2|zaytsev_denis|TEST FAILED|-|
 |3822B1PE2|petrov_artem|TEST FAILED|-|
 |3822B1FI3|kholin_kirill|TEST FAILED|-|
 
@@ -1422,29 +1422,29 @@ Passed: 28
 |-----|----|------|-----|
 |3822B1PE2|chernova_natalia|**9/9**|**351**|
 |3822B1PE2|ermolaev_vladislav|**9/9**|**468**|
-|3822B1PE2|filatiev_vladislav|**9/9**|**399**|
-|3822B1PE2|filatieva_elizaveta|**9/9**|**389**|
+|3822B1PE2|filatiev_vladislav|**9/9**|**398**|
+|3822B1PE2|filatieva_elizaveta|**9/9**|**388**|
 |3822B1PE2|fyodorov_matthew|5/9|195|
-|3822B1PE2|gusev_nikita|**9/9**|**375**|
+|3822B1PE2|gusev_nikita|**9/9**|**374**|
 |3822B1PE2|kalinin_dmitry|**9/9**|**387**|
 |3822B1PE2|kavtorev_dmitry|**9/9**|**382**|
-|3822B1PE2|kondratev_yaroslav|**9/9**|**430**|
+|3822B1PE2|kondratev_yaroslav|**9/9**|**429**|
 |3822B1PE2|korovin_nikita|**9/9**|**473**|
 |3822B1PE2|matynina_aleksandra|**9/9**|**340**|
-|3822B1PE2|mukhina_margarita|**9/9**|**448**|
-|3822B1PE2|muradov_mike|**9/9**|**432**|
+|3822B1PE2|mukhina_margarita|**9/9**|**447**|
+|3822B1PE2|muradov_mike|**9/9**|**431**|
 |3822B1PE2|naumov_bogdan|6/9|181|
 |3822B1PE2|petrov_artem|6/9|150|
 |3822B1PE2|pikarychev_ilya|**9/9**|**375**|
-|3822B1PE2|sorokin_andrey|**9/9**|**409**|
-|3822B1PE2|strakhov_andrey|**9/9**|**324**|
+|3822B1PE2|sorokin_andrey|**9/9**|**408**|
+|3822B1PE2|strakhov_andrey|**9/9**|**323**|
 |3822B1PE2|titov_semyon|**9/9**|**461**|
 |3822B1PE2|varfolomeev_gregory|**9/9**|**383**|
-|3822B1PE2|vladimirova_julia|**9/9**|**385**|
-|3822B1PE2|zaytsev_denis|8/9|280|
+|3822B1PE2|vladimirova_julia|**9/9**|**384**|
+|3822B1PE2|zaytsev_denis|**9/9**|**315**|
 |3822B1PE2|zolotareva_arina|**9/9**|**441**|
 
-Passed: 19
+Passed: 20
 
 ## 3822B1PE3
 |Group|Name|Passed|Score|
@@ -1480,7 +1480,7 @@ Passed: 8
 
 Passed: 13
 
-**Total Passed: 89**
+**Total Passed: 90**
 
 ---
 *Maximum Score: 576 (64 per task)
