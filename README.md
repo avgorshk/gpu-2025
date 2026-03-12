@@ -567,6 +567,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE1|polikanov_vitaliy|0.2118|18|
 |3822B1PE2|zolotareva_arina|0.2140|11|
 |3822B1PE2|matynina_aleksandra|0.2143|16|
+|3822B1PE2|makhov_mikhail|0.2145|23|
 |3822B1FI2|yasakova_tanya|0.2151|1|
 |3822B1PE4|kovalchuk_alexander|0.2152|8|
 |3822B1FI3|lavrentyev_alexey|0.2153|4|
@@ -644,7 +645,6 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE1|vershinina_alexandra|0.6209|16|
 |3822B1FI1|komshina_daria|0.6698|4|
 |3822B1PE2|fyodorov_matthew|TEST FAILED|-|
-|3822B1PE2|makhov_mikhail|TOO SLOW|-|
 
 ## 3_naive_gemm_omp (1024 elements)
 |Group|Name|Result|Rank|
@@ -701,6 +701,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE2|mukhina_margarita|0.2602|4|
 |3822B1FI2|markin_ivan|0.2821|5|
 |3822B1PE2|korovin_nikita|0.3160|5|
+|3822B1PE2|makhov_mikhail|0.3225|24|
 |3822B1FI2|mezhuev_maksim|0.6826|4|
 |3822B1FI3|kudryashova_irina|0.6950|1|
 |3822B1FI1|ionova_ekaterina|0.7003|5|
@@ -745,7 +746,6 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1FI1|shulpin_ilya|0.7960|2|
 |3822B1FI1|shpynov_nikita|0.8225|7|
 |3822B1PE1|odintsov_misha|0.8459|13|
-|3822B1PE2|makhov_mikhail|BUILD FAILED|-|
 
 ## 4_naive_gemm_cuda (4096 elements)
 |Group|Name|Result|Rank|
@@ -882,6 +882,7 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE2|varfolomeev_gregory|0.0889|15|
 |3822B1FI1|komshina_daria|0.0918|4|
 |3822B1FI2|shkurinskaya_elena|0.0919|2|
+|3822B1PE2|makhov_mikhail|0.0919|24|
 |3822B1PE1|vasilev_sergey|0.0926|21|
 |3822B1PE3|oturin_alexander|0.0943|1|
 |3822B1PE2|sorokin_andrey|0.0950|6|
@@ -946,7 +947,6 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1FI1|elvin_veliev|0.3520|3|
 |3822B1PE1|sidorina_polina|0.6883|17|
 |3822B1PE1|odintsov_misha|0.7827|12|
-|3822B1PE2|makhov_mikhail|BUILD FAILED|-|
 
 ## 6_block_gemm_cuda (4096 elements)
 |Group|Name|Result|Rank|
@@ -1086,13 +1086,13 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE2|matynina_aleksandra|0.0513|17|
 |3822B1PE3|malyshev_anton|0.0514|7|
 |3822B1PE3|mironov_ilya|0.0514|6|
-|3822B1PE1|sadikov_ivan|0.0515|5|
 |3822B1PE2|varfolomeev_gregory|0.0515|15|
+|3822B1PE1|sadikov_ivan|0.0515|5|
 |3822B1PE4|shuravina_oksana|0.0517|2|
 |3822B1PE1|sidorina_polina|0.0518|17|
 |3822B1FI3|lavrentyev_alexey|0.0518|3|
-|3822B1PE1|kapustin_ivan|0.0519|22|
 |3822B1PE2|chernova_natalia|0.0519|16|
+|3822B1PE1|kapustin_ivan|0.0519|22|
 |3822B1FI3|agafeev_sergey|0.0519|7|
 |3822B1PE4|fomin_vladimir|0.0520|8|
 |3822B1PE4|muradov_kamal|0.0520|9|
@@ -1103,17 +1103,17 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE4|karaseva_ekaterina|0.0528|4|
 |3822B1PE2|kavtorev_dmitry|0.0529|13|
 |3822B1FI3|kirill_kholin|0.0529|2|
-|3822B1PE1|kalyakina_anastasia|0.0530|16|
 |3822B1PE2|zaytsev_denis|0.0530|20|
+|3822B1PE1|kalyakina_anastasia|0.0530|16|
 |3822B1PE2|sorokin_andrey|0.0531|4|
 |3822B1FI3|koshkin_nikita|0.0531|4|
 |3822B1PE4|kolokolova_darya|0.0531|5|
 |3822B1PE4|kovalchuk_alexander|0.0531|6|
 |3822B1PE2|strakhov_andrey|0.0532|19|
 |3822B1FI2|yasakova_tanya|0.0532|1|
+|3822B1PE2|kondratev_yaroslav|0.0535|3|
 |3822B1PE1|zaitsev_artem|0.0535|28|
 |3822B1PE1|vedernikova_kseniya|0.0535|23|
-|3822B1PE2|kondratev_yaroslav|0.0535|3|
 |3822B1PE4|podovinnikov_artyom|0.0535|1|
 |3822B1FI1|shulpin_ilya|0.0538|2|
 |3822B1PE4|prokhorov_nikita|0.0541|13|
@@ -1169,8 +1169,8 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE1|tyurin_mikhail|0.1108|14|
 |3822B1PE1|krylov_mikhail|0.1109|2|
 |3822B1PE1|shvedova_vitalina|0.1117|9|
-|3822B1PE4|salaev_vladislav|0.1128|9|
 |3822B1PE2|kalinin_dmitry|0.1128|15|
+|3822B1PE4|salaev_vladislav|0.1128|9|
 |3822B1PE3|sarafanov_maxim|0.1163|4|
 |3822B1PE1|sorochkin_danila|0.1219|25|
 |3822B1PE1|milovankin_maxim|0.1222|5|
@@ -1179,8 +1179,8 @@ std::vector<float> GeluOCL(const std::vector<float>& input, int platform) {
 |3822B1PE4|karaseva_ekaterina|0.1226|5|
 |3822B1FI3|solovyev_danila|0.1228|5|
 |3822B1PE2|korovin_nikita|0.1231|3|
-|3822B1PE4|prokhorov_nikita|0.1232|13|
 |3822B1PE2|zaytsev_denis|0.1232|21|
+|3822B1PE4|prokhorov_nikita|0.1232|13|
 |3822B1PE4|podovinnikov_artyom|0.1235|1|
 |3822B1FI3|lavrentyev_alexey|0.1235|4|
 |3822B1PE3|malyshev_anton|0.1239|7|
@@ -1429,32 +1429,32 @@ Passed: 28
 ## 3822B1PE2
 |Group|Name|Passed|Score|
 |-----|----|------|-----|
-|3822B1PE2|chernova_natalia|**9/9**|**344**|
-|3822B1PE2|ermolaev_vladislav|**9/9**|**461**|
-|3822B1PE2|filatiev_vladislav|**9/9**|**389**|
-|3822B1PE2|filatieva_elizaveta|**9/9**|**380**|
+|3822B1PE2|chernova_natalia|**9/9**|**341**|
+|3822B1PE2|ermolaev_vladislav|**9/9**|**458**|
+|3822B1PE2|filatiev_vladislav|**9/9**|**386**|
+|3822B1PE2|filatieva_elizaveta|**9/9**|**377**|
 |3822B1PE2|fyodorov_matthew|5/9|192|
-|3822B1PE2|gusev_nikita|**9/9**|**364**|
-|3822B1PE2|kalinin_dmitry|**9/9**|**382**|
-|3822B1PE2|kavtorev_dmitry|**9/9**|**375**|
-|3822B1PE2|kondratev_yaroslav|**9/9**|**421**|
-|3822B1PE2|korovin_nikita|**9/9**|**465**|
-|3822B1PE2|makhov_mikhail|6/9|199|
-|3822B1PE2|matynina_aleksandra|**9/9**|**334**|
-|3822B1PE2|mukhina_margarita|**9/9**|**439**|
-|3822B1PE2|muradov_mike|**9/9**|**423**|
-|3822B1PE2|naumov_bogdan|**9/9**|**265**|
-|3822B1PE2|petrov_artem|**9/9**|**269**|
-|3822B1PE2|pikarychev_ilya|**9/9**|**369**|
-|3822B1PE2|sorokin_andrey|**9/9**|**398**|
-|3822B1PE2|strakhov_andrey|**9/9**|**315**|
-|3822B1PE2|titov_semyon|**9/9**|**452**|
-|3822B1PE2|varfolomeev_gregory|**9/9**|**376**|
-|3822B1PE2|vladimirova_julia|**9/9**|**375**|
-|3822B1PE2|zaytsev_denis|**9/9**|**307**|
+|3822B1PE2|gusev_nikita|**9/9**|**363**|
+|3822B1PE2|kalinin_dmitry|**9/9**|**381**|
+|3822B1PE2|kavtorev_dmitry|**9/9**|**373**|
+|3822B1PE2|kondratev_yaroslav|**9/9**|**419**|
+|3822B1PE2|korovin_nikita|**9/9**|**463**|
+|3822B1PE2|makhov_mikhail|**9/9**|**295**|
+|3822B1PE2|matynina_aleksandra|**9/9**|**333**|
+|3822B1PE2|mukhina_margarita|**9/9**|**438**|
+|3822B1PE2|muradov_mike|**9/9**|**422**|
+|3822B1PE2|naumov_bogdan|**9/9**|**263**|
+|3822B1PE2|petrov_artem|**9/9**|**267**|
+|3822B1PE2|pikarychev_ilya|**9/9**|**366**|
+|3822B1PE2|sorokin_andrey|**9/9**|**396**|
+|3822B1PE2|strakhov_andrey|**9/9**|**313**|
+|3822B1PE2|titov_semyon|**9/9**|**450**|
+|3822B1PE2|varfolomeev_gregory|**9/9**|**375**|
+|3822B1PE2|vladimirova_julia|**9/9**|**373**|
+|3822B1PE2|zaytsev_denis|**9/9**|**306**|
 |3822B1PE2|zolotareva_arina|**9/9**|**434**|
 
-Passed: 22
+Passed: 23
 
 ## 3822B1PE3
 |Group|Name|Passed|Score|
@@ -1490,7 +1490,7 @@ Passed: 8
 
 Passed: 13
 
-**Total Passed: 92**
+**Total Passed: 93**
 
 ---
 *Maximum Score: 576 (64 per task)*
