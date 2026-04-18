@@ -3,14 +3,12 @@
 
 std::vector<float> GeluOMP(const std::vector<float>& input) {
     size_t vector_size = input.size();
-    std::vector<float> output(input);
-    const float* in_ptr = input.data();
-    float* out_ptr = output.data();
+    std::vector<float> output(vector_size);
 
-#pragma omp parallel for schedule(static, 8388608)
-    for (int i = 0; i < static_cast<int>(vector_size); i++) {
-        out_ptr[i] /= (1.0f + std::exp(-1.6f * in_ptr[i]));
+#pragma omp parallel for
+    for (int i = 0; i < vector_size; i++) {
+        float x = input[i];
+        output[i] = x * 0.5f * (1.0f + tanh(sqrt(2.0f/acos(-1.0f)) * x * (1.0f + 0.044715f * x * x)));
     }
-
     return output;
 }
